@@ -127,7 +127,16 @@ section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26p
 .fb-q { font-size: 13px; color: var(--muted); }
 .fb-btn { font: 600 14px var(--body); display: inline-flex; align-items: center; gap: 6px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
 .fb-nums { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
-.fb-n { font: 600 14px var(--body); font-variant-numeric: tabular-nums; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 9px 0; min-width: 0; cursor: pointer; }
+.fb-head { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.fb-quick { display: inline-flex; gap: 6px; flex: none; }
+.fb-q-btn { font: 700 16px var(--body); width: 40px; height: 36px; border-radius: 8px; border: 2px solid transparent; color: #fff; cursor: pointer; opacity: .8; }
+.fb-q-btn.si { background: #2f8f5b; }
+.fb-q-btn.no { background: #c0473f; }
+.fb-q-btn[aria-pressed="true"] { opacity: 1; border-color: #fff; box-shadow: 0 0 0 2px currentColor; }
+.fb-q-btn.si[aria-pressed="true"] { box-shadow: 0 0 0 2px #2f8f5b; }
+.fb-q-btn.no[aria-pressed="true"] { box-shadow: 0 0 0 2px #c0473f; }
+.fb-q-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb-n { font: 700 14px var(--body); font-variant-numeric: tabular-nums; background: #5b6163; color: #fff; border: 1px solid #767d7f; border-radius: 8px; padding: 9px 0; min-width: 0; cursor: pointer; }
 .fb-n[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
 .fb-n:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
 .fb-btn.si[aria-pressed="true"] { background: #2f8f5b; border-color: #2f8f5b; color: #fff; }
@@ -183,7 +192,7 @@ section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26p
   <header>
     <div class="eyebrow">3Way · ViDeus</div>
     <h1>Videos de <em>ViDeus</em></h1>
-    <p class="lede">Los videos terminados, con voz. Mirá cada uno, ponele un puntaje del 1 al 10 y, al final, tocá "Enviar feedback".</p>
+    <p class="lede">Los videos terminados, con voz. Mirá cada uno, ponele un puntaje del 1 al 10 (o solo ✓ / ✕) y, al final, tocá "Enviar feedback".</p>
   </header>
   <nav class="tabs" aria-label="Qué videos ver">
     <button type="button" id="tab-sel" data-own-tab aria-selected="true">Selección final</button>
@@ -226,7 +235,7 @@ section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26p
   <div class="fb-actions"><a class="main" id="fb-mail" href="mailto:camussisofia@gmail.com">Abrir mail</a><button type="button" id="fb-copy">Copiar texto</button><span class="fb-q" id="fb-msg" role="status"></span></div>
 </section>
 </div>
-<div id="fb-bar"><span id="fb-count">Poné un puntaje del 1 al 10 en cada video.</span><button type="button" id="fb-send">Enviar feedback</button></div>
+<div id="fb-bar"><span id="fb-count">Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.</span><button type="button" id="fb-send">Enviar feedback</button></div>
 <div id="mu">
   <div id="mu-panel">
     <div id="mu-frame"></div>
@@ -322,14 +331,14 @@ try { FB = JSON.parse(localStorage.getItem("videus-puntajes") || "{}"); } catch 
 const fbSave = () => { try { localStorage.setItem("videus-puntajes", JSON.stringify(FB)); } catch (e) {} fbCount(); };
 const fbOrder = [];
 function fbCount() {
-  const n = fbOrder.filter(it => FB[it.id] && FB[it.id].v).length;
+  const n = fbOrder.filter(it => FB[it.id] && (FB[it.id].v || FB[it.id].q)).length;
   const c = document.getElementById("fb-count");
-  if (c) c.textContent = n ? `Puntuaste ${n} de ${fbOrder.length} videos.` : "Poné un puntaje del 1 al 10 en cada video.";
+  if (c) c.textContent = n ? `Puntuaste ${n} de ${fbOrder.length} videos.` : "Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.";
   if (!document.getElementById("fb-panel").hidden) fbCompose();
 }
 function fbBlock(it, card) {
   fbOrder.push(it);
-  const st = FB[it.id] || (FB[it.id] = { v: "", c: "" });
+  const st = FB[it.id] || (FB[it.id] = { v: "", c: "", q: "" });
   const nums = el("div", { class: "fb-nums", role: "group", "aria-label": "Puntaje del 1 al 10 para " + it.t });
   const btns = [];
   for (let n = 1; n <= 10; n++) {
@@ -337,17 +346,24 @@ function fbBlock(it, card) {
     b.addEventListener("click", () => { st.v = st.v === n ? "" : n; paint(); fbSave(); });
     btns.push(b); nums.append(b);
   }
+  const si = el("button", { type: "button", class: "fb-q-btn si", id: "fb-si-" + it.id, text: "✓", "aria-label": "Me gusta: " + it.t });
+  const no = el("button", { type: "button", class: "fb-q-btn no", id: "fb-no-" + it.id, text: "✕", "aria-label": "No me gusta: " + it.t });
   const ta = el("textarea", { id: "fb-c-" + it.id, "aria-label": "Comentario sobre " + it.t });
   ta.value = st.c || "";
   function paint() {
     btns.forEach((b, i) => b.setAttribute("aria-pressed", String(st.v === i + 1)));
-    card.classList.toggle("liked", st.v >= 8); card.classList.toggle("disliked", !!st.v && st.v <= 4);
-    ta.hidden = !st.v;
-    ta.placeholder = st.v && st.v < 8 ? "¿Qué le falta para un 10? (por ejemplo: el ritmo, una frase, una imagen)" : "Comentario opcional";
+    si.setAttribute("aria-pressed", String(st.q === "si")); no.setAttribute("aria-pressed", String(st.q === "no"));
+    const bad = st.q === "no" || (!st.q && !!st.v && st.v <= 4), good = st.q === "si" || (!st.q && st.v >= 8);
+    card.classList.toggle("liked", good); card.classList.toggle("disliked", bad);
+    ta.hidden = !st.v && !st.q;
+    ta.placeholder = st.q === "no" || (st.v && st.v < 8) ? "¿Qué le falta? (por ejemplo: el ritmo, una frase, una imagen)" : "Comentario opcional";
   }
+  si.addEventListener("click", () => { st.q = st.q === "si" ? "" : "si"; paint(); fbSave(); });
+  no.addEventListener("click", () => { st.q = st.q === "no" ? "" : "no"; paint(); fbSave(); });
   ta.addEventListener("input", () => { st.c = ta.value; fbSave(); });
   paint();
-  return el("div", { class: "fb" }, [el("span", { class: "fb-q", text: "¿Qué puntaje le ponés? (1 = no va, 10 = excelente)" }), nums, ta]);
+  const head = el("div", { class: "fb-head" }, [el("span", { class: "fb-q", text: "Puntaje del 1 al 10, o solo ✓ / ✕" }), el("span", { class: "fb-quick" }, [si, no])]);
+  return el("div", { class: "fb" }, [head, nums, ta]);
 }
 function fbCompose() {
   const base = location.origin + location.pathname;
@@ -357,15 +373,18 @@ function fbCompose() {
   const picks = typeof PICKS !== "undefined" ? PICKS : [];
   const all = fbOrder.map((it, i) => [it, i, FB[it.id] || {}]);
   const rated = all.filter(r => r[2].v);
+  const seen = all.filter(r => r[2].v || r[2].q);
+  const mark = st => st.q === "si" ? " · ✓ le gustó" : st.q === "no" ? " · ✕ no le gustó" : "";
   const avg = rated.length ? (rated.reduce((t, r) => t + r[2].v, 0) / rated.length).toFixed(1).replace(".", ",") : "0";
-  lines.push(`Puntuados: ${rated.length} de ${all.length} · Promedio: ${avg}`, "");
+  lines.push(`Opinó sobre: ${seen.length} de ${all.length} · Con puntaje: ${rated.length} · Promedio: ${avg} · ✓ ${all.filter(r => r[2].q === "si").length} · ✕ ${all.filter(r => r[2].q === "no").length}`, "");
   function section(title, rows) {
-    const n = rows.filter(r => r[2].v).length;
-    lines.push(`== ${title} · puntuados ${n} de ${rows.length} ==`);
-    rows.slice().sort((x, y) => (y[2].v || 0) - (x[2].v || 0) || x[1] - y[1]).forEach(([it, i, st]) => {
-      lines.push(`${st.v || 0}/10 · ${it.t}${st.v ? "" : " (sin puntaje)"}`);
+    const n = rows.filter(r => r[2].v || r[2].q).length;
+    lines.push(`== ${title} · opinó sobre ${n} de ${rows.length} ==`);
+    const rank = st => st.v || (st.q === "si" ? 0.6 : st.q === "no" ? 0.4 : 0);
+    rows.slice().sort((x, y) => rank(y[2]) - rank(x[2]) || x[1] - y[1]).forEach(([it, i, st]) => {
+      lines.push(`${st.v || 0}/10${mark(st)} · ${it.t}${st.v ? "" : st.q ? " (sin número)" : " (sin puntaje)"}`);
       if (st.c && st.c.trim()) lines.push(`   Comentario: ${st.c.trim()}`);
-      if (st.v) lines.push(`   Link: ${base}#v-${it.id}`);
+      if (st.v || st.q) lines.push(`   Link: ${base}#v-${it.id}`);
     });
     lines.push("");
   }
