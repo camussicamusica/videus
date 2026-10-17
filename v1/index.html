@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>ViDeus · Videos · V1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: a screening room. One row per case: the story on the left, the player on the right, version switches above the player. Deliberately dark, like the ViDeus interface. */
+:root {
+  color-scheme: dark;
+  --bg: #17191a;
+  --panel: #212426;
+  --line: #33383a;
+  --fg: #eef0ee;
+  --muted: #9aa3a3;
+  --orange: #e0623a;
+  --teal: #4f9aa6;
+  --old: #8a8f86;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 40px 80px; }
+
+header { display: grid; gap: 18px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 6vw, 58px); line-height: 1; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--orange); }
+.lede { color: var(--muted); max-width: 62ch; margin: 0; }
+.jump { color: var(--teal); }
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+.ctl { display: flex; align-items: center; gap: 8px; }
+.ctl-label { font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--panel); }
+.seg button { font: 500 14px var(--body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.seg button:focus-visible, .chip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.close-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+.close-tag.new { background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--orange); }
+.close-tag.old { background: color-mix(in srgb, var(--old) 18%, transparent); color: var(--old); }
+.close-tag.voice { background: color-mix(in srgb, var(--teal) 20%, transparent); color: var(--teal); }
+
+.case { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 32px; padding-block: 36px; border-bottom: 1px solid var(--line); align-items: start; }
+.case-head { display: grid; gap: 12px; min-width: 0; }
+.case-num { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.case h2 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.case p { margin: 0; color: var(--muted); max-width: 52ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.file { font-family: var(--mono); font-size: 12px; color: var(--teal); word-break: break-all; }
+
+.player { display: grid; gap: 12px; min-width: 0; }
+.versions { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 13px var(--body); color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--fg); border-color: var(--orange); }
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip-group .ctl-label { min-width: 84px; }
+.screen { background: #000; border: 1px solid var(--line); border-radius: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.screen video { display: block; max-width: 100%; background: #000; }
+.screen.v video { height: min(64vh, 620px); width: auto; aspect-ratio: 9 / 16; }
+.screen.h video { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+
+.explainer { border-top: 1px solid var(--line); }
+.explainer .case-num { color: var(--teal); }
+.script { margin: 0; padding-left: 22px; color: var(--muted); display: grid; gap: 4px; font-size: 14px; max-width: 56ch; }
+
+section.extra { padding-block: 36px; display: grid; gap: 20px; border-bottom: 1px solid var(--line); }
+section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.notes ol, .notes ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 6px; }
+.notes h3 { font: 600 14px var(--body); margin: 0 0 8px; color: var(--fg); }
+.path { font-family: var(--mono); font-size: 13px; color: var(--teal); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); padding-top: 8px; }
+.tabs button { font: 600 15px var(--body); color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; padding: 10px 14px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--orange); }
+.tabs button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.series { display: grid; gap: 8px; padding-block: 32px; border-bottom: 1px solid var(--line); }
+.series h2 { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); margin: 0; text-wrap: balance; }
+.series > p { margin: 0; color: var(--muted); max-width: 62ch; }
+.iters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; margin-top: 12px; }
+.iter { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.iter-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--muted); }
+.iter-head b { color: var(--fg); font-weight: 600; }
+.iter .screen.v video { height: auto; width: 100%; max-width: 300px; }
+.iter p { margin: 0; font-size: 13px; color: var(--muted); }
+.close-tag.gone { background: color-mix(in srgb, #c94a4a 20%, transparent); color: #e07a7a; }
+.close-tag.now { background: color-mix(in srgb, var(--teal) 20%, transparent); color: var(--teal); }
+
+
+.board-sum { display: grid; gap: 10px; }
+.bar { height: 10px; border-radius: 6px; background: var(--line); overflow: hidden; max-width: 520px; }
+.bar i { display: block; height: 100%; background: var(--orange); }
+.dl-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.dl { display: inline-flex; align-items: center; gap: 6px; font: 600 14px var(--body); text-decoration: none; background: var(--orange); color: #fff; border-radius: 8px; padding: 9px 14px; }
+.dl.alt { background: none; color: var(--fg); border: 1px solid var(--line); }
+.dl:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.chip[disabled] { opacity: .45; cursor: default; border-style: dashed; }
+.pending-box { border: 1px dashed var(--line); border-radius: 10px; padding: 28px 16px; text-align: center; color: var(--muted); font-size: 14px; }
+.theme { font: 600 13px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin: 22px 0 4px; }
+.claim { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 12px 16px; }
+.claim summary { cursor: pointer; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.claim summary b { font: 700 18px var(--display); }
+.claim .en { flex-basis: 100%; color: var(--muted); }
+.claim p { margin: 10px 0 0; max-width: 70ch; color: var(--muted); }
+.claim blockquote { margin: 10px 0 0; padding: 8px 14px; border-left: 3px solid var(--orange); background: var(--bg); border-radius: 0 8px 8px 0; max-width: 70ch; }
+.claim cite { font: 12px var(--mono); color: var(--muted); font-style: normal; }
+.claim .confirm { color: var(--orange); }
+#claims { display: grid; gap: 8px; }
+.claim { --st: var(--orange); border-left: 5px solid var(--st); }
+.claim.said { --st: #4fae7b; }
+.claim.part { --st: #d9b44a; }
+.claim.miss { --st: var(--orange); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--st, var(--muted)); margin-right: 6px; flex: none; }
+.chip.said { --st: #4fae7b; } .chip.part { --st: #d9b44a; } .chip.miss { --st: var(--orange); }
+.claim .state { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--st); border: 1px solid var(--st); border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+.claim .where { color: var(--fg); display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.vchip { font: 500 13px var(--body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.vchip:hover, .vchip:focus-visible { border-color: var(--teal); outline: none; }
+.fb { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 10px; }
+.fb-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fb-q { font-size: 13px; color: var(--muted); }
+.fb-btn { font: 600 14px var(--body); display: inline-flex; align-items: center; gap: 6px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+.fb-nums { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.fb-head { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.fb-quick { display: inline-flex; gap: 6px; flex: none; }
+.fb-q-btn { font: 700 16px var(--body); width: 40px; height: 36px; border-radius: 8px; border: 2px solid transparent; color: #fff; cursor: pointer; opacity: .8; }
+.fb-q-btn.si { background: #2f8f5b; }
+.fb-q-btn.no { background: #c0473f; }
+.fb-q-btn[aria-pressed="true"] { opacity: 1; border-color: #fff; box-shadow: 0 0 0 2px currentColor; }
+.fb-q-btn.si[aria-pressed="true"] { box-shadow: 0 0 0 2px #2f8f5b; }
+.fb-q-btn.no[aria-pressed="true"] { box-shadow: 0 0 0 2px #c0473f; }
+.fb-q-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb-n { font: 700 14px var(--body); font-variant-numeric: tabular-nums; background: #5b6163; color: #fff; border: 1px solid #767d7f; border-radius: 8px; padding: 9px 0; min-width: 0; cursor: pointer; }
+.fb-n[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
+.fb-n:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb-btn.si[aria-pressed="true"] { background: #2f8f5b; border-color: #2f8f5b; color: #fff; }
+.fb-btn.no[aria-pressed="true"] { background: #c0473f; border-color: #c0473f; color: #fff; }
+.fb-btn:focus-visible, .fb textarea:focus-visible, #fb-send:focus-visible, .fb-actions a:focus-visible, .fb-actions button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb textarea, #fb-text, #fb-name { width: 100%; font: 14px var(--body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; resize: vertical; }
+.fb textarea { min-height: 64px; }
+.iter.liked { outline: 2px solid #2f8f5b; outline-offset: 6px; border-radius: 6px; }
+.iter.disliked { outline: 2px solid #c0473f; outline-offset: 6px; border-radius: 6px; }
+#fb-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--panel); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: center; font-size: 14px; }
+#fb-send { font: 700 15px var(--body); background: var(--orange); color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; cursor: pointer; }
+#fb-panel { padding-block: 32px; display: grid; gap: 12px; border-top: 1px solid var(--line); max-width: 760px; }
+#fb-panel h2 { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; }
+#fb-text { min-height: 260px; font-family: var(--mono); font-size: 13px; }
+.fb-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fb-actions a, .fb-actions button { font: 600 14px var(--body); text-decoration: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--fg); }
+.fb-actions a.main { background: var(--orange); border-color: var(--orange); color: #fff; }
+.wrap { padding-bottom: 120px; }
+.cfilter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+
+#mu { position: fixed; right: 12px; bottom: calc(70px + env(safe-area-inset-bottom, 0px)); z-index: 21; display: grid; gap: 8px; justify-items: end; }
+#mu-toggle { font: 700 14px var(--body); background: var(--teal); color: #fff; border: 0; border-radius: 999px; padding: 10px 16px; cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.45); }
+#mu-panel { width: min(300px, calc(100vw - 24px)); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.5); }
+#mu-frame { aspect-ratio: 16 / 9; background: #000; border-radius: 8px; overflow: hidden; }
+#mu-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.mu-row { display: flex; gap: 8px; align-items: center; justify-content: center; }
+.mu-row button { font: 600 18px var(--body); min-width: 48px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; cursor: pointer; }
+.mu-row button#mu-play { background: var(--orange); border-color: var(--orange); color: #fff; min-width: 64px; }
+#mu button:focus-visible, #mu a:focus-visible, #mu input:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.mu-vol { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.mu-vol input { flex: 1; min-width: 0; accent-color: var(--orange); }
+#mu-pop { font: 700 14px var(--body); background: var(--orange); color: #fff; border: 0; border-radius: 8px; padding: 12px; cursor: pointer; }
+#mu-panel p { margin: 0; font-size: 12px; color: var(--muted); }
+#mu-panel a { color: var(--teal); }
+.steps { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 760px; counter-reset: st; }
+.steps li { counter-increment: st; border: 1px solid var(--line); border-left: 5px solid #4fae7b; background: var(--panel); border-radius: 10px; padding: 12px 16px; display: grid; gap: 4px; }
+.steps li.todo { border-left-color: var(--orange); }
+.steps li b { font: 700 17px var(--display); }
+.steps li b::before { content: counter(st) ". "; color: var(--muted); }
+.steps li span { color: var(--muted); font-size: 14px; }
+.steps .state { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #4fae7b; }
+.steps li.todo .state { color: var(--orange); }
+
+@media (max-width: 760px) {
+  .case { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .screen.v video { height: auto; width: 100%; max-width: 360px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head><body>
+<script src="../versions.js" data-current="v1" data-root="../"></script>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">3Way · ViDeus</div>
+    <h1>Videos de <em>ViDeus</em></h1>
+    <p class="lede">Los videos terminados, con voz. Mirá cada uno, ponele un puntaje del 1 al 10 (o solo ✓ / ✕) y, al final, tocá "Enviar feedback".</p>
+  </header>
+  <nav class="tabs" aria-label="Qué videos ver">
+    <button type="button" id="tab-sel" data-own-tab aria-selected="true">Selección final (8)</button>
+    <button type="button" id="tab-voz" data-own-tab aria-selected="false">Todos los videos (31)</button>
+  </nav>
+  <div id="panel-voz">
+    <section class="series" id="sel-intro">
+      <h2>Selección final</h2>
+      <p>Los 8 videos para ver primero: qué es ViDeus, las dos ideas que Seba pidió destacar (sumamos, no reemplazamos; el archivo no sale del edificio) y cuatro casos de distintos clientes. El resto está en "Todos los videos".</p>
+    </section>
+    <section class="series board-sum">
+      <h2>Videos terminados</h2>
+      <p>31 videos con voz, cada uno en sus 4 versiones: español e inglés, para celu y para compu. Elegí la versión, mirala acá y bajala con el botón Descargar (archivo original, desde Drive). Lo que se ve acá está comprimido solo para esta página.</p>
+    </section>
+    <div id="voz"></div>
+  </div>
+  <div id="panel-metodo">
+    <section class="series">
+      <h2>Metodología: cómo se hace cada video</h2>
+      <p>Cada video sale de la misma cadena de pasos. Casi toda la cadena ya corre sola; la música es el único paso que todavía no está automatizado.</p>
+      <ol class="steps">
+        <li><b>Guion</b><span class="state">Listo</span><span>Sale de las frases de la llamada con Seba. Sofi lo escribe con Claude y lo aprueba.</span></li>
+        <li><b>Voz</b><span class="state">Listo</span><span>Sofi genera la voz en ElevenLabs, en español y en inglés, y ajusta el texto mientras graba.</span></li>
+        <li><b>Tiempos</b><span class="state">Automático</span><span>Claude transcribe el audio y marca en qué segundo se dice cada palabra.</span></li>
+        <li><b>Imagen</b><span class="state">Automático</span><span>Una plantilla arma el video alrededor de la voz: el texto en pantalla aparece justo cuando se dice.</span></li>
+        <li><b>Versiones</b><span class="state">Automático</span><span>De cada video salen las versiones para celu y para compu, en los dos idiomas, y las versiones con subtítulos.</span></li>
+        <li><b>Publicación</b><span class="state">Automático</span><span>Los videos se suben a Drive y aparecen en esta página, con el botón para descargarlos y para ponerles puntaje.</span></li>
+        <li class="todo"><b>Música</b><span class="state">Todavía no automatizado</span><span>Los videos se entregan sin música. Para probar cómo quedan con música de fondo, usá el botón "♪ Música" de esta página: reproduce una playlist libre de derechos mientras mirás. El plan es automatizar este paso con DaVinci Resolve y Claude, y dejar la música elegida dentro de cada archivo final.</span></li>
+      </ol>
+    </section>
+  </div>
+
+<section id="fb-panel" hidden>
+  <h2>Tu feedback</h2>
+  <p class="lede">Este es el resumen de lo que marcaste. "Abrir mail" lo pone en un correo para Sofi, listo para enviar. Si el mail no se abre, copiá el texto y pegalo en un mensaje a camussisofia@gmail.com.</p>
+  <label class="fb-q" for="fb-name">Tu nombre (opcional)</label>
+  <input id="fb-name" type="text" autocomplete="name">
+  <label class="fb-q" for="fb-text">Resumen</label>
+  <textarea id="fb-text" readonly></textarea>
+  <div class="fb-actions"><a class="main" id="fb-mail" href="mailto:camussisofia@gmail.com">Abrir mail</a><button type="button" id="fb-copy">Copiar texto</button><span class="fb-q" id="fb-msg" role="status"></span></div>
+</section>
+</div>
+<div id="fb-bar"><span id="fb-count">Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.</span><button type="button" id="fb-send">Enviar feedback</button></div>
+<div id="mu">
+  <div id="mu-panel">
+    <div id="mu-frame"></div>
+    <button type="button" id="mu-pop" hidden>▶ Abrir la música en una ventanita</button>
+    <div class="mu-row" role="group" aria-label="Controles de música">
+      <button type="button" id="mu-prev" aria-label="Pista anterior">⏮</button>
+      <button type="button" id="mu-play" aria-label="Reproducir o pausar la música">▶</button>
+      <button type="button" id="mu-next" aria-label="Pista siguiente">⏭</button>
+    </div>
+    <label class="mu-vol">Volumen <input type="range" id="mu-vol" min="0" max="100" value="25"></label>
+    <p>Música de fondo para probar con los videos. Playlist de Mokka (No Copyright Music). <a href="https://www.youtube.com/playlist?list=PLq2aS32V3IdYErNVHD19SYDd0Jw0xeJ1h" target="_blank" rel="noopener">Abrir en YouTube</a></p>
+  </div>
+  <button type="button" id="mu-toggle" aria-expanded="true" aria-controls="mu-panel">♪ Ocultar música</button>
+</div>
+<script>
+(function () {
+  const ORIGIN = "https://www.youtube.com";
+  const panel = document.getElementById("mu-panel"), tog = document.getElementById("mu-toggle"), box = document.getElementById("mu-frame");
+  const play = document.getElementById("mu-play"), vol = document.getElementById("mu-vol");
+  let fr = null, ready = false, playing = false, wantPlay = false, alive = false;
+  const pop = document.getElementById("mu-pop");
+  const LIST_URL = "https://www.youtube.com/playlist?list=PLq2aS32V3IdYErNVHD19SYDd0Jw0xeJ1h";
+  // Some hosts (claude.ai) block the YouTube frame: if it never answers, offer the playlist in a small separate window instead.
+  function fallback() { if (alive) return; box.hidden = true; document.querySelector("#mu .mu-row").hidden = true; document.querySelector("#mu .mu-vol").hidden = true; pop.hidden = false; }
+  pop.addEventListener("click", function () { window.open("https://www.youtube.com/embed/videoseries?list=PLq2aS32V3IdYErNVHD19SYDd0Jw0xeJ1h&autoplay=1", "videus-musica", "width=420,height=300") || window.open(LIST_URL, "_blank"); });
+  function cmd(func, args) { if (fr && fr.contentWindow) fr.contentWindow.postMessage(JSON.stringify({ event: "command", func: func, args: args || [] }), ORIGIN); }
+  function paint() { play.textContent = playing ? "⏸" : "▶"; tog.textContent = panel.hidden ? (playing ? "♪ Música · sonando" : "♪ Música") : "♪ Ocultar música"; }
+  function load() {
+    if (fr) return;
+    fr = document.createElement("iframe");
+    fr.title = "Playlist de música de fondo";
+    fr.allow = "autoplay; encrypted-media";
+    fr.src = ORIGIN + "/embed/videoseries?list=PLq2aS32V3IdYErNVHD19SYDd0Jw0xeJ1h&enablejsapi=1&playsinline=1&rel=0";
+    fr.addEventListener("load", function () {
+      ready = true;
+      fr.contentWindow.postMessage(JSON.stringify({ event: "listening", id: "mu" }), ORIGIN);
+      cmd("setVolume", [Number(vol.value)]);
+      if (wantPlay) { cmd("playVideo"); wantPlay = false; }
+    });
+    box.appendChild(fr);
+    setTimeout(fallback, 6000);
+  }
+  window.addEventListener("message", function (e) {
+    if (e.origin !== ORIGIN || typeof e.data !== "string") return;
+    alive = true;
+    try {
+      const d = JSON.parse(e.data);
+      if (d.event === "infoDelivery" && d.info && typeof d.info.playerState === "number") { playing = d.info.playerState === 1 || d.info.playerState === 3; paint(); }
+    } catch (err) {}
+  });
+  tog.addEventListener("click", function () {
+    const open = panel.hidden;
+    panel.hidden = !open; tog.setAttribute("aria-expanded", String(open));
+    if (open) load();
+    paint();
+  });
+  load();
+  play.addEventListener("click", function () {
+    if (!ready) { wantPlay = true; load(); return; }
+    cmd(playing ? "pauseVideo" : "playVideo"); playing = !playing; paint();
+  });
+  document.getElementById("mu-prev").addEventListener("click", function () { cmd("previousVideo"); });
+  document.getElementById("mu-next").addEventListener("click", function () { cmd("nextVideo"); });
+  vol.addEventListener("input", function () { cmd("setVolume", [Number(vol.value)]); });
+})();
+</script>
+
+<script>
+function el(tag, attrs = {}, kids = []) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  kids.forEach(k => n.append(k));
+  return n;
+}
+
+function showTab() {}
+const VOZ = [{"g": "Qué es ViDeus", "items": [{"id": "guru", "t": "El gurú", "n": "Le habla al dueño del archivo, presenta al gurú y cierra con «¿Qué le preguntarías primero?».", "v": {"es-vertical": {"dl": "1P8Ha_nhxcz9E8fqamcYr0DmjC8K9opSV", "dls": "1hV3IIgNChB4Smq1UjWEtZkDrrRLUXu9b", "file": "casos/guru/guru-es-vertical.mp4", "src": "../videos/voz/guru-es-vertical.mp4"}, "es-horizontal": {"dl": "1G458fdVVYRbc0XIlIzdb9R62fADW7itT", "dls": "1VxUBUgOKJF-GLihPn-Kbqij7Q_LZJW8G", "file": "casos/guru/guru-es-horizontal.mp4", "src": "../videos/voz/guru-es-horizontal.mp4"}, "en-vertical": {"dl": "1pDxhZSpX7PWvIlx73MzgUoolqvQioH72", "dls": "1Z0sGDq1h_pOVUh5x_JxuKy8zGHmzImcb", "file": "casos/guru/guru-en-vertical.mp4", "src": "../videos/voz/guru-en-vertical.mp4"}, "en-horizontal": {"dl": "16H41LJVt3fB1xkY5d9KKBP1Uyrzphnhc", "dls": "1YjwxWfaVnFQ6UXdPDwXPTuvW5uUEaOwx", "file": "casos/guru/guru-en-horizontal.mp4", "src": "../videos/voz/guru-en-horizontal.mp4"}}}, {"id": "con-videus", "t": "Con ViDeus", "n": "La versión positiva: todo lo bueno que pasa cuando lo tenés.", "v": {"es-vertical": {"dl": "1lBB4k6VLFCO7MvJoC9MlV097eo8LXF9Z", "dls": "1o7m8fi8MLUEcuc3-ZOblfi2R5b7Db2oM", "file": "casos/con-videus/con-videus-es-vertical.mp4", "src": "../videos/voz/con-videus-es-vertical.mp4"}, "es-horizontal": {"dl": "1Mdh75FY87UjwqYblWuTUdsNEq4h29wJM", "dls": "1fRK6Zp1_UvEdZsnc1VHjpbhySWqGy8CH", "file": "casos/con-videus/con-videus-es-horizontal.mp4", "src": "../videos/voz/con-videus-es-horizontal.mp4"}, "en-vertical": {"dl": "1E8SKQhO1VDoLT_deXX5K0YD-Ge4iwprC", "dls": "1CiiUGwCGFF71hMD60dPZhlhnNxVsV3e6", "file": "casos/con-videus/con-videus-en-vertical.mp4", "src": "../videos/voz/con-videus-en-vertical.mp4"}, "en-horizontal": {"dl": "1Zp8yDo0bMnuLXm0LAYna7o_qyNJykDyT", "dls": "183N4sSSYZHeKWzg3AJQmiinSH3nolWWB", "file": "casos/con-videus/con-videus-en-horizontal.mp4", "src": "../videos/voz/con-videus-en-horizontal.mp4"}}}, {"id": "mam", "t": "¿Qué es un MAM?", "n": "Qué son los sistemas de archivo de video y qué cambia cuando el archivo entiende lo que tiene adentro.", "v": {"es-vertical": {"dl": "1CSnRNpVNK0DTairc3PKdi1Sw_ox-SkN7", "dls": "1TgbK7b9d38VhSojb7SxsLlDkIAWJxbN4", "file": "casos/mam/mam-es-eleven-vertical.mp4", "src": "../videos/voz/mam-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1ydSBZkGYi9lS3THngXXMVWtcdeh2I3TG", "dls": "1h6nmQ2EzBfk7iyUPISU0StCSBgHRqAQY", "file": "casos/mam/mam-es-eleven-horizontal.mp4", "src": "../videos/voz/mam-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1IVcgwBy6N8F722TctUqD-zT75j9Vr-ps", "dls": null, "file": "casos-con-voz/mam/mam-en-vertical.mp4", "src": "../videos/voz/mam-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1fWKKhH1TSjXF4WD-8wDVmwMfUFdGvkhp", "dls": null, "file": "casos-con-voz/mam/mam-en-horizontal.mp4", "src": "../videos/voz/mam-en-horizontal.mp4", "subs": false}}}]}, {"g": "Las objeciones", "items": [{"id": "v02", "t": "02 · Tu archivo nunca sale del edificio", "n": "Todo corre adentro de tu red. En español es tu versión nueva, la larga. 63 s.", "v": {"es-vertical": {"dl": "14aPMEWsTgOUcwVJBIoiTbcuURKYtb5UY", "dls": "1whpIXfF11GpVgd7z_RvnvLcnL_e0Ha4M", "file": "casos-con-voz/v02/v02-es-vertical.mp4", "src": "../videos/voz/v02-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1KNmg0Bog71I4fv1ZzR1uwqeigsAEUJrp", "dls": "1NuQ6HGBqT5xl7olziLjW1xAWGVayyCft", "file": "casos-con-voz/v02/v02-es-horizontal.mp4", "src": "../videos/voz/v02-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1YyhbenP2f10mdgJ3Gd6Ze1yU5LSxy5G5", "dls": "1RJI2vKZ-GHUWjeqCGPII65MO-EKjzJbE", "file": "casos-con-voz/v02/v02-en-vertical.mp4", "src": "../videos/voz/v02-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1OYQ-qA7VlHj1U-TqZ--IFApfe7kmElD4", "dls": "1C0ALY5E3d0MpP28AuZ9YFI_8g_EZgwaz", "file": "casos-con-voz/v02/v02-en-horizontal.mp4", "src": "../videos/voz/v02-en-horizontal.mp4", "subs": true}}}, {"id": "v03", "t": "03 · El costo de un archivo que no podés buscar", "n": "Lo que ya pagaste y no podés usar. 36 s.", "v": {"es-vertical": {"dl": "1fOMHUOLCpIh-1b8Lx5jcCQNJfsnLqtzv", "dls": null, "file": "casos-con-voz/v03/v03-es-vertical.mp4", "src": "../videos/voz/v03-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1T3nRq5ucXy3H17N7_TV5bEPAtArXvR3s", "dls": null, "file": "casos-con-voz/v03/v03-es-horizontal.mp4", "src": "../videos/voz/v03-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "19XLh4B_sPbXCkSOBomPtk9OfR8yskcND", "dls": null, "file": "casos-con-voz/v03/v03-en-vertical.mp4", "src": "../videos/voz/v03-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1twcb6IFGx0GUAg54gflFrRt3G0BwkrT8", "dls": null, "file": "casos-con-voz/v03/v03-en-horizontal.mp4", "src": "../videos/voz/v03-en-horizontal.mp4", "subs": false}}}, {"id": "v04", "t": "04 · Hacé inteligente el archivo que ya tenés", "n": "Sin migración, sin duplicados. 45 s.", "v": {"es-vertical": {"dl": "1H8XUDCtnLEIUEsbhfMLSFbjeF8CEb4HF", "dls": "1Nc_6YblqzLbvN_whCb6ty8iJnbnJdVGO", "file": "casos-con-voz/v04/v04-es-vertical.mp4", "src": "../videos/voz/v04-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1bPHmfY_sQPRLUOT6FiJvzaBqlzw1fSe0", "dls": "13sichZ8R_N-INWH-j8LupOPelJ9iMYZw", "file": "casos-con-voz/v04/v04-es-horizontal.mp4", "src": "../videos/voz/v04-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1C-YJpqtnVtJrWj9LIs2hUH1l1XrauraJ", "dls": "1t6Ed_QZBroYGMuGkWjt0UvaaBZ2AaX5m", "file": "casos-con-voz/v04/v04-en-vertical.mp4", "src": "../videos/voz/v04-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1cqElK4QR5Nppqp4tC11ihA1aCGNOnCX8", "dls": "19Wwrpzs_MZwHu2sR_lR_XhjkXU8hOrxg", "file": "casos-con-voz/v04/v04-en-horizontal.mp4", "src": "../videos/voz/v04-en-horizontal.mp4", "subs": true}}}]}, {"g": "Los casos", "items": [{"id": "leyenda", "t": "La leyenda", "n": "Seis de la tarde, el homenaje de las ocho. 33 s.", "v": {"es-vertical": {"dl": "1gMdCFTkFDLRZguw8Cqsjya7HBuYr1d1D", "dls": "1mK3ItpevHutAPbwngQV17EtXji3fjhF2", "file": "casos-con-voz/leyenda/leyenda-es-vertical.mp4", "src": "../videos/voz/leyenda-es-vertical.mp4"}, "es-horizontal": {"dl": "1xR9LFIJhUPREAHZUsJeJTNVEcZmSf2px", "dls": "1SUPn4GWp-e9ytsPp8AQPQhJaZPp2Mwhv", "file": "casos-con-voz/leyenda/leyenda-es-horizontal.mp4", "src": "../videos/voz/leyenda-es-horizontal.mp4"}, "en-vertical": {"dl": "1XAUwQX6UbN3uKy6INIXLyHx2djbXfHDi", "dls": "1mGxydVDzqnLqaXV3yQL7VOo87jr_q3bS", "file": "casos-con-voz/leyenda/leyenda-en-vertical.mp4", "src": "../videos/voz/leyenda-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1KIHZenWt9EGU_xTm_GcB34M4uh0DPp5y", "dls": "1oitovOJ0uNs4qKiZxHWtAUz3XXHuUZ_p", "file": "casos-con-voz/leyenda/leyenda-en-horizontal.mp4", "src": "../videos/voz/leyenda-en-horizontal.mp4", "subs": true}}}, {"id": "abuela", "t": "La abuela", "n": "El pedido de 1998 para el cumpleaños 90. 39 s.", "v": {"es-vertical": {"dl": "1sNE6vNEM1zw1IIyMZAf7u0i6pYEhBEw3", "dls": null, "file": "casos-con-voz/abuela/abuela-es-vertical.mp4", "src": "../videos/voz/abuela-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1nwQyqMi3km07zGwUGkyTIhXqi_vyLTqd", "dls": null, "file": "casos-con-voz/abuela/abuela-es-horizontal.mp4", "src": "../videos/voz/abuela-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1In1QwnmMyc6ycfF2vaf3AeXFRfxnP9pP", "dls": null, "file": "casos-con-voz/abuela/abuela-en-vertical.mp4", "src": "../videos/voz/abuela-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1Nxu_awzh64RC6Rdrp-HUNVFOFlPMGR3E", "dls": null, "file": "casos-con-voz/abuela/abuela-en-horizontal.mp4", "src": "../videos/voz/abuela-en-horizontal.mp4", "subs": false}}}, {"id": "reels", "t": "Reels (el evento)", "n": "Para productoras: ¿cuál es tu estrategia? 45 s.", "v": {"es-vertical": {"dl": "1KZVHpeMZd47q8wEzOEog0BSVksRSkRdl", "dls": "1YspqgaGnkctWiKN9fBnm638Vf9511nQ_", "file": "casos-con-voz/reels/reels-es-vertical.mp4", "src": "../videos/voz/reels-es-vertical.mp4"}, "es-horizontal": {"dl": "1QXZknHHf_15xiZ1sxlqToToETuR3sKe9", "dls": "1Q91HiAURoluuNVbs9f7hzB1D62YKFDjP", "file": "casos-con-voz/reels/reels-es-horizontal.mp4", "src": "../videos/voz/reels-es-horizontal.mp4"}, "en-vertical": {"dl": "1WOvO3jVouBVsp9FH9p8s2Vq5Eypomklp", "dls": "1VkA26085YlhQZjecY4Vv_Nw_0sHPcdij", "file": "casos-con-voz/reels/reels-en-vertical.mp4", "src": "../videos/voz/reels-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1sGCu2uX21IjbS9IO5UduDqSK9WcGtNgr", "dls": "1QifnEWeZta_BJtXsVqJrhOMhJC5CyFjR", "file": "casos-con-voz/reels/reels-en-horizontal.mp4", "src": "../videos/voz/reels-en-horizontal.mp4", "subs": true}}}, {"id": "contradiccion", "t": "La contradicción", "n": "«Nunca apoyé esa ley.» ¿Seguro? 33 s.", "v": {"es-vertical": {"dl": "1Gi0Zs2U-uZjZKzTUL_UPh2Rc7o5lp-u3", "dls": "12zgHgGrmc7Pde7ze4LTNvK1Spo5Yyp1z", "file": "casos-con-voz/contradiccion/contradiccion-es-vertical.mp4", "src": "../videos/voz/contradiccion-es-vertical.mp4"}, "es-horizontal": {"dl": "1GhMViBMAD0CSsU-tb-s89VGskLADHJ3f", "dls": "19DaMR0kKIScLeDoIpxYFo1cQB-Cj_pSL", "file": "casos-con-voz/contradiccion/contradiccion-es-horizontal.mp4", "src": "../videos/voz/contradiccion-es-horizontal.mp4"}, "en-vertical": {"dl": "1WQgbteKrNOMNEvunHarPl1SZOOZf6euT", "dls": null, "file": "casos-con-voz/contradiccion/contradiccion-en-vertical.mp4", "src": "../videos/voz/contradiccion-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1Ogh6l42FnDiTey1PeMW2-yvvZPI0QOn2", "dls": null, "file": "casos-con-voz/contradiccion/contradiccion-en-horizontal.mp4", "src": "../videos/voz/contradiccion-en-horizontal.mp4", "subs": false}}}, {"id": "universidad", "t": "La universidad", "n": "Para decanos: cada clase grabada, parte de la biblioteca. 49 s.", "v": {"es-vertical": {"dl": "1R8FGK-SdoU5xhw8qT9KVQUBs1AkZHhUW", "dls": null, "file": "casos-con-voz/universidad/universidad-es-vertical.mp4", "src": "../videos/voz/universidad-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1fyGEBxsHyv_KE1wLus3-jph7S5vC8XVN", "dls": null, "file": "casos-con-voz/universidad/universidad-es-horizontal.mp4", "src": "../videos/voz/universidad-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1W_8MD5EplJpvUxOsxzg9sQYH-JE3N6rx", "dls": null, "file": "casos-con-voz/universidad/universidad-en-vertical.mp4", "src": "../videos/voz/universidad-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "16VO9p6QDp-PM9T8NFIeq5rOFeFbLc46W", "dls": null, "file": "casos-con-voz/universidad/universidad-en-horizontal.mp4", "src": "../videos/voz/universidad-en-horizontal.mp4", "subs": false}}}, {"id": "congreso", "t": "El congreso", "n": "Veinte minutos para el cierre y una diputada que dijo otra cosa. 31 s.", "v": {"es-vertical": {"dl": "1jKzZEwA_IigkpYEK3zcVmdFh0CxApILZ", "dls": "1EvRJLySlKhDY7KTEPHBBl5rMKWGWrQwI", "file": "casos-con-voz/congreso/congreso-es-vertical.mp4", "src": "../videos/voz/congreso-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1JNIw7t8qZ_O4UhaxUleMojn2E130Gv4Y", "dls": "1RcKAkj8scNt03QGG1LzDEyFHPZvuTYHX", "file": "casos-con-voz/congreso/congreso-es-horizontal.mp4", "src": "../videos/voz/congreso-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1yB5ACxuLhqfTuVgoTlcsinjsMNciR6ev", "dls": "1obdD5BzndDjZ5sRZRjnEnpBplIFjv0MK", "file": "casos-con-voz/congreso/congreso-en-vertical.mp4", "src": "../videos/voz/congreso-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1QdaF4Yo-yhgl5_06cShJgmGe-sK_Y4jW", "dls": "16w0ll09qcGYWo80B0Rj0HmpoYrvjv7vC", "file": "casos-con-voz/congreso/congreso-en-horizontal.mp4", "src": "../videos/voz/congreso-en-horizontal.mp4", "subs": true}}}, {"id": "primero", "t": "¿Quién lo dijo primero?", "n": "El origen de una frase que es tendencia. 31 s.", "v": {"es-vertical": {"dl": "1Qi-UfoiCLoOdOxqr8J7Yut8yLOacIK6p", "dls": null, "file": "casos-con-voz/primero/primero-es-vertical.mp4", "src": "../videos/voz/primero-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1pF41b26YEPIF2eBwBptpFLTwIm9P8s_o", "dls": null, "file": "casos-con-voz/primero/primero-es-horizontal.mp4", "src": "../videos/voz/primero-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1Thtt9n3gvxQw5luduXaL2rZBiqa4qYIr", "dls": null, "file": "casos-con-voz/primero/primero-en-vertical.mp4", "src": "../videos/voz/primero-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1HdONRIbEOdyGKjCi1H-_LyQQWEuC-W3p", "dls": null, "file": "casos-con-voz/primero/primero-en-horizontal.mp4", "src": "../videos/voz/primero-en-horizontal.mp4", "subs": false}}}, {"id": "abogados", "t": "Lo que se dijo de tu cliente", "n": "La audiencia es el lunes: 38 menciones ordenadas por riesgo. 34 s.", "v": {"es-vertical": {"dl": "1UMRwO30ru0kukv8VfEzcqs3BOXLp8WfH", "dls": "1rbI9BUeHNVLS7KNKUBx9kOAa3EP41biB", "file": "casos-con-voz/abogados/abogados-es-vertical.mp4", "src": "../videos/voz/abogados-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1gTUcWbBxrohOom54qfmFxMwsSUa2HkMi", "dls": "1ZAV2ebB0FtQCEXg2CymHgQFIstVcF5ZQ", "file": "casos-con-voz/abogados/abogados-es-horizontal.mp4", "src": "../videos/voz/abogados-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1JcktqOo_HLxN6l-N2BqSsgZT_GMFLgQH", "dls": null, "file": "casos-con-voz/abogados/abogados-en-vertical.mp4", "src": "../videos/voz/abogados-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1qE6tdOcy6DegkMd_cU2vVCvNR_DqF1E1", "dls": null, "file": "casos-con-voz/abogados/abogados-en-horizontal.mp4", "src": "../videos/voz/abogados-en-horizontal.mp4", "subs": false}}}, {"id": "difamacion", "t": "«Es un ladrón»", "n": "Quién lo dijo, dónde y cuándo, al segundo. 28 s.", "v": {"es-vertical": {"dl": "1K2bdV-k_NHr5JdHS2q_8myL_zyHjKZad", "dls": "1DKbkJNMqfQR_iW7oR35l1wAjhW23hUAG", "file": "casos-con-voz/difamacion/difamacion-es-vertical.mp4", "src": "../videos/voz/difamacion-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1ufHH3HurojqVQy56Qj9piFHvqAqTY98d", "dls": "1_jvP7Krv6byNqiBQ3R5ybk5HEvI9uHnh", "file": "casos-con-voz/difamacion/difamacion-es-horizontal.mp4", "src": "../videos/voz/difamacion-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1e67MY3uLG-qzfTRrUwAextVCGrP3ogh1", "dls": null, "file": "casos-con-voz/difamacion/difamacion-en-vertical.mp4", "src": "../videos/voz/difamacion-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "18SHEWg5WSQXbM-OpBdi2-z5vV2K-ScYL", "dls": null, "file": "casos-con-voz/difamacion/difamacion-en-horizontal.mp4", "src": "../videos/voz/difamacion-en-horizontal.mp4", "subs": false}}}, {"id": "despedida", "t": "El homenaje", "n": "Lo que antes llevaba meses, ahora es una pregunta. 43 s.", "v": {"es-vertical": {"dl": "1hMSHZczKsvE0dcabFNXEeYDnieHsc6xZ", "dls": "1djGzUkCbY84nlN9VydFjNer6pREKGbxz", "file": "casos-con-voz/despedida/despedida-es-vertical.mp4", "src": "../videos/voz/despedida-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1e0sQ2TSK2PNO6f8kGyNb6YZwlvEr1eIu", "dls": "1gghqwrROLk62hlIffENYKFogOoRLaWzd", "file": "casos-con-voz/despedida/despedida-es-horizontal.mp4", "src": "../videos/voz/despedida-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1KwgG27pASaf0fGdRPyX_Jdt3YWiYrH-f", "dls": null, "file": "casos-con-voz/despedida/despedida-en-vertical.mp4", "src": "../videos/voz/despedida-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1MIV5yGM5fvuhLxE14kr_OhRlJtyEngoK", "dls": null, "file": "casos-con-voz/despedida/despedida-en-horizontal.mp4", "src": "../videos/voz/despedida-en-horizontal.mp4", "subs": false}}}]}, {"g": "Más casos", "items": [{"id": "documental", "t": "Documentalista", "n": "Las imágenes de una década, en minutos. 30 s.", "v": {"es-vertical": {"dl": "1EcBcONmLwkm1TFTdV4CCFEtjkD5no7LD", "dls": "1wIX6bXLgNliBUE_0jaqv2sfU4STdh18n", "file": "casos-con-voz/documental/documental-es-vertical.mp4", "src": "../videos/voz/documental-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1AMWSJu8oZAPPBJogemish1aP-HNtWNCn", "dls": "15Xtyg93U499aVCy1axJ4_3X3l-rDqHT_", "file": "casos-con-voz/documental/documental-es-horizontal.mp4", "src": "../videos/voz/documental-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "12sxfJ-1mX8u0PYG9d-LTyzpLTHlnUoFB", "dls": null, "file": "casos-con-voz/documental/documental-en-vertical.mp4", "src": "../videos/voz/documental-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1TbF9qtWddh3W2tylBbgs7cxBLe2_XKg9", "dls": null, "file": "casos-con-voz/documental/documental-en-horizontal.mp4", "src": "../videos/voz/documental-en-horizontal.mp4", "subs": false}}}, {"id": "agencia", "t": "Agencia de noticias", "n": "Lo que antes se perdía por no encontrarlo, ahora se vende. 33 s.", "v": {"es-vertical": {"dl": "1HD_Dvh7SJ2KM_OrvPJnKsGUwUPn9GeEz", "dls": "1C6yTJ9vpE0s4WqRJJd25-zkK8WKv4JDl", "file": "casos-con-voz/agencia/agencia-es-vertical.mp4", "src": "../videos/voz/agencia-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "12qKbigM-1LEF5JZu5vmM8ryO4WptiTEM", "dls": "1Jdgl7EK3j_TIbToBnktksmIEtXan-jNR", "file": "casos-con-voz/agencia/agencia-es-horizontal.mp4", "src": "../videos/voz/agencia-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1xVBVgvBAgiHVEQ30Boxs2gGX88SryPR5", "dls": "176QT6xRHDFR_m9yfA9yJW8Jk8Qw0aBHf", "file": "casos-con-voz/agencia/agencia-en-vertical.mp4", "src": "../videos/voz/agencia-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "10NjhvVDBwagnTRh_1svH52R9oOnj6Rus", "dls": "1IYyAGZwpLWf5-HUn2nBmsrmbTu_pVOyA", "file": "casos-con-voz/agencia/agencia-en-horizontal.mp4", "src": "../videos/voz/agencia-en-horizontal.mp4", "subs": true}}}, {"id": "streaming", "t": "Plataforma de streaming", "n": "Cada escena en la que la protagonista se ríe. 30 s.", "v": {"es-vertical": {"dl": "1uuTxdasx9vSj7Fml5wC-yd0QNqfx1Dgf", "dls": null, "file": "casos-con-voz/streaming/streaming-es-vertical.mp4", "src": "../videos/voz/streaming-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1Jc7SDlBf8Ew-8NInJ4CXmzbabeuGCe79", "dls": null, "file": "casos-con-voz/streaming/streaming-es-horizontal.mp4", "src": "../videos/voz/streaming-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1O4CPisdkgHCobv2FXGNvu604y3MgYKi2", "dls": null, "file": "casos-con-voz/streaming/streaming-en-vertical.mp4", "src": "../videos/voz/streaming-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1Mc1ag49xvQmHzIbkVRZWy7ap0NWCE_dd", "dls": null, "file": "casos-con-voz/streaming/streaming-en-horizontal.mp4", "src": "../videos/voz/streaming-en-horizontal.mp4", "subs": false}}}, {"id": "club", "t": "Club de fútbol", "n": "El centenario se arma en días, no en meses. 31 s.", "v": {"es-vertical": {"dl": "1XNyzDEBYt9tjmghSDuALv3y8zyl1PkzM", "dls": "1ra2cbE3xRLDb9hGPv0ZSFbeLJT6VTTVd", "file": "casos-con-voz/club/club-es-vertical.mp4", "src": "../videos/voz/club-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "126y2tcAN-wsSEgNJlmfHEcUp_0kmEjeL", "dls": "1sCB3r0SYWM8FnY83ZxzzbTHe3hrZ5qSS", "file": "casos-con-voz/club/club-es-horizontal.mp4", "src": "../videos/voz/club-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1AcchioaYi33bX36ZDNGmEhrwII39rlRW", "dls": null, "file": "casos-con-voz/club/club-en-vertical.mp4", "src": "../videos/voz/club-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1CjHvDm5c6BoGZDsyR4J2mfF7JjIbx53h", "dls": null, "file": "casos-con-voz/club/club-en-horizontal.mp4", "src": "../videos/voz/club-en-horizontal.mp4", "subs": false}}}, {"id": "escenario", "t": "Teatro, festival o conciertos", "n": "Cada vez que la banda tocó su canción más pedida. 25 s.", "v": {"es-vertical": {"dl": "1OcyblIaWNCrfBKiOqRUPE7Lxd1WbCJA1", "dls": "14L3jvz2NdKCLNoKbSRZa5VuHCEnAkXQv", "file": "casos-con-voz/escenario/escenario-es-vertical.mp4", "src": "../videos/voz/escenario-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1y3M1-UIM1OpEhEW3SA7_UdoA_u1eifbi", "dls": "10wpMNUKbSOmtj9gDkZphzWvYwj3YmSNP", "file": "casos-con-voz/escenario/escenario-es-horizontal.mp4", "src": "../videos/voz/escenario-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1AAPKcVWAVN0tavjsXRv1GlSZ7HH0bJ3B", "dls": null, "file": "casos-con-voz/escenario/escenario-en-vertical.mp4", "src": "../videos/voz/escenario-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1GsPQ65R8e4l1NGjuANhDDnZ-6oOp3gFU", "dls": null, "file": "casos-con-voz/escenario/escenario-en-horizontal.mp4", "src": "../videos/voz/escenario-en-horizontal.mp4", "subs": false}}}, {"id": "museo", "t": "Museo o filmoteca", "n": "El patrimonio vuelve a estar a mano. 31 s.", "v": {"es-vertical": {"dl": "1Z-BlyrTsZ1mUc0G_Kd98loG383IkdQxV", "dls": null, "file": "casos-con-voz/museo/museo-es-vertical.mp4", "src": "../videos/voz/museo-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1jolj_sgcazkTRFTXikTNZyDSlYTOnlaq", "dls": null, "file": "casos-con-voz/museo/museo-es-horizontal.mp4", "src": "../videos/voz/museo-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1iyq8-oyy7HtW5f0N19yT-O4ErPaSryK3", "dls": null, "file": "casos-con-voz/museo/museo-en-vertical.mp4", "src": "../videos/voz/museo-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "11iiCF31dTgD7kdi00UKXAkpG_djXnchS", "dls": null, "file": "casos-con-voz/museo/museo-en-horizontal.mp4", "src": "../videos/voz/museo-en-horizontal.mp4", "subs": false}}}, {"id": "empresa", "t": "Empresa (uso interno)", "n": "Lo que tu empresa ya explicó una vez. 33 s.", "v": {"es-vertical": {"dl": "1qCNMJ9g0hLq2Mup6_ijP4bbFbl6uBmiX", "dls": "1eFAPB751EFQ9jhGLPBNxcGIjWmEx_Mh5", "file": "casos-con-voz/empresa/empresa-es-vertical.mp4", "src": "../videos/voz/empresa-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1pEebFBALRPTZCNyWDhLnZ4F3kCBb3tSj", "dls": "1JoSnmLDvUnwEz761mo_gg-OKazEUiwGR", "file": "casos-con-voz/empresa/empresa-es-horizontal.mp4", "src": "../videos/voz/empresa-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1HK8uu6oaq5WvLssHIg38XoWUbTzVaSuq", "dls": null, "file": "casos-con-voz/empresa/empresa-en-vertical.mp4", "src": "../videos/voz/empresa-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1HPMffkk1LcmCOw-SxKJ7tRHsxL_d_UB8", "dls": null, "file": "casos-con-voz/empresa/empresa-en-horizontal.mp4", "src": "../videos/voz/empresa-en-horizontal.mp4", "subs": false}}}, {"id": "idioma", "t": "Tu archivo en otro idioma", "n": "Preguntan en inglés a un archivo que habla español. 24 s.", "v": {"es-vertical": {"dl": "1S5aaOMClXZn5ok-2EP4T3Wyla5NbiCKY", "dls": null, "file": "casos-con-voz/idioma/idioma-es-vertical.mp4", "src": "../videos/voz/idioma-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1_bssg5X-OHVys7sybY6stmtgOFsUr74m", "dls": null, "file": "casos-con-voz/idioma/idioma-es-horizontal.mp4", "src": "../videos/voz/idioma-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1mzlo1BMcXUWUZMVTwH-VORRojIsc3COk", "dls": null, "file": "casos-con-voz/idioma/idioma-en-vertical.mp4", "src": "../videos/voz/idioma-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1pJ4TWqUCHsSp8PXvU7G-zHWYMc2uPE1e", "dls": null, "file": "casos-con-voz/idioma/idioma-en-horizontal.mp4", "src": "../videos/voz/idioma-en-horizontal.mp4", "subs": false}}}, {"id": "comunicacion", "t": "Consultora de comunicación", "n": "¿Qué se dijo de nosotros este año? 26 s.", "v": {"es-vertical": {"dl": "1I7q6XYZpPeXLWH3S_WP-3FphaaVToGzK", "dls": "1zvdqkPhqAJoO0yBiXn4nY1UMb4uSr3jI", "file": "casos-con-voz/comunicacion/comunicacion-es-vertical.mp4", "src": "../videos/voz/comunicacion-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1gV7DvhzQhgHKX-svza9XJfOa20KXXFyn", "dls": "1S4K55iWTPJPnSQAb_K7xLIAZGs9-8zBU", "file": "casos-con-voz/comunicacion/comunicacion-es-horizontal.mp4", "src": "../videos/voz/comunicacion-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1_8bslalJZClgxbIvO8Y0wD5PkbEWbtpM", "dls": null, "file": "casos-con-voz/comunicacion/comunicacion-en-vertical.mp4", "src": "../videos/voz/comunicacion-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1_n9aVFbrlmXvn4Us-VHnn0qN0YhC6Yg_", "dls": null, "file": "casos-con-voz/comunicacion/comunicacion-en-horizontal.mp4", "src": "../videos/voz/comunicacion-en-horizontal.mp4", "subs": false}}}, {"id": "famoso", "t": "El famoso y su manager", "n": "Sesenta años de trayectoria, listos para recortar. 33 s.", "v": {"es-vertical": {"dl": "18b0WuU-APPlP3O3oixh58qKCmKTFgVKD", "dls": "1IDOEdKh97z052hSTepilaE7-N551XrVg", "file": "casos-con-voz/famoso/famoso-es-vertical.mp4", "src": "../videos/voz/famoso-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1qLuk3tRnd6Q5fd7wSnWRXcOkH2q5QK8F", "dls": "1hvhh4bhxS62HU41Y62Rx2nYkfFD1YirA", "file": "casos-con-voz/famoso/famoso-es-horizontal.mp4", "src": "../videos/voz/famoso-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1TwV8N4RTvyCHGnyNXbwQh8Df59imuYqX", "dls": null, "file": "casos-con-voz/famoso/famoso-en-vertical.mp4", "src": "../videos/voz/famoso-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "18uZRXQM7Fl4BN5cnzG86xwWXQjjXG4cO", "dls": null, "file": "casos-con-voz/famoso/famoso-en-horizontal.mp4", "src": "../videos/voz/famoso-en-horizontal.mp4", "subs": false}}}]}, {"g": "Filosofía", "items": [{"id": "filo-buscar-preguntar", "t": "Buscar vs. preguntar", "n": "Dejamos de buscar. Empezamos a preguntar. 40 s.", "v": {"es-vertical": {"dl": "1ESvJH2M2sdpw6z66oaUGMzueM67anNhl", "dls": "1GvyFT6Cp-chQrucgRKTb4zfFGOVTOrtv", "file": "casos-con-voz/filo-buscar-preguntar/filo-buscar-preguntar-es-vertical.mp4", "src": "../videos/voz/filo-buscar-preguntar-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1rfCnA1HebSUHpKCR25qg0V_AfBcVw1jA", "dls": "1K_e0JvB3B4FN5z8O0WKwvJxaOgSIHL_G", "file": "casos-con-voz/filo-buscar-preguntar/filo-buscar-preguntar-es-horizontal.mp4", "src": "../videos/voz/filo-buscar-preguntar-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1Hl-AXai4KA2qEMvtRSMm6aiSPCdLKqLE", "dls": null, "file": "casos-con-voz/filo-buscar-preguntar/filo-buscar-preguntar-en-vertical.mp4", "src": "../videos/voz/filo-buscar-preguntar-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "17AE43ZoC3DpsVOuYmpvQcfTefFdOg5e7", "dls": null, "file": "casos-con-voz/filo-buscar-preguntar/filo-buscar-preguntar-en-horizontal.mp4", "src": "../videos/voz/filo-buscar-preguntar-en-horizontal.mp4", "subs": false}}}, {"id": "filo-sumamos", "t": "Sumamos, no reemplazamos", "n": "No te sacamos nada. Te sumamos algo. 54 s.", "v": {"es-vertical": {"dl": "1mSGlhvq132KqFu4mF6cwCQLCyHT-x7hE", "dls": "1hRcptkj73b-x8m9LuLCdj8IDTMsziOOf", "file": "casos-con-voz/filo-sumamos/filo-sumamos-es-vertical.mp4", "src": "../videos/voz/filo-sumamos-es-vertical.mp4", "subs": true}, "es-horizontal": {"dl": "1jlQWvw6hA067moyXGD7aqDksMvWQAsBV", "dls": "1bKB17NiLvv2ieM6S8wVxYExiMfTTrOMK", "file": "casos-con-voz/filo-sumamos/filo-sumamos-es-horizontal.mp4", "src": "../videos/voz/filo-sumamos-es-horizontal.mp4", "subs": true}, "en-vertical": {"dl": "1V3PCTlnfLx_hXFshqbakkC_GJDo4oi9O", "dls": "1wBg9h6somHwjQj9oJv2knmhHEt4Hu2TG", "file": "casos-con-voz/filo-sumamos/filo-sumamos-en-vertical.mp4", "src": "../videos/voz/filo-sumamos-en-vertical.mp4", "subs": true}, "en-horizontal": {"dl": "1a22d0FHpbP4PKuhI7Serzhg8archpjRx", "dls": "14550tWMQYwq9naBEhP52DDxO6qiAFA0J", "file": "casos-con-voz/filo-sumamos/filo-sumamos-en-horizontal.mp4", "src": "../videos/voz/filo-sumamos-en-horizontal.mp4", "subs": true}}}, {"id": "filo-sigue-ahi", "t": "Todo lo que grabaste sigue ahí", "n": "Y ya está pagado. 29 s.", "v": {"es-vertical": {"dl": "14Ox88wEysKhy7MJBpM4iy2alX3PbGKhQ", "dls": null, "file": "casos-con-voz/filo-sigue-ahi/filo-sigue-ahi-es-vertical.mp4", "src": "../videos/voz/filo-sigue-ahi-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1GS6q4AipatTka4QQTXcrWPBCjIqlIISy", "dls": null, "file": "casos-con-voz/filo-sigue-ahi/filo-sigue-ahi-es-horizontal.mp4", "src": "../videos/voz/filo-sigue-ahi-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1N7P5yNGuMT8qcfuOBW3Cc9socqDN4TCq", "dls": null, "file": "casos-con-voz/filo-sigue-ahi/filo-sigue-ahi-en-vertical.mp4", "src": "../videos/voz/filo-sigue-ahi-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1pikGYkreT0bLtHFr6m04LF8kntofqFYM", "dls": null, "file": "casos-con-voz/filo-sigue-ahi/filo-sigue-ahi-en-horizontal.mp4", "src": "../videos/voz/filo-sigue-ahi-en-horizontal.mp4", "subs": false}}}, {"id": "filo-colega", "t": "El colega que vio todo", "n": "Lo que sabe tu archivo deja de depender de una sola persona. 40 s.", "v": {"es-vertical": {"dl": "1ggoLq6m9JdWT2a3-RMGSkv-5jlvQo45w", "dls": null, "file": "casos-con-voz/filo-colega/filo-colega-es-vertical.mp4", "src": "../videos/voz/filo-colega-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1lwc8bZdQ31CRLN23eh6kKMU92FVLfoqY", "dls": null, "file": "casos-con-voz/filo-colega/filo-colega-es-horizontal.mp4", "src": "../videos/voz/filo-colega-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1pRN0D5jDpBs0ayg3R3BQkP9MJqB6OX-d", "dls": null, "file": "casos-con-voz/filo-colega/filo-colega-en-vertical.mp4", "src": "../videos/voz/filo-colega-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1OmXI46jFf1XsetyOtpb0Wj3xWxQ-1206", "dls": null, "file": "casos-con-voz/filo-colega/filo-colega-en-horizontal.mp4", "src": "../videos/voz/filo-colega-en-horizontal.mp4", "subs": false}}}, {"id": "filo-materia-prima", "t": "Tu archivo es materia prima", "n": "El contenido de mañana ya está grabado. 30 s.", "v": {"es-vertical": {"dl": "1tiOF5Dh_OMqXLW7dJI0fKtv1J6Tp9noi", "dls": null, "file": "casos-con-voz/filo-materia-prima/filo-materia-prima-es-vertical.mp4", "src": "../videos/voz/filo-materia-prima-es-vertical.mp4", "subs": false}, "es-horizontal": {"dl": "1zxyIV5OAQIomywKX6gAiJlIOHf_pG2kE", "dls": null, "file": "casos-con-voz/filo-materia-prima/filo-materia-prima-es-horizontal.mp4", "src": "../videos/voz/filo-materia-prima-es-horizontal.mp4", "subs": false}, "en-vertical": {"dl": "1LrzEtyRbR-2AvPe-zz5u_YCqBprTNAkA", "dls": null, "file": "casos-con-voz/filo-materia-prima/filo-materia-prima-en-vertical.mp4", "src": "../videos/voz/filo-materia-prima-en-vertical.mp4", "subs": false}, "en-horizontal": {"dl": "1b4MMnqtn7zyqgdtEw8_Eh-8xiK36H9e2", "dls": null, "file": "casos-con-voz/filo-materia-prima/filo-materia-prima-en-horizontal.mp4", "src": "../videos/voz/filo-materia-prima-en-horizontal.mp4", "subs": false}}}]}];
+document.querySelectorAll(".cfilter button").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".cfilter button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  document.querySelectorAll("#claims .claim").forEach(c => { c.hidden = b.dataset.f !== "all" && c.dataset.st !== b.dataset.f; });
+  document.querySelectorAll("#claims .theme").forEach(h => { let n = h.nextElementSibling, any = false; while (n && !n.classList.contains("theme")) { if (!n.hidden) any = true; n = n.nextElementSibling; } h.hidden = !any; });
+}));
+document.querySelectorAll(".vchip").forEach(b => b.addEventListener("click", () => {
+  showTab("voz");
+  const t = document.getElementById("v-" + b.dataset.go);
+  if (t) t.scrollIntoView({ block: "center" });
+}));
+const DL = "https://drive.google.com/uc?export=download&id=";
+const VKEYS = [["es","vertical","ES · Celu"],["es","horizontal","ES · Compu"],["en","vertical","EN · Celu"],["en","horizontal","EN · Compu"]];
+// ---- feedback: like / dislike + comment per video, kept in this browser, sent by mail ----
+let FB = {};
+try { FB = JSON.parse(localStorage.getItem("videus-puntajes") || "{}"); } catch (e) {}
+const fbSave = () => { try { localStorage.setItem("videus-puntajes", JSON.stringify(FB)); } catch (e) {} fbCount(); };
+const fbOrder = [];
+function fbCount() {
+  const n = fbOrder.filter(it => FB[it.id] && (FB[it.id].v || FB[it.id].q)).length;
+  const c = document.getElementById("fb-count");
+  if (c) c.textContent = n ? `Puntuaste ${n} de ${fbOrder.length} videos.` : "Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.";
+  if (!document.getElementById("fb-panel").hidden) fbCompose();
+}
+function fbBlock(it, card) {
+  fbOrder.push(it);
+  const st = FB[it.id] || (FB[it.id] = { v: "", c: "", q: "" });
+  const nums = el("div", { class: "fb-nums", role: "group", "aria-label": "Puntaje del 1 al 10 para " + it.t });
+  const btns = [];
+  for (let n = 1; n <= 10; n++) {
+    const b = el("button", { type: "button", class: "fb-n", id: "fb-" + n + "-" + it.id, text: String(n), "aria-label": n + " de 10" });
+    b.addEventListener("click", () => { st.v = st.v === n ? "" : n; paint(); fbSave(); });
+    btns.push(b); nums.append(b);
+  }
+  const si = el("button", { type: "button", class: "fb-q-btn si", id: "fb-si-" + it.id, text: "✓", "aria-label": "Me gusta: " + it.t });
+  const no = el("button", { type: "button", class: "fb-q-btn no", id: "fb-no-" + it.id, text: "✕", "aria-label": "No me gusta: " + it.t });
+  const ta = el("textarea", { id: "fb-c-" + it.id, "aria-label": "Comentario sobre " + it.t });
+  ta.value = st.c || "";
+  function paint() {
+    btns.forEach((b, i) => b.setAttribute("aria-pressed", String(st.v === i + 1)));
+    si.setAttribute("aria-pressed", String(st.q === "si")); no.setAttribute("aria-pressed", String(st.q === "no"));
+    const bad = st.q === "no" || (!st.q && !!st.v && st.v <= 4), good = st.q === "si" || (!st.q && st.v >= 8);
+    card.classList.toggle("liked", good); card.classList.toggle("disliked", bad);
+    ta.hidden = !st.v && !st.q;
+    ta.placeholder = st.q === "no" || (st.v && st.v < 8) ? "¿Qué le falta? (por ejemplo: el ritmo, una frase, una imagen)" : "Comentario opcional";
+  }
+  si.addEventListener("click", () => { st.q = st.q === "si" ? "" : "si"; paint(); fbSave(); });
+  no.addEventListener("click", () => { st.q = st.q === "no" ? "" : "no"; paint(); fbSave(); });
+  ta.addEventListener("input", () => { st.c = ta.value; fbSave(); });
+  paint();
+  const head = el("div", { class: "fb-head" }, [el("span", { class: "fb-q", text: "Puntaje del 1 al 10, o solo ✓ / ✕" }), el("span", { class: "fb-quick" }, [si, no])]);
+  return el("div", { class: "fb" }, [head, nums, ta]);
+}
+function fbCompose() {
+  const base = location.origin + location.pathname;
+  const name = document.getElementById("fb-name").value.trim();
+  const d = new Date();
+  const lines = [`Feedback de los videos de ViDeus${name ? " · " + name : ""} · ${d.toLocaleDateString("es-AR")}`, ""];
+  const picks = typeof PICKS !== "undefined" ? PICKS : [];
+  const all = fbOrder.map((it, i) => [it, i, FB[it.id] || {}]);
+  const rated = all.filter(r => r[2].v);
+  const seen = all.filter(r => r[2].v || r[2].q);
+  const mark = st => st.q === "si" ? " · ✓ le gustó" : st.q === "no" ? " · ✕ no le gustó" : "";
+  const avg = rated.length ? (rated.reduce((t, r) => t + r[2].v, 0) / rated.length).toFixed(1).replace(".", ",") : "0";
+  lines.push(`Opinó sobre: ${seen.length} de ${all.length} · Con puntaje: ${rated.length} · Promedio: ${avg} · ✓ ${all.filter(r => r[2].q === "si").length} · ✕ ${all.filter(r => r[2].q === "no").length}`, "");
+  function section(title, rows) {
+    const n = rows.filter(r => r[2].v || r[2].q).length;
+    lines.push(`== ${title} · opinó sobre ${n} de ${rows.length} ==`);
+    const rank = st => st.v || (st.q === "si" ? 0.6 : st.q === "no" ? 0.4 : 0);
+    rows.slice().sort((x, y) => rank(y[2]) - rank(x[2]) || x[1] - y[1]).forEach(([it, i, st]) => {
+      lines.push(`${st.v || 0}/10${mark(st)} · ${it.t}${st.v ? "" : st.q ? " (sin número)" : " (sin puntaje)"}`);
+      if (st.c && st.c.trim()) lines.push(`   Comentario: ${st.c.trim()}`);
+      if (st.v || st.q) lines.push(`   Link: ${base}#v-${it.id}`);
+    });
+    lines.push("");
+  }
+  section("SELECCIÓN FINAL", all.filter(r => picks.includes(r[0].id)));
+  section("TODOS LOS DEMÁS VIDEOS", all.filter(r => !picks.includes(r[0].id)));
+  const text = lines.join(String.fromCharCode(10));
+  document.getElementById("fb-text").value = text;
+  document.getElementById("fb-mail").href = "mailto:camussisofia@gmail.com?subject=" + encodeURIComponent("Feedback videos ViDeus" + (name ? " · " + name : "")) + "&body=" + encodeURIComponent(text);
+  return text;
+}
+document.getElementById("fb-send").addEventListener("click", () => {
+  showTab("voz");
+  const p = document.getElementById("fb-panel");
+  p.hidden = false; fbCompose(); p.scrollIntoView({ block: "start" });
+});
+document.getElementById("fb-name").addEventListener("input", fbCompose);
+document.getElementById("fb-copy").addEventListener("click", () => {
+  const t = document.getElementById("fb-text"), msg = document.getElementById("fb-msg");
+  const ok = () => { msg.textContent = "Copiado. Pegalo en un mail a camussisofia@gmail.com."; };
+  const manual = () => { t.focus(); t.select(); msg.textContent = "Quedó seleccionado: copialo con Ctrl+C o Cmd+C."; };
+  try { navigator.clipboard.writeText(t.value).then(ok, manual); } catch (e) { manual(); }
+});
+const vozBox = document.getElementById("voz");
+VOZ.forEach(grp => {
+  grp.items = grp.items.filter(it => it.v["es-vertical"] && it.v["es-horizontal"]);
+  if (!grp.items.length) return;
+  const sec = el("section", { class: "series" }, [el("h2", { text: grp.g })]);
+  const grid = el("div", { class: "iters" });
+  grp.items.forEach(it => {
+    const have = VKEYS.filter(([l, f]) => it.v[l + "-" + f]);
+    const head = el("div", { class: "iter-head" }, [el("b", { text: it.t })]);
+    const card = el("div", { class: "iter", id: "v-" + it.id }, [head]);
+    const chips = el("div", { class: "versions", role: "group", "aria-label": "Versión" });
+    card.append(chips);
+    if (!have.length) {
+      VKEYS.forEach(([l, f, lab]) => chips.append(el("button", { type: "button", class: "chip", disabled: "", text: lab })));
+      card.append(el("div", { class: "pending-box", text: "Pendiente: todavía no está renderizado." }), el("p", { text: it.n }));
+      grid.append(card); return;
+    }
+    const screen = el("div", { class: "screen v" });
+    const video = el("video", { controls: "", playsinline: "", preload: "none" });
+    screen.append(video);
+    const dl = el("a", { class: "dl", target: "_blank", rel: "noopener" });
+    const dls = el("a", { class: "dl alt", target: "_blank", rel: "noopener", text: "Con subtítulos" });
+    const file = el("div", { class: "file" });
+    let cur = have[0][0] + "-" + have[0][1];
+    const btns = VKEYS.map(([l, f, lab]) => {
+      const k = l + "-" + f;
+      const b = el("button", { type: "button", class: "chip", text: it.v[k] ? lab : lab + " · en camino" });
+      if (!it.v[k]) b.setAttribute("disabled", ""); else b.addEventListener("click", () => { cur = k; render(); });
+      chips.append(b); return [b, k];
+    });
+    function render() {
+      const e = it.v[cur];
+      btns.forEach(([b, k]) => b.setAttribute("aria-pressed", String(k === cur)));
+      screen.className = "screen " + (cur.endsWith("vertical") ? "v" : "h");
+      if (!video.src.endsWith(e.src)) video.src = e.src;
+      dl.textContent = "↓ Descargar";
+      if (e.dl) { dl.href = DL + e.dl; dl.hidden = false; } else { dl.hidden = true; }
+      if (e.dls) { dls.href = DL + e.dls; dls.hidden = false; } else { dls.hidden = true; }
+      file.textContent = e.dl ? e.file : e.file + " (subiendo a Drive…)";
+    }
+    card.append(screen, el("div", { class: "dl-row" }, [dl, dls]), file, el("p", { text: it.n }), fbBlock(it, card));
+    render();
+    grid.append(card);
+  });
+  sec.append(grid); vozBox.append(sec);
+});
+fbCount();
+if (/^#v-/.test(location.hash)) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView({ block: "center" }); }
+
+// ---- "Selección final": filter the same cards down to the picks ----
+const PICKS = ["guru", "filo-sumamos", "v04", "v02", "congreso", "leyenda", "reels", "agencia"];
+function applyPicks(on) {
+  document.querySelectorAll("#voz .iter").forEach(c => { c.hidden = on && !PICKS.includes(c.id.slice(2)); });
+  Array.from(document.getElementById("voz").children).forEach(s => { s.hidden = on && !s.querySelector(".iter:not([hidden])"); });
+  const i = document.getElementById("sel-intro"), b = document.querySelector(".board-sum");
+  if (i) i.hidden = !on;
+  if (b) b.hidden = on;
+}
+(function () {
+  const ts = document.getElementById("tab-sel"), tv = document.getElementById("tab-voz");
+  if (!ts || !tv) return;
+  const base = showTab;
+  showTab = function (id) {
+    base(id === "sel" ? "voz" : id);
+    ts.setAttribute("aria-selected", String(id === "sel"));
+    tv.setAttribute("aria-selected", String(id === "voz"));
+    if (id === "sel" || id === "voz") applyPicks(id === "sel");
+  };
+  document.querySelectorAll("[data-own-tab]").forEach(b => b.addEventListener("click", () => showTab(b.id.slice(4))));
+  if (!location.hash || location.hash === "#sel") showTab("sel");
+  else if (/^#v-/.test(location.hash)) { showTab("voz"); const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView({ block: "center" }); }
+})();
+</script>
+</body></html>
