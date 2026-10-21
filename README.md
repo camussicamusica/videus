@@ -4,11 +4,14 @@ Live: https://camussicamusica.github.io/videus/
 
 | URL | What |
 |---|---|
-| `/` | latest version (currently V2) |
+| `/` | latest version (currently V3 · Final) |
 | `/v1/` | V1 (first release, 2026-10-03) |
-| `/v2/` | V2 permalink (same content as `/`) |
+| `/v2/` | V2 (2026-10-16, music + ViDeus Catalog end card) |
+| `/v3/` | V3 · Final permalink (same content as `/`) |
 
-Previews: V1 in `videos/voz/` (never move or rename), V2 in `videos/v2/`.
+Previews: V1 in `videos/voz/` (never move or rename), V2 in `videos/v2/`, V3 in `videos/v3/`.
+
+V3 page layout: Final first (Selección final / Todos), the older versions in the "Historial de iteraciones" side drawer (not the top version menu). Generator: `_render-work/yacimiento/v3-todos/site/gen_v3.py` (outside this repo).
 
 ## How to add a version (e.g. V3)
 1. Previews go in `videos/v3/`.

@@ -4,7 +4,8 @@
 (function () {
   var VERSIONS = [
     { id: "v1", path: "v1/" },
-    { id: "v2", path: "v2/" }   // <- add { id: "v3", path: "v3/" } after this line
+    { id: "v2", path: "v2/" },
+    { id: "v3", path: "v3/" }   // Final (2026-10-21). Add the next version after this line
   ];
   var s = document.currentScript, cur = s.getAttribute("data-current"), root = s.getAttribute("data-root") || "";
   var css = document.createElement("style");

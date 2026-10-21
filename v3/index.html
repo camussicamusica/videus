@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViDeus · Videos · Final</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a screening room. One row per case: the story on the left, the player on the right, version switches above the player. Deliberately dark, like the ViDeus interface. */
+:root {
+  color-scheme: dark;
+  --bg: #17191a;
+  --panel: #212426;
+  --line: #33383a;
+  --fg: #eef0ee;
+  --muted: #9aa3a3;
+  --orange: #e0623a;
+  --teal: #4f9aa6;
+  --old: #8a8f86;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); padding-block: 40px 80px; }
+
+header { display: grid; gap: 18px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(34px, 6vw, 58px); line-height: 1; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--orange); }
+.lede { color: var(--muted); max-width: 62ch; margin: 0; }
+.jump { color: var(--teal); }
+
+.controls { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+.ctl { display: flex; align-items: center; gap: 8px; }
+.ctl-label { font-family: var(--mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--panel); }
+.seg button { font: 500 14px var(--body); color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.seg button:focus-visible, .chip:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.close-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+.close-tag.new { background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--orange); }
+.close-tag.old { background: color-mix(in srgb, var(--old) 18%, transparent); color: var(--old); }
+.close-tag.voice { background: color-mix(in srgb, var(--teal) 20%, transparent); color: var(--teal); }
+
+.case { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 32px; padding-block: 36px; border-bottom: 1px solid var(--line); align-items: start; }
+.case-head { display: grid; gap: 12px; min-width: 0; }
+.case-num { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.case h2 { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; margin: 0; text-wrap: balance; }
+.case p { margin: 0; color: var(--muted); max-width: 52ch; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.file { font-family: var(--mono); font-size: 12px; color: var(--teal); word-break: break-all; }
+
+.player { display: grid; gap: 12px; min-width: 0; }
+.versions { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 500 13px var(--body); color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--fg); border-color: var(--orange); }
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip-group .ctl-label { min-width: 84px; }
+.screen { background: #000; border: 1px solid var(--line); border-radius: 10px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.screen video { display: block; max-width: 100%; background: #000; }
+.screen.v video { height: min(64vh, 620px); width: auto; aspect-ratio: 9 / 16; }
+.screen.h video { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+
+.explainer { border-top: 1px solid var(--line); }
+.explainer .case-num { color: var(--teal); }
+.script { margin: 0; padding-left: 22px; color: var(--muted); display: grid; gap: 4px; font-size: 14px; max-width: 56ch; }
+
+section.extra { padding-block: 36px; display: grid; gap: 20px; border-bottom: 1px solid var(--line); }
+section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; }
+.notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.notes ol, .notes ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 6px; }
+.notes h3 { font: 600 14px var(--body); margin: 0 0 8px; color: var(--fg); }
+.path { font-family: var(--mono); font-size: 13px; color: var(--teal); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--line); padding-top: 8px; }
+.tabs button { font: 600 15px var(--body); color: var(--muted); background: none; border: 0; border-bottom: 2px solid transparent; padding: 10px 14px; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--orange); }
+.tabs button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.series { display: grid; gap: 8px; padding-block: 32px; border-bottom: 1px solid var(--line); }
+.series h2 { font-family: var(--display); font-weight: 700; font-size: clamp(22px, 3vw, 28px); margin: 0; text-wrap: balance; }
+.series > p { margin: 0; color: var(--muted); max-width: 62ch; }
+.iters { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 20px; margin-top: 12px; }
+.iter { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.iter-head { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: 13px; color: var(--muted); }
+.iter-head b { color: var(--fg); font-weight: 600; }
+.iter .screen.v video { height: auto; width: 100%; max-width: 300px; }
+.iter p { margin: 0; font-size: 13px; color: var(--muted); }
+.close-tag.gone { background: color-mix(in srgb, #c94a4a 20%, transparent); color: #e07a7a; }
+.close-tag.now { background: color-mix(in srgb, var(--teal) 20%, transparent); color: var(--teal); }
+
+
+.board-sum { display: grid; gap: 10px; }
+.bar { height: 10px; border-radius: 6px; background: var(--line); overflow: hidden; max-width: 520px; }
+.bar i { display: block; height: 100%; background: var(--orange); }
+.dl-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.dl { display: inline-flex; align-items: center; gap: 6px; font: 600 14px var(--body); text-decoration: none; background: var(--orange); color: #fff; border-radius: 8px; padding: 9px 14px; }
+.dl.alt { background: none; color: var(--fg); border: 1px solid var(--line); }
+.dl:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+.chip[disabled] { opacity: .45; cursor: default; border-style: dashed; }
+.pending-box { border: 1px dashed var(--line); border-radius: 10px; padding: 28px 16px; text-align: center; color: var(--muted); font-size: 14px; }
+.theme { font: 600 13px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--teal); margin: 22px 0 4px; }
+.claim { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 12px 16px; }
+.claim summary { cursor: pointer; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; }
+.claim summary b { font: 700 18px var(--display); }
+.claim .en { flex-basis: 100%; color: var(--muted); }
+.claim p { margin: 10px 0 0; max-width: 70ch; color: var(--muted); }
+.claim .script { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.claim .script pre { white-space: pre-wrap; font: 14px/1.5 var(--mono); background: rgba(0,0,0,.25); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 6px 0 12px; max-width: 75ch; }
+.claim .script-l { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 13px; }
+.has-script { font-size: 12px; color: #4fae7b; border: 1px solid #4fae7b; border-radius: 6px; padding: 1px 7px; }
+
+.claim blockquote { margin: 10px 0 0; padding: 8px 14px; border-left: 3px solid var(--orange); background: var(--bg); border-radius: 0 8px 8px 0; max-width: 70ch; }
+.claim cite { font: 12px var(--mono); color: var(--muted); font-style: normal; }
+.claim .confirm { color: var(--orange); }
+#claims { display: grid; gap: 8px; }
+.claim { --st: var(--orange); border-left: 5px solid var(--st); }
+.claim.said { --st: #4fae7b; }
+.claim.part { --st: #d9b44a; }
+.claim.miss { --st: var(--orange); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--st, var(--muted)); margin-right: 6px; flex: none; }
+.chip.said { --st: #4fae7b; } .chip.part { --st: #d9b44a; } .chip.miss { --st: var(--orange); }
+.claim .state { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--st); border: 1px solid var(--st); border-radius: 4px; padding: 2px 7px; white-space: nowrap; }
+.claim .where { color: var(--fg); display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.vchip { font: 500 13px var(--body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.vchip:hover, .vchip:focus-visible { border-color: var(--teal); outline: none; }
+.fb { display: grid; gap: 8px; border-top: 1px solid var(--line); padding-top: 10px; }
+.fb-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fb-q { font-size: 13px; color: var(--muted); }
+.fb-btn { font: 600 14px var(--body); display: inline-flex; align-items: center; gap: 6px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+.fb-nums { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.fb-head { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+.fb-quick { display: inline-flex; gap: 6px; flex: none; }
+.fb-q-btn { font: 700 16px var(--body); width: 40px; height: 36px; border-radius: 8px; border: 2px solid transparent; color: #fff; cursor: pointer; opacity: .8; }
+.fb-q-btn.si { background: #2f8f5b; }
+.fb-q-btn.no { background: #c0473f; }
+.fb-q-btn[aria-pressed="true"] { opacity: 1; border-color: #fff; box-shadow: 0 0 0 2px currentColor; }
+.fb-q-btn.si[aria-pressed="true"] { box-shadow: 0 0 0 2px #2f8f5b; }
+.fb-q-btn.no[aria-pressed="true"] { box-shadow: 0 0 0 2px #c0473f; }
+.fb-q-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb-n { font: 700 14px var(--body); font-variant-numeric: tabular-nums; background: #5b6163; color: #fff; border: 1px solid #767d7f; border-radius: 8px; padding: 9px 0; min-width: 0; cursor: pointer; }
+.fb-n[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
+.fb-n:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb-btn.si[aria-pressed="true"] { background: #2f8f5b; border-color: #2f8f5b; color: #fff; }
+.fb-btn.no[aria-pressed="true"] { background: #c0473f; border-color: #c0473f; color: #fff; }
+.fb-btn:focus-visible, .fb textarea:focus-visible, #fb-send:focus-visible, .fb-actions a:focus-visible, .fb-actions button:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.fb textarea, #fb-text, #fb-name { width: 100%; font: 14px var(--body); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; resize: vertical; }
+.fb textarea { min-height: 64px; }
+.iter.liked { outline: 2px solid #2f8f5b; outline-offset: 6px; border-radius: 6px; }
+.iter.disliked { outline: 2px solid #c0473f; outline-offset: 6px; border-radius: 6px; }
+#fb-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--panel); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: center; font-size: 14px; }
+#fb-send { font: 700 15px var(--body); background: var(--orange); color: #fff; border: 0; border-radius: 8px; padding: 10px 18px; cursor: pointer; }
+#fb-panel { padding-block: 32px; display: grid; gap: 12px; border-top: 1px solid var(--line); max-width: 760px; }
+#fb-panel h2 { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; }
+#fb-text { min-height: 260px; font-family: var(--mono); font-size: 13px; }
+.fb-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.fb-actions a, .fb-actions button { font: 600 14px var(--body); text-decoration: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--fg); }
+.fb-actions a.main { background: var(--orange); border-color: var(--orange); color: #fff; }
+.wrap { padding-bottom: 120px; }
+.cfilter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+
+.steps { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; max-width: 760px; counter-reset: st; }
+.steps li { counter-increment: st; border: 1px solid var(--line); border-left: 5px solid #4fae7b; background: var(--panel); border-radius: 10px; padding: 12px 16px; display: grid; gap: 4px; }
+.steps li.todo { border-left-color: var(--orange); }
+.steps li b { font: 700 17px var(--display); }
+.steps li b::before { content: counter(st) ". "; color: var(--muted); }
+.steps li span { color: var(--muted); font-size: 14px; }
+.steps .state { font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #4fae7b; }
+.steps li.todo .state { color: var(--orange); }
+
+@media (max-width: 760px) {
+  .case { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .screen.v video { height: auto; width: 100%; max-width: 360px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ---- V3: Final first, iterations in a side drawer ---- */
+.final-hero { padding: 28px 0 8px; }
+.final-hero .kicker { font: 500 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.final-hero h1 { font: 800 clamp(34px, 6vw, 56px)/1.02 var(--display); margin: 6px 0 10px; }
+.final-hero h1 span { color: #00e5ff; }
+.final-hero p { max-width: 70ch; color: var(--muted); margin: 0 0 8px; }
+.legend-c { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); margin: 6px 0 2px; }
+.hist-btn { position: fixed; right: 0; top: 40%; z-index: 30; writing-mode: vertical-rl; transform: rotate(180deg); background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-right: 0; border-radius: 0 10px 10px 0; padding: 14px 8px; font: 600 13px var(--body); cursor: pointer; }
+.hist-btn:hover, .hist-btn:focus-visible { border-color: var(--orange); outline: none; }
+#hist { position: fixed; top: 0; right: 0; bottom: 0; width: min(380px, 92vw); z-index: 40; background: var(--bg); border-left: 1px solid var(--line); padding: 22px 20px 90px; overflow-y: auto; transform: translateX(100%); transition: transform .25s ease; box-shadow: -20px 0 40px rgba(0,0,0,.35); }
+#hist.open { transform: none; }
+#hist h2 { font: 700 22px var(--display); margin: 0 0 4px; }
+#hist .close { position: absolute; right: 14px; top: 14px; background: none; border: 1px solid var(--line); color: var(--fg); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+.it-item { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 12px 14px; margin-top: 12px; }
+.it-item b { display: block; font: 700 16px var(--display); }
+.it-item span { font: 500 12px var(--mono); color: var(--muted); }
+.it-item p { margin: 6px 0 8px; color: var(--muted); font-size: 14px; }
+.it-item a { color: var(--fg); }
+@media (max-width: 700px) { .hist-btn { writing-mode: horizontal-tb; transform: none; top: auto; bottom: 96px; right: 12px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-size: 12px; } }
+@media (prefers-reduced-motion: reduce) { #hist { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="final-hero">
+    <div class="kicker">3Way · ViDeus Catalog</div>
+    <h1>Videos <span>Final</span></h1>
+    <p>29 videos, cada uno en 4 versiones: español e inglés, para celu y para compu. Con voz, música y «ViDeus Catalog» como título en el cierre. Elegí la versión, miralo acá y bajalo con Descargar (el original, desde Drive). Lo que se ve acá está comprimido solo para esta página.</p>
+    <div class="legend-c"><span><b style="color:#2f8cff">●</b> Azul: explican qué es</span><span><b style="color:#f5b400">●</b> Ámbar: historias humanas</span><span><b style="color:#00e5ff">●</b> Gris con cian: empresas e instituciones</span></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Secciones">
+    <button type="button" role="tab" id="tab-sel" aria-controls="final" aria-selected="true">Selección final (8)</button>
+    <button type="button" role="tab" id="tab-all" aria-controls="final" aria-selected="false">Todos los videos (29)</button>
+  </nav>
+  <section class="series" id="sel-intro"><p>Los 8 para ver primero: qué es ViDeus Catalog, las dos ideas que Seba pidió destacar (sumamos, no reemplazamos; el archivo no sale del edificio) y casos de distintos clientes. El resto está en «Todos los videos».</p></section>
+  <div id="final" role="tabpanel"></div>
+  <p class="meta" id="pend">Todavía no están en este diseño: «Con ViDeus» y «¿Qué es un MAM?». Están en la Iteración 2 (Historial).</p>
+<section id="fb-panel" hidden>
+  <h2>Tu feedback</h2>
+  <p class="lede">Este es el resumen de lo que marcaste. "Abrir mail" lo pone en un correo para Sofi, listo para enviar. Si el mail no se abre, copiá el texto y pegalo en un mensaje a camussisofia@gmail.com.</p>
+  <label class="fb-q" for="fb-name">Tu nombre (opcional)</label>
+  <input id="fb-name" type="text" autocomplete="name">
+  <label class="fb-q" for="fb-text">Resumen</label>
+  <textarea id="fb-text" readonly></textarea>
+  <div class="fb-actions"><a class="main" id="fb-mail" href="mailto:camussisofia@gmail.com">Abrir mail</a><button type="button" id="fb-copy">Copiar texto</button><span class="fb-q" id="fb-msg" role="status"></span></div>
+</section>
+</div>
+
+<button type="button" class="hist-btn" id="hist-btn" aria-expanded="false" aria-controls="hist">Historial de iteraciones</button>
+<aside id="hist" aria-label="Historial de iteraciones" aria-hidden="true">
+  <button type="button" class="close" id="hist-close" aria-label="Cerrar">✕</button>
+  <h2>Historial</h2>
+  <p class="meta">Todas las versiones anteriores, para comparar. Lo actual es Final.</p>
+  <div class="it-item"><b>Final</b><span>21 oct 2026 · 29 videos</span><p>Todo el catálogo en el diseño V3. Es esta página.</p></div>
+  <div class="it-item"><b>Iteración 3 · Prueba del diseño V3</b><span>20 oct 2026 · 5 videos</span><p>Gurú, Sumamos, La abuela, La leyenda y Tu empresa: la prueba de colores y fondos que se aprobó. Los mismos 5 están en Final.</p></div>
+  <div class="it-item"><b>Iteración 2 · Con música y cierre «ViDeus Catalog»</b><span>16 oct 2026 · 31 videos</span><p>El diseño anterior (fondo oscuro), ya con música.</p><a href="../v2/">Ver la Iteración 2 →</a></div>
+  <div class="it-item"><b>Iteración 1 · Primera versión con voz</b><span>3 oct 2026 · 31 videos</span><p>La primera tanda con las voces de ElevenLabs, sin música.</p><a href="../v1/">Ver la Iteración 1 →</a></div>
+</aside>
+
+<div id="fb-bar"><span id="fb-count">Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.</span><button type="button" id="fb-send">Enviar feedback</button></div>
+
+<script>
+function el(tag, attrs = {}, kids = []) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  kids.forEach(k => n.append(k));
+  return n;
+}
+
+const DL = "https://drive.google.com/uc?export=download&id=";
+const VKEYS = [["es","vertical","ES · Celu"],["es","horizontal","ES · Compu"],["en","vertical","EN · Celu"],["en","horizontal","EN · Compu"]];
+const PICKS = ["guru", "filo-sumamos", "v04", "v02", "congreso", "leyenda", "reels", "agencia"];
+// ---- feedback: like / dislike + comment per video, kept in this browser, sent by mail ----
+let FB = {};
+try { FB = JSON.parse(localStorage.getItem("videus-puntajes") || "{}"); } catch (e) {}
+const fbSave = () => { try { localStorage.setItem("videus-puntajes", JSON.stringify(FB)); } catch (e) {} fbCount(); };
+const fbOrder = [];
+function fbCount() {
+  const n = fbOrder.filter(it => FB[it.id] && (FB[it.id].v || FB[it.id].q)).length;
+  const c = document.getElementById("fb-count");
+  if (c) c.textContent = n ? `Puntuaste ${n} de ${fbOrder.length} videos.` : "Poné un puntaje del 1 al 10, o ✓ / ✕, en cada video.";
+  if (!document.getElementById("fb-panel").hidden) fbCompose();
+}
+function fbBlock(it, card) {
+  fbOrder.push(it);
+  const st = FB[it.id] || (FB[it.id] = { v: "", c: "", q: "" });
+  const nums = el("div", { class: "fb-nums", role: "group", "aria-label": "Puntaje del 1 al 10 para " + it.t });
+  const btns = [];
+  for (let n = 1; n <= 10; n++) {
+    const b = el("button", { type: "button", class: "fb-n", id: "fb-" + n + "-" + it.id, text: String(n), "aria-label": n + " de 10" });
+    b.addEventListener("click", () => { st.v = st.v === n ? "" : n; paint(); fbSave(); });
+    btns.push(b); nums.append(b);
+  }
+  const si = el("button", { type: "button", class: "fb-q-btn si", id: "fb-si-" + it.id, text: "✓", "aria-label": "Me gusta: " + it.t });
+  const no = el("button", { type: "button", class: "fb-q-btn no", id: "fb-no-" + it.id, text: "✕", "aria-label": "No me gusta: " + it.t });
+  const ta = el("textarea", { id: "fb-c-" + it.id, "aria-label": "Comentario sobre " + it.t });
+  ta.value = st.c || "";
+  function paint() {
+    btns.forEach((b, i) => b.setAttribute("aria-pressed", String(st.v === i + 1)));
+    si.setAttribute("aria-pressed", String(st.q === "si")); no.setAttribute("aria-pressed", String(st.q === "no"));
+    const bad = st.q === "no" || (!st.q && !!st.v && st.v <= 4), good = st.q === "si" || (!st.q && st.v >= 8);
+    card.classList.toggle("liked", good); card.classList.toggle("disliked", bad);
+    ta.hidden = !st.v && !st.q;
+    ta.placeholder = st.q === "no" || (st.v && st.v < 8) ? "¿Qué le falta? (por ejemplo: el ritmo, una frase, una imagen)" : "Comentario opcional";
+  }
+  si.addEventListener("click", () => { st.q = st.q === "si" ? "" : "si"; paint(); fbSave(); });
+  no.addEventListener("click", () => { st.q = st.q === "no" ? "" : "no"; paint(); fbSave(); });
+  ta.addEventListener("input", () => { st.c = ta.value; fbSave(); });
+  paint();
+  const head = el("div", { class: "fb-head" }, [el("span", { class: "fb-q", text: "Puntaje del 1 al 10, o solo ✓ / ✕" }), el("span", { class: "fb-quick" }, [si, no])]);
+  return el("div", { class: "fb" }, [head, nums, ta]);
+}
+function fbCompose() {
+  const base = location.origin + location.pathname;
+  const name = document.getElementById("fb-name").value.trim();
+  const d = new Date();
+  const lines = [`Feedback de los videos de ViDeus${name ? " · " + name : ""} · ${d.toLocaleDateString("es-AR")}`, ""];
+  const picks = typeof PICKS !== "undefined" ? PICKS : [];
+  const all = fbOrder.map((it, i) => [it, i, FB[it.id] || {}]);
+  const rated = all.filter(r => r[2].v);
+  const seen = all.filter(r => r[2].v || r[2].q);
+  const mark = st => st.q === "si" ? " · ✓ le gustó" : st.q === "no" ? " · ✕ no le gustó" : "";
+  const avg = rated.length ? (rated.reduce((t, r) => t + r[2].v, 0) / rated.length).toFixed(1).replace(".", ",") : "0";
+  lines.push(`Opinó sobre: ${seen.length} de ${all.length} · Con puntaje: ${rated.length} · Promedio: ${avg} · ✓ ${all.filter(r => r[2].q === "si").length} · ✕ ${all.filter(r => r[2].q === "no").length}`, "");
+  function section(title, rows) {
+    const n = rows.filter(r => r[2].v || r[2].q).length;
+    lines.push(`== ${title} · opinó sobre ${n} de ${rows.length} ==`);
+    const rank = st => st.v || (st.q === "si" ? 0.6 : st.q === "no" ? 0.4 : 0);
+    rows.slice().sort((x, y) => rank(y[2]) - rank(x[2]) || x[1] - y[1]).forEach(([it, i, st]) => {
+      lines.push(`${st.v || 0}/10${mark(st)} · ${it.t}${st.v ? "" : st.q ? " (sin número)" : " (sin puntaje)"}`);
+      if (st.c && st.c.trim()) lines.push(`   Comentario: ${st.c.trim()}`);
+      if (st.v || st.q) lines.push(`   Link: ${base}#v-${it.id}`);
+    });
+    lines.push("");
+  }
+  section("SELECCIÓN FINAL", all.filter(r => picks.includes(r[0].id)));
+  section("TODOS LOS DEMÁS VIDEOS", all.filter(r => !picks.includes(r[0].id)));
+  const text = lines.join(String.fromCharCode(10));
+  document.getElementById("fb-text").value = text;
+  document.getElementById("fb-mail").href = "mailto:camussisofia@gmail.com?subject=" + encodeURIComponent("Feedback videos ViDeus" + (name ? " · " + name : "")) + "&body=" + encodeURIComponent(text);
+  return text;
+}
+document.getElementById("fb-send").addEventListener("click", () => {
+  const p = document.getElementById("fb-panel");
+  p.hidden = false; fbCompose(); p.scrollIntoView({ block: "start" });
+});
+document.getElementById("fb-name").addEventListener("input", fbCompose);
+document.getElementById("fb-copy").addEventListener("click", () => {
+  const t = document.getElementById("fb-text"), msg = document.getElementById("fb-msg");
+  const ok = () => { msg.textContent = "Copiado. Pegalo en un mail a camussisofia@gmail.com."; };
+  const manual = () => { t.focus(); t.select(); msg.textContent = "Quedó seleccionado: copialo con Ctrl+C o Cmd+C."; };
+  try { navigator.clipboard.writeText(t.value).then(ok, manual); } catch (e) { manual(); }
+});
+
+const FINAL = [{"g": "Qué es ViDeus", "items": [{"id": "guru", "t": "El gurú", "n": "Le habla al dueño del archivo, presenta al gurú y cierra con «¿Qué le preguntarías primero?».", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/guru-es-vertical.mp4", "dl": "1g1DciK9zDvdTLtm9eoQug6L4Cz4EsxgR", "file": "ViDeus-Catalog-guru-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/guru-es-horizontal.mp4", "dl": "1YZyC1DKy5XKkCtydey9gnYDuuoKVn1gy", "file": "ViDeus-Catalog-guru-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/guru-en-vertical.mp4", "dl": "1HC-Xl0NqGiofSsrgcPTjTjMx0B2sti6A", "file": "ViDeus-Catalog-guru-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/guru-en-horizontal.mp4", "dl": "1H6Fnl0DjNO-kBDc_bx5XSdnQWawce-eC", "file": "ViDeus-Catalog-guru-en-horizontal.mp4"}}}]}, {"g": "Las objeciones", "items": [{"id": "v02", "t": "02 · Tu archivo nunca sale del edificio", "n": "Todo corre adentro de tu red. En español es tu versión nueva, la larga. 63 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/v02-es-vertical.mp4", "dl": "1kwmN6RFffW1xqxLGek_pLpHMIyYmYgxA", "file": "ViDeus-Catalog-v02-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/v02-es-horizontal.mp4", "dl": "1PcrLSt--Q3c3eqWhvW2kdtBlBLmQa4-l", "file": "ViDeus-Catalog-v02-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/v02-en-vertical.mp4", "dl": "1K7SB7LDpkEX8BZR0RsrTWKEa1PpMIYLr", "file": "ViDeus-Catalog-v02-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/v02-en-horizontal.mp4", "dl": "1keKlUH1M0HAZu5ymlyt61uxM5ba2eRus", "file": "ViDeus-Catalog-v02-en-horizontal.mp4"}}}, {"id": "v03", "t": "03 · El costo de un archivo que no podés buscar", "n": "Lo que ya pagaste y no podés usar. 36 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/v03-es-vertical.mp4", "dl": "1cJ50j2IaJF03dRihh4dnW8HaQcOZCmxY", "file": "ViDeus-Catalog-v03-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/v03-es-horizontal.mp4", "dl": "1BgsMGHDsMN1uJ44gYwzjD2-AFnnyZ9Rc", "file": "ViDeus-Catalog-v03-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/v03-en-vertical.mp4", "dl": "1pey7pb5mXjN4DN44bpeoG4Ow5Q6U4ENy", "file": "ViDeus-Catalog-v03-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/v03-en-horizontal.mp4", "dl": "1wAjJt-oZdKT_5IXLzz3DuZlGtGhimH9L", "file": "ViDeus-Catalog-v03-en-horizontal.mp4"}}}, {"id": "v04", "t": "04 · Hacé inteligente el archivo que ya tenés", "n": "Sin migración, sin duplicados. 45 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/v04-es-vertical.mp4", "dl": "1uTp2zBwunRH1VjxM9AsKqwk7dTx9uY00", "file": "ViDeus-Catalog-v04-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/v04-es-horizontal.mp4", "dl": "1R5YzIZQwhU4lHOjelc7HGVry4ihCBeHg", "file": "ViDeus-Catalog-v04-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/v04-en-vertical.mp4", "dl": "1ctJPlpn-L7QOhdl4VhOIf0k_zFCmFSXj", "file": "ViDeus-Catalog-v04-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/v04-en-horizontal.mp4", "dl": "1UnE-Dr8S1x1J4VWT_z35ybWSzrswt3Np", "file": "ViDeus-Catalog-v04-en-horizontal.mp4"}}}]}, {"g": "Los casos", "items": [{"id": "leyenda", "t": "La leyenda", "n": "Seis de la tarde, el homenaje de las ocho. 33 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/leyenda-es-vertical.mp4", "dl": "1qAokPy5-ZYJoO0nJBW9F4oAjCQFdtBWU", "file": "ViDeus-Catalog-leyenda-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/leyenda-es-horizontal.mp4", "dl": "1T9RLBkJ1mBscnpjGw4XRGwi0sOFGUYOX", "file": "ViDeus-Catalog-leyenda-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/leyenda-en-vertical.mp4", "dl": "1g3S0CgjInLqfwhNcCUmMCTU6pZ_1S-ZT", "file": "ViDeus-Catalog-leyenda-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/leyenda-en-horizontal.mp4", "dl": "1j7IONFA8kymprr7NkU3lFIkNHYEyVHjZ", "file": "ViDeus-Catalog-leyenda-en-horizontal.mp4"}}}, {"id": "abuela", "t": "La abuela", "n": "El pedido de 1998 para el cumpleaños 90. 39 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/abuela-es-vertical.mp4", "dl": "1_Ds1HaYEUaIUFqsCJuxsRaLaDqEpgEOA", "file": "ViDeus-Catalog-abuela-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/abuela-es-horizontal.mp4", "dl": "13PlLdshW0v7J7ZqkmLtaFqt8VbgO-cJr", "file": "ViDeus-Catalog-abuela-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/abuela-en-vertical.mp4", "dl": "1E_Bn0SMJZrtZM_0RNOr-ewM5w6-sbzsI", "file": "ViDeus-Catalog-abuela-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/abuela-en-horizontal.mp4", "dl": "1N9G_GBZsqR8jnmYrcmO9V0cN6cIyWnKA", "file": "ViDeus-Catalog-abuela-en-horizontal.mp4"}}}, {"id": "reels", "t": "Reels (el evento)", "n": "Para productoras: ¿cuál es tu estrategia? 45 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/reels-es-vertical.mp4", "dl": "1SP6xEEAgyjcWs5keBG_YHPHDQD-LJzD2", "file": "ViDeus-Catalog-reels-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/reels-es-horizontal.mp4", "dl": "1i5-y0TKLrahCGQgw_CS517nh60wC4UYT", "file": "ViDeus-Catalog-reels-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/reels-en-vertical.mp4", "dl": "1MMSzZaltlboibBYVIbM4HHmdlTeEqQ-9", "file": "ViDeus-Catalog-reels-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/reels-en-horizontal.mp4", "dl": "1Zp-_5VsbZgFuPmr0RgrPwhAvo8RjAK_n", "file": "ViDeus-Catalog-reels-en-horizontal.mp4"}}}, {"id": "contradiccion", "t": "La contradicción", "n": "«Nunca apoyé esa ley.» ¿Seguro? 33 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/contradiccion-es-vertical.mp4", "dl": "17dGPPlao8L1dYKr1OKzX0KXBvSUs0D7F", "file": "ViDeus-Catalog-contradiccion-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/contradiccion-es-horizontal.mp4", "dl": "1gTjYxY_RLcftWuOWPoIWeK6j5PF7u6uI", "file": "ViDeus-Catalog-contradiccion-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/contradiccion-en-vertical.mp4", "dl": "1twpdntSSKoIDbvmscUyAETWzJDHSW-NM", "file": "ViDeus-Catalog-contradiccion-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/contradiccion-en-horizontal.mp4", "dl": "1mXJ-eaVCOB7Jbj5OfkBBH62sLEBW8sw2", "file": "ViDeus-Catalog-contradiccion-en-horizontal.mp4"}}}, {"id": "universidad", "t": "La universidad", "n": "Para decanos: cada clase grabada, parte de la biblioteca. 49 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/universidad-es-vertical.mp4", "dl": "12ea796hVUlEqlAenkKkedPvjfzRDbJfv", "file": "ViDeus-Catalog-universidad-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/universidad-es-horizontal.mp4", "dl": "1uu-be29Nkkh3by4JqgDu3JW3hsuR9L4j", "file": "ViDeus-Catalog-universidad-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/universidad-en-vertical.mp4", "dl": "1r9DCwmEqwpulT3af2p9O3olbs49tgEbh", "file": "ViDeus-Catalog-universidad-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/universidad-en-horizontal.mp4", "dl": "1JycSgeZp96KqtZvHpWbH6VHWMcpZiCb7", "file": "ViDeus-Catalog-universidad-en-horizontal.mp4"}}}, {"id": "congreso", "t": "El congreso", "n": "Veinte minutos para el cierre y una diputada que dijo otra cosa. 31 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/congreso-es-vertical.mp4", "dl": "108Ppj8xsmDl6Rwr_R0-QzdluAmPKM8RY", "file": "ViDeus-Catalog-congreso-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/congreso-es-horizontal.mp4", "dl": "1HbFSYUYivm7aUIhNqPE3LfN8SWdI_QgU", "file": "ViDeus-Catalog-congreso-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/congreso-en-vertical.mp4", "dl": "1D1c3TuucYgey5QFvEwZWvcQoWvozEjvv", "file": "ViDeus-Catalog-congreso-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/congreso-en-horizontal.mp4", "dl": "1DkZ7KF75Wum6d-H7MYSqcv6wblfLdUnv", "file": "ViDeus-Catalog-congreso-en-horizontal.mp4"}}}, {"id": "primero", "t": "¿Quién lo dijo primero?", "n": "El origen de una frase que es tendencia. 31 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/primero-es-vertical.mp4", "dl": "1bq-vYyiHpCtcOdv3teymttfYl6xPXwEg", "file": "ViDeus-Catalog-primero-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/primero-es-horizontal.mp4", "dl": "1V4zi6IQGl5Jst0B1zoGwQWjDtZybJczk", "file": "ViDeus-Catalog-primero-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/primero-en-vertical.mp4", "dl": "1Y68IWsVX4-NwdbzObdwD4pp7GM0d3cuQ", "file": "ViDeus-Catalog-primero-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/primero-en-horizontal.mp4", "dl": "1jJhE3mxnSVrzYYFkrQXUPRk2wy3gg0lG", "file": "ViDeus-Catalog-primero-en-horizontal.mp4"}}}, {"id": "abogados", "t": "Lo que se dijo de tu cliente", "n": "La audiencia es el lunes: 38 menciones ordenadas por riesgo. 34 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/abogados-es-vertical.mp4", "dl": "152IPKCczcwQwpC9KLtoATNomXz3pqQxZ", "file": "ViDeus-Catalog-abogados-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/abogados-es-horizontal.mp4", "dl": "1GLj_eWIWEMR3lplYgOOaxhrAbUCH5Y7K", "file": "ViDeus-Catalog-abogados-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/abogados-en-vertical.mp4", "dl": "1WyVbDcfFWCD6cI9P2hiFpE6b9_QNugjP", "file": "ViDeus-Catalog-abogados-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/abogados-en-horizontal.mp4", "dl": "162eLUK_QJMlE71Ikvy6qiV3n8RZZZ55I", "file": "ViDeus-Catalog-abogados-en-horizontal.mp4"}}}, {"id": "difamacion", "t": "«Es un ladrón»", "n": "Quién lo dijo, dónde y cuándo, al segundo. 28 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/difamacion-es-vertical.mp4", "dl": "1M-jE6R1qwI6dHi-gf2BojnqxUUzU-s8H", "file": "ViDeus-Catalog-difamacion-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/difamacion-es-horizontal.mp4", "dl": "1H-04snDumSNr10ULG8uyR0SIhSjKDfuD", "file": "ViDeus-Catalog-difamacion-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/difamacion-en-vertical.mp4", "dl": "1fSzey3y7x_6pQeRTsWyuYg8rxlDRLJLH", "file": "ViDeus-Catalog-difamacion-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/difamacion-en-horizontal.mp4", "dl": "1X5XDCGqn8yhXNl3cJwVqzVtF-29K6R-c", "file": "ViDeus-Catalog-difamacion-en-horizontal.mp4"}}}, {"id": "despedida", "t": "El homenaje", "n": "Lo que antes llevaba meses, ahora es una pregunta. 43 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/despedida-es-vertical.mp4", "dl": "178XhbGgRoK8o2knI7PFaU2cAfBK3rp31", "file": "ViDeus-Catalog-despedida-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/despedida-es-horizontal.mp4", "dl": "1pdwSMaZmnTIUcCaFbI2Cq9FMnRH6Ohzt", "file": "ViDeus-Catalog-despedida-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/despedida-en-vertical.mp4", "dl": "1pKUpzats1n0L5NDeXX5-AD72WYSHErL1", "file": "ViDeus-Catalog-despedida-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/despedida-en-horizontal.mp4", "dl": "17H6YK0bwgfPb2m5HuCSvVnOpF2Qre6BO", "file": "ViDeus-Catalog-despedida-en-horizontal.mp4"}}}]}, {"g": "Más casos", "items": [{"id": "documental", "t": "Documentalista", "n": "Las imágenes de una década, en minutos. 30 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/documental-es-vertical.mp4", "dl": "1H3ub2HS6ukzPRRIVaM-Gg25UzjQvLheh", "file": "ViDeus-Catalog-documental-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/documental-es-horizontal.mp4", "dl": "1uNLB_MUR1KVW6Nm_Dy4rmHdIiEC6aLAH", "file": "ViDeus-Catalog-documental-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/documental-en-vertical.mp4", "dl": "16jCEXbsKqRc7_G7H7RtoFJ5lDCqICeHG", "file": "ViDeus-Catalog-documental-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/documental-en-horizontal.mp4", "dl": "1IJ1r89kl7ly2r3u-5gy4WQXaexHrjKIE", "file": "ViDeus-Catalog-documental-en-horizontal.mp4"}}}, {"id": "agencia", "t": "Agencia de noticias", "n": "Lo que antes se perdía por no encontrarlo, ahora se vende. 33 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/agencia-es-vertical.mp4", "dl": "1Alyf92WZ1tCHzGErkiclkdL_KvY-tAyu", "file": "ViDeus-Catalog-agencia-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/agencia-es-horizontal.mp4", "dl": "1FDET888T34wnN0AdXeOXERUElh6J4wXj", "file": "ViDeus-Catalog-agencia-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/agencia-en-vertical.mp4", "dl": "1_qLHHcR2b72m1e4lwPSnxzAPMVHGpb8d", "file": "ViDeus-Catalog-agencia-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/agencia-en-horizontal.mp4", "dl": "1BURd1p5M_2NHJLKDPzUPSiWIluyb3X6J", "file": "ViDeus-Catalog-agencia-en-horizontal.mp4"}}}, {"id": "streaming", "t": "Plataforma de streaming", "n": "Cada escena en la que la protagonista se ríe. 30 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/streaming-es-vertical.mp4", "dl": "1lYd_4A6MOEDTuc1STsidDtn1jboFKhTX", "file": "ViDeus-Catalog-streaming-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/streaming-es-horizontal.mp4", "dl": "1tOeWPqBxnYeYsmX_wBeznjQvqJ6CYWMr", "file": "ViDeus-Catalog-streaming-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/streaming-en-vertical.mp4", "dl": "1KJNaWSEGLwQntBZmw9anhAp3iBxQJaY4", "file": "ViDeus-Catalog-streaming-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/streaming-en-horizontal.mp4", "dl": "1ZOIk7_CrCnmU5Xe9nUe81Rb3NA4la-0j", "file": "ViDeus-Catalog-streaming-en-horizontal.mp4"}}}, {"id": "club", "t": "Club de fútbol", "n": "El centenario se arma en días, no en meses. 31 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/club-es-vertical.mp4", "dl": "1CC2EptKQNrV8sqkuupFegf7ApTphM0nr", "file": "ViDeus-Catalog-club-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/club-es-horizontal.mp4", "dl": "1vZcXuVkVA2I7zyR7IFLwdgu-8mUgK3U9", "file": "ViDeus-Catalog-club-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/club-en-vertical.mp4", "dl": "1isqimqq0Xm8mR54mT9wDyXaq97jZElPs", "file": "ViDeus-Catalog-club-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/club-en-horizontal.mp4", "dl": "1gKrIbmCx31Bzwumfgvvkfty22fR1TC1X", "file": "ViDeus-Catalog-club-en-horizontal.mp4"}}}, {"id": "escenario", "t": "Teatro, festival o conciertos", "n": "Cada vez que la banda tocó su canción más pedida. 25 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/escenario-es-vertical.mp4", "dl": "1yLjcPrT1JZ9BZhE82Sd111XT9zIrrdsl", "file": "ViDeus-Catalog-escenario-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/escenario-es-horizontal.mp4", "dl": "1xqqeIen8bqZwi4YI70l0xgqlEu7yb6Nf", "file": "ViDeus-Catalog-escenario-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/escenario-en-vertical.mp4", "dl": "1Aru2kfK_pc5V5IJ7U7QKmDen-pa04uY-", "file": "ViDeus-Catalog-escenario-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/escenario-en-horizontal.mp4", "dl": "1KjNh7cMGt10Aq4zMKibGTWBtuba0u1X-", "file": "ViDeus-Catalog-escenario-en-horizontal.mp4"}}}, {"id": "museo", "t": "Museo o filmoteca", "n": "El patrimonio vuelve a estar a mano. 31 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/museo-es-vertical.mp4", "dl": "1S_pJh1eDZ_S2RUraxWVbrLNyvxx4NG0v", "file": "ViDeus-Catalog-museo-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/museo-es-horizontal.mp4", "dl": "1-z5xhnPCOHq1N1aNE37qMsFhCkZ8pXYM", "file": "ViDeus-Catalog-museo-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/museo-en-vertical.mp4", "dl": "1ynbLuzxhqBBBbIpk8NyKeXxV9qKdSAXz", "file": "ViDeus-Catalog-museo-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/museo-en-horizontal.mp4", "dl": "1ks3VvpywXLHqHNLq1lekiMw4ChffrHAk", "file": "ViDeus-Catalog-museo-en-horizontal.mp4"}}}, {"id": "empresa", "t": "Empresa (uso interno)", "n": "Lo que tu empresa ya explicó una vez. 33 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/empresa-es-vertical.mp4", "dl": "1HPYPKvRkIj-gkhvHl4Swiy0ymRb3Fcxp", "file": "ViDeus-Catalog-empresa-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/empresa-es-horizontal.mp4", "dl": "1_QNrRkjVpZxa2p9i4dgQiMsp9fjGDGq3", "file": "ViDeus-Catalog-empresa-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/empresa-en-vertical.mp4", "dl": "1X4uJPke9Mc2y2A-YkAu3wsoumYwQXXNw", "file": "ViDeus-Catalog-empresa-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/empresa-en-horizontal.mp4", "dl": "1a_eRb37PZxLxjewQxhGQFzL_miZoI4-D", "file": "ViDeus-Catalog-empresa-en-horizontal.mp4"}}}, {"id": "idioma", "t": "Tu archivo en otro idioma", "n": "Preguntan en inglés a un archivo que habla español. 24 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/idioma-es-vertical.mp4", "dl": "1barN__yBJ9K8dp4H9RNpWXPBvw-WJ6Cf", "file": "ViDeus-Catalog-idioma-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/idioma-es-horizontal.mp4", "dl": "1i3GiMAEM4KxMAo_8xNcnjBUJ8hgG7eRQ", "file": "ViDeus-Catalog-idioma-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/idioma-en-vertical.mp4", "dl": "1Zh6DI7bQX1ks83kNdBNl6ORmscODJCGY", "file": "ViDeus-Catalog-idioma-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/idioma-en-horizontal.mp4", "dl": "1zhEbAZduq0RvQX4KwmyZiGFoZBgAwdL-", "file": "ViDeus-Catalog-idioma-en-horizontal.mp4"}}}, {"id": "comunicacion", "t": "Consultora de comunicación", "n": "¿Qué se dijo de nosotros este año? 26 s.", "col": "gris", "hex": "#00e5ff", "v": {"es-vertical": {"src": "../videos/v3/comunicacion-es-vertical.mp4", "dl": "1OtdYKUJe14WCaKa7kdet-x4H5kSIHcgF", "file": "ViDeus-Catalog-comunicacion-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/comunicacion-es-horizontal.mp4", "dl": "1wv4y7i_oUZpfoexc6BOg-r9ZD4VAAveK", "file": "ViDeus-Catalog-comunicacion-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/comunicacion-en-vertical.mp4", "dl": "17qjU_tBTnkqfsUrDvM0ED7PjrCsVIouk", "file": "ViDeus-Catalog-comunicacion-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/comunicacion-en-horizontal.mp4", "dl": "1KaUTgVkwQVORFedVbesMLtaj4IFkqO-F", "file": "ViDeus-Catalog-comunicacion-en-horizontal.mp4"}}}, {"id": "famoso", "t": "El famoso y su manager", "n": "Sesenta años de trayectoria, listos para recortar. 33 s.", "col": "ámbar", "hex": "#f5b400", "v": {"es-vertical": {"src": "../videos/v3/famoso-es-vertical.mp4", "dl": "1UwXZiapuQa-1DopelFE46BKW4M22zE6G", "file": "ViDeus-Catalog-famoso-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/famoso-es-horizontal.mp4", "dl": "1lOW5LfJS5cMjzMu5qcNR1EZ_o8Z3L38A", "file": "ViDeus-Catalog-famoso-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/famoso-en-vertical.mp4", "dl": "1R6Mi_JK538G10LjpLfcP-_aRNlYcdy5p", "file": "ViDeus-Catalog-famoso-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/famoso-en-horizontal.mp4", "dl": "143wMri8ovOSkKHfJZRB4NmHs2WEV3gfS", "file": "ViDeus-Catalog-famoso-en-horizontal.mp4"}}}]}, {"g": "Filosofía", "items": [{"id": "filo-buscar-preguntar", "t": "Buscar vs. preguntar", "n": "Dejamos de buscar. Empezamos a preguntar. 40 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/filo-buscar-preguntar-es-vertical.mp4", "dl": "1Dj6XU0JlvgruQBL2cuixsd6yW0NpmR41", "file": "ViDeus-Catalog-filo-buscar-preguntar-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/filo-buscar-preguntar-es-horizontal.mp4", "dl": "187fLaeKXBTQJv7MVuQ3Tr7Kr5mjDuj1T", "file": "ViDeus-Catalog-filo-buscar-preguntar-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/filo-buscar-preguntar-en-vertical.mp4", "dl": "12gQf0sMaqcHIzKvKhZO5uvfsdtmDhS0P", "file": "ViDeus-Catalog-filo-buscar-preguntar-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/filo-buscar-preguntar-en-horizontal.mp4", "dl": "1--4XtKPPO3wxqhdXhBD1OMaZihuEMU_g", "file": "ViDeus-Catalog-filo-buscar-preguntar-en-horizontal.mp4"}}}, {"id": "filo-sumamos", "t": "Sumamos, no reemplazamos", "n": "No te sacamos nada. Te sumamos algo. 54 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/sumamos-es-vertical.mp4", "dl": "1_nT6Wwej3_IEcI8cEF3kDdarXoQ3hlzF", "file": "ViDeus-Catalog-sumamos-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/sumamos-es-horizontal.mp4", "dl": "1GFyNy-lbEJGAlCmf86vOj4cBwWirbIn7", "file": "ViDeus-Catalog-sumamos-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/sumamos-en-vertical.mp4", "dl": "18jdk5FtXL9S5Xbu_hI8vFoX8jIPsAMk_", "file": "ViDeus-Catalog-sumamos-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/sumamos-en-horizontal.mp4", "dl": "1gvRksyyfwYecYsVfATlC4H6eCoYQfuA6", "file": "ViDeus-Catalog-sumamos-en-horizontal.mp4"}}}, {"id": "filo-sigue-ahi", "t": "Todo lo que grabaste sigue ahí", "n": "Y ya está pagado. 29 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/filo-sigue-ahi-es-vertical.mp4", "dl": "1T1p-mY4cYy3uNOGcp7HfqbXJudh84o5W", "file": "ViDeus-Catalog-filo-sigue-ahi-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/filo-sigue-ahi-es-horizontal.mp4", "dl": "1qNBNDJv5zqM9Gr6dUA7G5wyQ4tYk85aS", "file": "ViDeus-Catalog-filo-sigue-ahi-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/filo-sigue-ahi-en-vertical.mp4", "dl": "16cfhQSwMkeZ4KKvg8REwBEAxsRrZ7V4n", "file": "ViDeus-Catalog-filo-sigue-ahi-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/filo-sigue-ahi-en-horizontal.mp4", "dl": "1v-yMSZ94TgW0wBkafyHYqxJ8z-vwxBzg", "file": "ViDeus-Catalog-filo-sigue-ahi-en-horizontal.mp4"}}}, {"id": "filo-colega", "t": "El colega que vio todo", "n": "Lo que sabe tu archivo deja de depender de una sola persona. 40 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/filo-colega-es-vertical.mp4", "dl": "1ckLkVHISDa5vo6g8fiUDV1HitSttRABZ", "file": "ViDeus-Catalog-filo-colega-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/filo-colega-es-horizontal.mp4", "dl": "1tPsT-mqiMUUI7Ku20YMKYJECKGKDpeei", "file": "ViDeus-Catalog-filo-colega-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/filo-colega-en-vertical.mp4", "dl": "1FKXzzLTppEwYE9vB2CjQF-j6HJT4VMks", "file": "ViDeus-Catalog-filo-colega-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/filo-colega-en-horizontal.mp4", "dl": "1wfQEaDBSGqpxgVt2KEh-ENH5lhK-9mPZ", "file": "ViDeus-Catalog-filo-colega-en-horizontal.mp4"}}}, {"id": "filo-materia-prima", "t": "Tu archivo es materia prima", "n": "El contenido de mañana ya está grabado. 30 s.", "col": "azul", "hex": "#2f8cff", "v": {"es-vertical": {"src": "../videos/v3/filo-materia-prima-es-vertical.mp4", "dl": "1YuFucerM9rdbqCd5t3BhkqGOpw8TtBKM", "file": "ViDeus-Catalog-filo-materia-prima-es-vertical.mp4"}, "es-horizontal": {"src": "../videos/v3/filo-materia-prima-es-horizontal.mp4", "dl": "1FHiB4VyqN-99Om4FjwfijB07MZ9ZuEci", "file": "ViDeus-Catalog-filo-materia-prima-es-horizontal.mp4"}, "en-vertical": {"src": "../videos/v3/filo-materia-prima-en-vertical.mp4", "dl": "19qeTcEzI379bYj8m79yutB3emQwYBtBi", "file": "ViDeus-Catalog-filo-materia-prima-en-vertical.mp4"}, "en-horizontal": {"src": "../videos/v3/filo-materia-prima-en-horizontal.mp4", "dl": "1qbm1seVGdgTgTqV_CSwdJGsIHDZNrQju", "file": "ViDeus-Catalog-filo-materia-prima-en-horizontal.mp4"}}}]}];
+const box = document.getElementById("final");
+FINAL.forEach(grp => {
+  const sec = el("section", { class: "series" }, [el("h2", { text: grp.g })]);
+  const grid = el("div", { class: "iters" });
+  grp.items.forEach(it => {
+    const head = el("div", { class: "iter-head" }, [el("b", { text: it.t }), el("span", { style: "color:" + it.hex, text: "● " + it.col })]);
+    const card = el("div", { class: "iter", id: "v-" + it.id }, [head]);
+    const chips = el("div", { class: "versions", role: "group", "aria-label": "Versión" });
+    const screen = el("div", { class: "screen v" });
+    const video = el("video", { controls: "", playsinline: "", preload: "none" });
+    screen.append(video);
+    const dl = el("a", { class: "dl", target: "_blank", rel: "noopener", text: "↓ Descargar" });
+    const file = el("div", { class: "file" });
+    let cur = "es-vertical";
+    const btns = VKEYS.map(([l, f, lab]) => { const k = l + "-" + f; const b = el("button", { type: "button", class: "chip", text: lab }); b.addEventListener("click", () => { cur = k; render(); }); chips.append(b); return [b, k]; });
+    function render() {
+      const e = it.v[cur];
+      btns.forEach(([b, k]) => b.setAttribute("aria-pressed", String(k === cur)));
+      screen.className = "screen " + (cur.endsWith("vertical") ? "v" : "h");
+      if (!video.src.endsWith(e.src.split("/").pop())) video.src = e.src;
+      dl.href = DL + e.dl; file.textContent = e.file;
+    }
+    card.append(chips, screen, el("div", { class: "dl-row" }, [dl]), file, el("p", { text: it.n }), fbBlock(it, card));
+    render();
+    grid.append(card);
+  });
+  sec.append(grid); box.append(sec);
+});
+fbCount();
+// tabs: the picks or every video (same cards, filtered)
+const ts = document.getElementById("tab-sel"), ta = document.getElementById("tab-all");
+function show(sel) {
+  ts.setAttribute("aria-selected", String(sel)); ta.setAttribute("aria-selected", String(!sel));
+  document.querySelectorAll("#final .iter").forEach(c => { c.hidden = sel && !PICKS.includes(c.id.slice(2)); });
+  Array.from(box.children).forEach(s => { s.hidden = !s.querySelector(".iter:not([hidden])"); });
+  document.getElementById("sel-intro").hidden = !sel;
+  document.getElementById("pend").hidden = sel;
+  try { history.replaceState(null, "", sel ? "#" : "#todos"); } catch (e) {}
+}
+ts.addEventListener("click", () => show(true)); ta.addEventListener("click", () => show(false));
+if (location.hash === "#todos") show(false);
+else if (/^#v-/.test(location.hash)) { const id = location.hash.slice(3); show(!PICKS.includes(id) ? false : true); const c = document.getElementById("v-" + id); if (c) c.scrollIntoView({ block: "center" }); }
+else show(true);
+// side drawer with the history of iterations
+const hb = document.getElementById("hist-btn"), hp = document.getElementById("hist");
+function hist(open) { hp.classList.toggle("open", open); hb.setAttribute("aria-expanded", String(open)); hp.setAttribute("aria-hidden", String(!open)); if (open) document.getElementById("hist-close").focus(); else hb.focus(); }
+hb.addEventListener("click", () => hist(!hp.classList.contains("open")));
+document.getElementById("hist-close").addEventListener("click", () => hist(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && hp.classList.contains("open")) hist(false); });
+</script>
+</body>
+</html>
