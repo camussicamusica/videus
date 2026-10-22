@@ -1,17 +1,56 @@
 [
-  {"id": "tutorial-01-entrar", "t": "Instructivo 1 · Entrar y ubicarse", "col": "azul",
-   "n": "Entrar por la web y moverse entre Inicio, Assets y Asistente. 2:06.",
-   "dl": {"es-horizontal": "1ePdO37izXcJ9lIyXS_alIj7xnq5F2uIn"}},
-  {"id": "tutorial-02-subir", "t": "Instructivo 2 · Subir archivos y seguir el proceso", "col": "azul",
-   "n": "ASSETS. Subir como en un drive, el puntito de color de cada paso y Estado de assets. Voz Valentina. 2:23.",
-   "dl": {"es-horizontal": "1zfMDjgUhxjsu1c-zazjkpfT18Big-rOO"}},
-  {"id": "tutorial-06-filtros", "t": "Instructivo 3 · Encontrar con los filtros", "col": "azul",
-   "n": "ASSETS. Los 13 filtros uno por uno, quién carga cada uno y cómo se suman. Voz Valentina. 3:59.",
-   "dl": {"es-horizontal": "1jwxre6Pt8vZsVFkcNOL13lDAT1uNCk3R"}},
-  {"id": "tutorial-04-ficha", "t": "Instructivo 4 · Lo que ya sabe de cada video", "col": "azul",
-   "n": "ASSETS. El resumen, los temas y las entidades con su tono que ViDeus arma solo; corregir es opcional; Confidencial lo decidís vos. Voz Valentina. 1:35.",
-   "dl": {"es-horizontal": "1V73WEXwvBxxsLDEhiAyupbOz9hcZcOlb"}},
-  {"id": "tutorial-05-dicho", "t": "Instructivo 5 · Encontrar lo que se dijo", "col": "azul",
-   "n": "ASSETS. Buscar una palabra en la transcripción, ir al minuto, pasar al Asistente y volver; nombrar una voz una sola vez. Voz Valentina. 1:29.",
-   "dl": {"es-horizontal": "1NuA17nvk-s4AphFzQRjZLPEyiE8JzNto"}}
+ {
+  "id": "tutorial-01-entrar",
+  "t": "Instructivo 1 · Entrar y ubicarse",
+  "col": "azul",
+  "n": "Entrar por la web y moverse entre Inicio, Assets y Asistente. 2:06.",
+  "dl": {
+   "es-horizontal": "1ePdO37izXcJ9lIyXS_alIj7xnq5F2uIn"
+  }
+ },
+ {
+  "id": "tutorial-02-subir",
+  "t": "Instructivo 2 · Subir archivos y seguir el proceso",
+  "col": "azul",
+  "n": "ASSETS. Subir como en un drive, el puntito de color de cada paso y Estado de assets. Voz Valentina. 2:23.",
+  "dl": {
+   "es-horizontal": "1zfMDjgUhxjsu1c-zazjkpfT18Big-rOO"
+  }
+ },
+ {
+  "id": "tutorial-06-filtros",
+  "t": "Instructivo 3 · Encontrar con los filtros",
+  "col": "azul",
+  "n": "ASSETS. Los 13 filtros uno por uno, quién carga cada uno y cómo se suman. Voz Valentina. 3:59.",
+  "dl": {
+   "es-horizontal": "1jwxre6Pt8vZsVFkcNOL13lDAT1uNCk3R"
+  }
+ },
+ {
+  "id": "tutorial-04-ficha",
+  "t": "Instructivo 4 · Lo que ya sabe de cada video",
+  "col": "azul",
+  "n": "ASSETS. El resumen, los temas y las entidades con su tono que ViDeus arma solo; corregir es opcional; Confidencial lo decidís vos. Voz Valentina. 1:35.",
+  "dl": {
+   "es-horizontal": "1V73WEXwvBxxsLDEhiAyupbOz9hcZcOlb"
+  }
+ },
+ {
+  "id": "tutorial-05-dicho",
+  "t": "Instructivo 5 · Encontrar lo que se dijo",
+  "col": "azul",
+  "n": "ASSETS. Buscar una palabra en la transcripción, ir al minuto, pasar al Asistente y volver; nombrar una voz una sola vez. Voz Valentina. 1:29.",
+  "dl": {
+   "es-horizontal": "1NuA17nvk-s4AphFzQRjZLPEyiE8JzNto"
+  }
+ },
+ {
+  "id": "tutorial-08-pedir",
+  "t": "Instructivo 8 · Pedirle bien al Asistente",
+  "col": "azul",
+  "n": "ASISTENTE. Las cuatro piezas de una buena pregunta (quién, de qué, cuándo, dónde), afinar en la misma conversación, pedir una postura y un listado para descargar. Voz Valentina. 1:25.",
+  "dl": {
+   "es-horizontal": "1kVlF0aci15oa37BXRTqPhYHnvm404VWy"
+  }
+ }
 ]
