@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Loop del stand | Loop del stand (voz Valentina, música más alta) | ES celu, ES TV (v2, cámara arreglada) | [carpeta](https://drive.google.com/drive/folders/1tx7Ffp2YLpA0rHR8mVsBgjdFNnbG28fw) | todavía sin lugar · `videos/loop/` |
 | 2026-10-22 | Tutoriales | Instructivo 5 · Encontrar lo que se dijo (voz Valentina) | ES compu, dividido (v2, 1:29) | [archivo](https://drive.google.com/file/d/1NuA17nvk-s4AphFzQRjZLPEyiE8JzNto/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 4 · Lo que ya sabe de cada video (voz Valentina) | ES compu, dividido (v4, 1:35) | [archivo](https://drive.google.com/file/d/1V73WEXwvBxxsLDEhiAyupbOz9hcZcOlb/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 3 · Encontrar con los filtros — v5 (título «3 de 11»; reemplaza la v4, guardada como …-v4-valentina.mp4) | ES compu, dividido (3:59) | [archivo](https://drive.google.com/file/d/1jwxre6Pt8vZsVFkcNOL13lDAT1uNCk3R/view) | Instructivos |
