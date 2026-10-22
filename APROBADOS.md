@@ -12,6 +12,9 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Tutoriales | Instructivo 5 · Encontrar lo que se dijo (voz Valentina) | ES compu, dividido (v2, 1:29) | [archivo](https://drive.google.com/file/d/1NuA17nvk-s4AphFzQRjZLPEyiE8JzNto/view) | Instructivos |
+| 2026-10-22 | Tutoriales | Instructivo 4 · Lo que ya sabe de cada video (voz Valentina) | ES compu, dividido (v4, 1:35) | [archivo](https://drive.google.com/file/d/1V73WEXwvBxxsLDEhiAyupbOz9hcZcOlb/view) | Instructivos |
+| 2026-10-22 | Tutoriales | Instructivo 3 · Encontrar con los filtros — v5 (título «3 de 11»; reemplaza la v4, guardada como …-v4-valentina.mp4) | ES compu, dividido (3:59) | [archivo](https://drive.google.com/file/d/1jwxre6Pt8vZsVFkcNOL13lDAT1uNCk3R/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 8 · Abrir sin exponer | ES celu, ES TV (v2, balanza centrada) | [carpeta](https://drive.google.com/drive/folders/1ApY1AZ9Gx6-MB8yeFzsotvfvYAhWH2dB) | [#v-frase8](https://camussicamusica.github.io/videus/#v-frase8) |
 | 2026-10-23 | Frases de Seba | Frase 10 · Material con precio | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1U_X4OcxqSb9cV6ZWABa6Zud7z4KSdP6y) | [#v-frase10](https://camussicamusica.github.io/videus/#v-frase10) |
 | 2026-10-23 | Frases de Seba | Frase 9 · Empezá a tu medida | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1Qz3GgEX3CzN4OsWvimOzx8ze1EA17MKm) | [#v-frase9](https://camussicamusica.github.io/videus/#v-frase9) |
