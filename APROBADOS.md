@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Tutoriales | Tutorial 1 · Entrar y ubicarse (audio viejo, sin el login) | ES compu, dividido (v3, 2:06) | [carpeta](https://drive.google.com/drive/folders/1aS6_4lmO1XzehXVw8LdfxeCbjIglOBgH) · `ViDeus-Catalog-tutorial-01-entrar-es-horizontal.mp4` | Instructivos · `videos/tutoriales/tutorial-01-entrar-es-horizontal.mp4` |
 | 2026-10-23 | Capítulos largos | Cap. 6 · Inversores | ES TV (v7, voz B), EN TV (v7) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `ViDeus-Catalog-cap6-inversores-<es|en>-horizontal.mp4` | todavía sin pestaña · `videos/largos/cap6-inversores-<es|en>-horizontal.mp4` |
 | 2026-10-23 | Capítulos largos | Cap. 5 · Lo que tu archivo puede hacer | ES TV (v2, voz B), EN TV (v2) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `ViDeus-Catalog-cap5-lo-que-tu-archivo-puede-hacer-<es|en>-horizontal.mp4` | todavía sin pestaña · `videos/largos/cap5-lo-que-tu-archivo-puede-hacer-<es|en>-horizontal.mp4` |
 | 2026-10-23 | Capítulos largos | Cap. 4 · Instituciones | ES TV (v4), EN TV (v4) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `ViDeus-Catalog-cap4-instituciones-<es|en>-horizontal.mp4` | todavía sin pestaña · `videos/largos/cap4-instituciones-<es|en>-horizontal.mp4` |
