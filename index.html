@@ -180,6 +180,7 @@ section.extra h2 { font-family: var(--display); font-weight: 700; font-size: 26p
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
 /* ---- V3: Final first, iterations in a side drawer ---- */
+[hidden] { display: none !important; }  /* .series sets display: grid, which beat the hidden attribute */
 .final-hero { padding: 28px 0 8px; }
 .final-hero .kicker { font: 500 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
 .final-hero h1 { font: 800 clamp(34px, 6vw, 56px)/1.02 var(--display); margin: 6px 0 10px; }
