@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Tutoriales | Instructivo 2 · Subir archivos y seguir el proceso (voz Valentina) | ES compu, dividido (v1, 2:23) | [archivo](https://drive.google.com/file/d/1zfMDjgUhxjsu1c-zazjkpfT18Big-rOO/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 3 · Encontrar con los filtros (v4, voz Valentina; reemplaza la v3 con Elena) | ES compu, dividido (3:59) | [archivo](https://drive.google.com/file/d/1jwxre6Pt8vZsVFkcNOL13lDAT1uNCk3R/view) · v3 guardada como `…-v3-elena.mp4` | Instructivos |
 | 2026-10-23 | Capítulos largos | Cap. 4 · Productoras | ES TV (v5, frases clave + marco), EN TV (v5) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `ViDeus-Catalog-cap4-productoras-<es|en>-horizontal.mp4` | Capítulos · `videos/largos/cap4-productoras-<es|en>-horizontal.mp4` |
 | 2026-10-23 | Tutoriales | Tutorial 1 · Entrar y ubicarse (audio viejo, sin el login) | ES compu, dividido (v3, 2:06) | [carpeta](https://drive.google.com/drive/folders/1aS6_4lmO1XzehXVw8LdfxeCbjIglOBgH) · `ViDeus-Catalog-tutorial-01-entrar-es-horizontal.mp4` | Instructivos · `videos/tutoriales/tutorial-01-entrar-es-horizontal.mp4` |
