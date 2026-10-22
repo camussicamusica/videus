@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Frases de Seba | Frase 8 · Abrir sin exponer | ES celu, ES TV (v2, balanza centrada) | [carpeta](https://drive.google.com/drive/folders/1ApY1AZ9Gx6-MB8yeFzsotvfvYAhWH2dB) | [#v-frase8](https://camussicamusica.github.io/videus/#v-frase8) |
 | 2026-10-23 | Frases de Seba | Frase 10 · Material con precio | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1U_X4OcxqSb9cV6ZWABa6Zud7z4KSdP6y) | [#v-frase10](https://camussicamusica.github.io/videus/#v-frase10) |
 | 2026-10-23 | Frases de Seba | Frase 9 · Empezá a tu medida | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1Qz3GgEX3CzN4OsWvimOzx8ze1EA17MKm) | [#v-frase9](https://camussicamusica.github.io/videus/#v-frase9) |
 | 2026-10-23 | Frases de Seba | Frase 7 · ¿Quién fue? | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1GqW-1-V3gJQ4Y1kPlbzBVMTcRL2-MvTF) | [#v-frase7](https://camussicamusica.github.io/videus/#v-frase7) |
