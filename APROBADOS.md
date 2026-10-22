@@ -12,6 +12,8 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Frases de Seba | Frase 10 · Material con precio | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1U_X4OcxqSb9cV6ZWABa6Zud7z4KSdP6y) | [#v-frase10](https://camussicamusica.github.io/videus/#v-frase10) |
+| 2026-10-23 | Frases de Seba | Frase 9 · Empezá a tu medida | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1Qz3GgEX3CzN4OsWvimOzx8ze1EA17MKm) | [#v-frase9](https://camussicamusica.github.io/videus/#v-frase9) |
 | 2026-10-23 | Frases de Seba | Frase 7 · ¿Quién fue? | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1GqW-1-V3gJQ4Y1kPlbzBVMTcRL2-MvTF) | [#v-frase7](https://camussicamusica.github.io/videus/#v-frase7) |
 | 2026-10-23 | Frases de Seba | Frase 6 · Busca lo que significa | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1qz6uxXD3f-axLOEXvFO8MFfHj-S5h59r) | [#v-frase6](https://camussicamusica.github.io/videus/#v-frase6) |
 | 2026-10-23 | Frases de Seba | Frase 5 · Quién habla | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/19KvTUEBL14OJw9Ui7EUg_CCbBMefFvWK) | [#v-frase5](https://camussicamusica.github.io/videus/#v-frase5) |
@@ -30,4 +32,4 @@ Página: https://camussicamusica.github.io/videus/
 | 2026-10-22 | Frases de Seba | Frase 2 · Subilo y olvidate | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1b-K8Mm5SklyqDP3BKuvb6m6IqA1dSCKV) | [#v-frase2](https://camussicamusica.github.io/videus/#v-frase2) |
 | 2026-10-21 | V3 · Final | 29 videos cortos, ES y EN, celu y compu | 4 por video | `5 - Videos finales/version-3-final/` | [Final](https://camussicamusica.github.io/videus/) |
 
-Pendiente de registrar, cuando Sofía los apruebe: tutoriales, frases 4, 8, 9 y 10 y las versiones en inglés de las frases.
+Pendiente de registrar, cuando Sofía los apruebe: tutoriales, frases 4 y 8 y las versiones en inglés de las frases.
