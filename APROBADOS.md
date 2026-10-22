@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Capítulos largos | Cap. 4 · Productoras (v6: balanza corregida, club = trofeo; reemplaza la v5) | ES TV, EN TV (v6) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · v5 guardada como `…-horizontal-v5.mp4` | Capítulos |
 | 2026-10-22 | Tutoriales | Instructivo 10 · Que ViDeus Catalog corte por vos (voz Valentina) — Sofía: «de los mejores» | ES compu, dividido (v1, 1:47) | [archivo](https://drive.google.com/file/d/1_4VrhhFmmlA4354_bJabOpC4-WUMxgr6/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 8 · Pedirle bien al Asistente (voz Valentina) | ES compu, dividido (v1, 1:25) | [archivo](https://drive.google.com/file/d/1kVlF0aci15oa37BXRTqPhYHnvm404VWy/view) | Instructivos |
 | 2026-10-22 | Loop del stand | Loop del stand (voz Valentina, música más alta) | ES celu, ES TV (v2, cámara arreglada) | [carpeta](https://drive.google.com/drive/folders/1tx7Ffp2YLpA0rHR8mVsBgjdFNnbG28fw) | todavía sin lugar · `videos/loop/` |
