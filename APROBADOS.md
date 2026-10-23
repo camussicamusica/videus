@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Frases de Seba | Frase 5 · Quién habla (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/19KvTUEBL14OJw9Ui7EUg_CCbBMefFvWK) | [#v-frase5](https://camussicamusica.github.io/videus/#v-frase5) |
 | 2026-10-23 | Frases de Seba | Frase 2 · Subilo y olvidate (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/1b-K8Mm5SklyqDP3BKuvb6m6IqA1dSCKV) | [#v-frase2](https://camussicamusica.github.io/videus/#v-frase2) |
 | 2026-10-23 | Frases de Seba | Frase 4 · De un vistazo | ES celu, ES TV (v1) | [carpeta](https://drive.google.com/drive/folders/1F00cSt7V78ozXzLwfCVvmY-qzn7UvYKg) | [#v-frase4](https://camussicamusica.github.io/videus/#v-frase4) |
 | 2026-10-23 | Capítulos largos | Versiones de celular (iconos arreglados): cap1-el-problema es, cap1-el-problema en, cap2-como-funciona es, cap2-como-funciona en, cap3-por-que-confiar es, cap3-por-que-confiar en, cap4-productoras es, cap4-productoras en, cap4-instituciones es | EN + ES celu (v2) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `…-vertical.mp4` | Capítulos |
