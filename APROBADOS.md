@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Tutoriales | Instructivo 6 · Encontrar a una persona — v3 (suma el Agrupado inteligente, que sale del 11; reemplaza la v2, guardada como …-v2.mp4) | ES compu, dividido (2:08) | [archivo](https://drive.google.com/file/d/1EobI3u-fUk3uZ1TOsa5Klnr_SZDRekx_/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 8 · Abrir sin exponer (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1ApY1AZ9Gx6-MB8yeFzsotvfvYAhWH2dB) | [#v-frase8](https://camussicamusica.github.io/videus/#v-frase8) |
 | 2026-10-22 | Tutoriales | Instructivo 6 · Encontrar a una persona (voz Valentina) | ES compu, dividido (v2, 1:37) | [archivo](https://drive.google.com/file/d/1ScMOllXnANM8VBqJsnczvmNoTkgm5jxJ/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 5 · Quién habla (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/19KvTUEBL14OJw9Ui7EUg_CCbBMefFvWK) | [#v-frase5](https://camussicamusica.github.io/videus/#v-frase5) |
