@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Capítulos largos | Versiones de celular (iconos arreglados): cap1-el-problema es, cap1-el-problema en, cap2-como-funciona es, cap2-como-funciona en, cap3-por-que-confiar es, cap3-por-que-confiar en, cap4-productoras es, cap4-productoras en, cap4-instituciones es | EN + ES celu (v2) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `…-vertical.mp4` | Capítulos |
 | 2026-10-22 | Tutoriales | Instructivo 7 · Encontrar escenas e imágenes (voz Valentina; el parque solar y el atardecer dibujados) | ES compu, dividido (v2, 1:11) | [archivo](https://drive.google.com/file/d/1Ho8PV11DFZOKy05ep05bGBNbq0YfmGVa/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 12 · Conectar tu IA al archivo (voz Valentina; MCP, app genérica «Tu IA») | ES compu, dividido (v2, 1:20) | [archivo](https://drive.google.com/file/d/15M5Lp9C5GEQQVoIOmRrh6AjtDD7dFt5F/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 13 · Pedirle al archivo desde tu IA (voz Valentina; MCP, app genérica «Tu IA») | ES compu, dividido (v2, 1:13) | [archivo](https://drive.google.com/file/d/1fA6xblQJmKcFMuXTIUcWAmlEnKpbyXFp/view) | Instructivos |
