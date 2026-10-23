@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Frases de Seba | Frase 8 · Abrir sin exponer (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1ApY1AZ9Gx6-MB8yeFzsotvfvYAhWH2dB) | [#v-frase8](https://camussicamusica.github.io/videus/#v-frase8) |
 | 2026-10-22 | Tutoriales | Instructivo 6 · Encontrar a una persona (voz Valentina) | ES compu, dividido (v2, 1:37) | [archivo](https://drive.google.com/file/d/1ScMOllXnANM8VBqJsnczvmNoTkgm5jxJ/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 5 · Quién habla (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/19KvTUEBL14OJw9Ui7EUg_CCbBMefFvWK) | [#v-frase5](https://camussicamusica.github.io/videus/#v-frase5) |
 | 2026-10-22 | Frases de Seba | Frase 2 · Subilo y olvidate (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1b-K8Mm5SklyqDP3BKuvb6m6IqA1dSCKV) | [#v-frase2](https://camussicamusica.github.io/videus/#v-frase2) |
