@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Loop del stand | Loop del stand (inglés, voz Ava) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1tx7Ffp2YLpA0rHR8mVsBgjdFNnbG28fw) | todavía sin lugar · `videos/loop/` |
 | 2026-10-23 | Frases de Seba | Frase 4 · De un vistazo (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1F00cSt7V78ozXzLwfCVvmY-qzn7UvYKg) | [#v-frase4](https://camussicamusica.github.io/videus/#v-frase4) |
 | 2026-10-23 | Capítulos largos | Versiones de celular (iconos arreglados): cap4-instituciones en, cap5-lo-que-tu-archivo-puede-hacer es, cap5-lo-que-tu-archivo-puede-hacer en, cap6-inversores es, cap6-inversores en | EN + ES celu (v2) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `…-vertical.mp4` | Capítulos |
 | 2026-10-23 | Frases de Seba | Frase 10 · Material con precio (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/1U_X4OcxqSb9cV6ZWABa6Zud7z4KSdP6y) | [#v-frase10](https://camussicamusica.github.io/videus/#v-frase10) |
