@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Tutoriales | Instructivo 9 · Pedirle ideas de reels (voz Valentina) | ES compu, dividido (v1, 0:57) | [archivo](https://drive.google.com/file/d/1JUfRD4GJu6bmjlsAFgV3fk_TIWy-Q2pU/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 9 · Empezá a tu medida (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1Qz3GgEX3CzN4OsWvimOzx8ze1EA17MKm) | [#v-frase9](https://camussicamusica.github.io/videus/#v-frase9) |
 | 2026-10-22 | Tutoriales | Instructivo 6 · Encontrar a una persona — v3 (suma el Agrupado inteligente, que sale del 11; reemplaza la v2, guardada como …-v2.mp4) | ES compu, dividido (2:08) | [archivo](https://drive.google.com/file/d/1EobI3u-fUk3uZ1TOsa5Klnr_SZDRekx_/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 8 · Abrir sin exponer (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1ApY1AZ9Gx6-MB8yeFzsotvfvYAhWH2dB) | [#v-frase8](https://camussicamusica.github.io/videus/#v-frase8) |
