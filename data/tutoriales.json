@@ -88,5 +88,23 @@
   "dl": {
    "es-horizontal": "1HOI9iLHi66CZElW1ul4V0nUtj4Vbw1-F"
   }
+ },
+ {
+  "id": "tutorial-12-conectar-ia",
+  "t": "Instructivo 12 · Conectar tu IA al archivo",
+  "col": "azul",
+  "n": "CONFIGURACIÓN. Conectar ChatGPT, Claude o Gemini a ViDeus Catalog por MCP: Plugins o Conectores, la dirección del equipo, usuario y contraseña, y la lista de herramientas. Voz Valentina. 1:20.",
+  "dl": {
+   "es-horizontal": "15M5Lp9C5GEQQVoIOmRrh6AjtDD7dFt5F"
+  }
+ },
+ {
+  "id": "tutorial-13-pedir-desde-ia",
+  "t": "Instructivo 13 · Pedirle al archivo desde tu IA",
+  "col": "azul",
+  "n": "ASISTENTE. Pedirle a tu IA un compilado de un partido (inicio, final, goles, rojas, ocasiones, pocos cortes) y recibirlo como MP4; en baja o en alta; solo goles; todas las notas de un tema en una pieza. Voz Valentina. 1:13.",
+  "dl": {
+   "es-horizontal": "1fA6xblQJmKcFMuXTIUcWAmlEnKpbyXFp"
+  }
  }
 ]

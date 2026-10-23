@@ -12,6 +12,8 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-22 | Tutoriales | Instructivo 12 · Conectar tu IA al archivo (voz Valentina; MCP, app genérica «Tu IA») | ES compu, dividido (v2, 1:20) | [archivo](https://drive.google.com/file/d/15M5Lp9C5GEQQVoIOmRrh6AjtDD7dFt5F/view) | Instructivos |
+| 2026-10-22 | Tutoriales | Instructivo 13 · Pedirle al archivo desde tu IA (voz Valentina; MCP, app genérica «Tu IA») | ES compu, dividido (v2, 1:13) | [archivo](https://drive.google.com/file/d/1fA6xblQJmKcFMuXTIUcWAmlEnKpbyXFp/view) | Instructivos |
 | 2026-10-22 | Frases de Seba | Frase 1 · Todos en el mismo archivo | ES celu, ES TV (v2, sistema nuevo) | [carpeta](https://drive.google.com/drive/folders/1dWMud_S2TZhkjvHO_h9UVa3-BvQGwpn0) | [#v-frase1](https://camussicamusica.github.io/videus/#v-frase1) |
 | 2026-10-22 | Tutoriales | Instructivo 11 · Para administradores (voz Valentina; sin el Agrupado, que pasó al 6) | ES compu, dividido (v2, 1:28) | [archivo](https://drive.google.com/file/d/1HOI9iLHi66CZElW1ul4V0nUtj4Vbw1-F/view) | Instructivos |
 | 2026-10-22 | Tutoriales | Instructivo 9 · Pedirle ideas de reels (voz Valentina) | ES compu, dividido (v1, 0:57) | [archivo](https://drive.google.com/file/d/1JUfRD4GJu6bmjlsAFgV3fk_TIWy-Q2pU/view) | Instructivos |
