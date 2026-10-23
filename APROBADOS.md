@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-23 | Capítulos largos | Versiones de celular (iconos arreglados): cap4-instituciones en, cap5-lo-que-tu-archivo-puede-hacer es, cap5-lo-que-tu-archivo-puede-hacer en, cap6-inversores es, cap6-inversores en | EN + ES celu (v2) | [carpeta](https://drive.google.com/drive/folders/1Y7BUI0YlElp8aGDOPwXpvwk65o5srVdp) · `…-vertical.mp4` | Capítulos |
 | 2026-10-23 | Frases de Seba | Frase 10 · Material con precio (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/1U_X4OcxqSb9cV6ZWABa6Zud7z4KSdP6y) | [#v-frase10](https://camussicamusica.github.io/videus/#v-frase10) |
 | 2026-10-23 | Frases de Seba | Frase 7 · Quién fue (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/1GqW-1-V3gJQ4Y1kPlbzBVMTcRL2-MvTF) | [#v-frase7](https://camussicamusica.github.io/videus/#v-frase7) |
 | 2026-10-23 | Frases de Seba | Frase 5 · Quién habla (iconos arreglados, reemplaza la v1) | ES celu, ES TV (v2) | [carpeta](https://drive.google.com/drive/folders/19KvTUEBL14OJw9Ui7EUg_CCbBMefFvWK) | [#v-frase5](https://camussicamusica.github.io/videus/#v-frase5) |
