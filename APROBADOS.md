@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-10-27 | V3 · Final | Gurú en inglés, versión celu: la tarjeta «What was said» ahora está en inglés (reemplaza la v1, que queda en Drive como `…-vertical-v1-tarjeta-es.mp4`) | EN celu (v2) | [archivo](https://drive.google.com/file/d/1DQXb_9EmiFXK944qHCT-KS9u2AXO7oKN/view) | [V3](https://camussicamusica.github.io/videus/v3/) |
 | 2026-10-27 | V3 · Final | Los 29 videos rehechos a pantalla completa en compu (antes eran el diseño de celu corrido a la izquierda; reemplaza la v1, que queda en Drive como `…-horizontal-v1-celu-corrido.mp4`) | ES TV + EN TV (v2, 58 archivos) | [carpeta](https://drive.google.com/drive/folders/1GNewe4ExfeyR5PTGrrjfxGB5fm0yWQOo) | [V3](https://camussicamusica.github.io/videus/v3/) |
 | 2026-10-23 | Loop del stand | Loop del stand (inglés, voz Ava) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1tx7Ffp2YLpA0rHR8mVsBgjdFNnbG28fw) | todavía sin lugar · `videos/loop/` |
 | 2026-10-23 | Frases de Seba | Frase 4 · De un vistazo (inglés) | EN celu, EN TV (v1) | [carpeta](https://drive.google.com/drive/folders/1F00cSt7V78ozXzLwfCVvmY-qzn7UvYKg) | [#v-frase4](https://camussicamusica.github.io/videus/#v-frase4) |
