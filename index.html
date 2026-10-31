@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>ViDeus Catalog · Videos</title>
+<title>Videos 3Way · ViDeus</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
@@ -43,48 +43,94 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 .nums input:focus-visible { outline: 2px solid var(--tst); outline-offset: 1px; }
 .nums small { color: var(--muted); font: 500 12px var(--mono); }
 .res .go.pdf { margin-top: 4px; }
-/* the diagnosis: hidden on screen, the only thing printed (3way.com.ar look: white, slate, indigo, Outfit + Inter) */
+/* the diagnosis: hidden on screen, the only thing printed. Same look as the videos: navy, wall of screens, five-station line */
 #report { display: none; }
 @media print {
-  @page { size: A4; margin: 14mm 14mm 16mm; }
-  body.printing { background: #fff !important; }
+  @page { size: A4; margin: 0; }
+  html, body.printing { background: #080d1c !important; margin: 0 !important; padding: 0 !important; }
   body.printing > *:not(#report) { display: none !important; }
   body.printing #report { display: block; }
 }
-#report { color: #0f172a; font: 400 10.5pt/1.5 "Inter", Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-#report h1, #report h2, #report h3, #report .rp-brand, #report .kpi b { font-family: "Outfit", Arial, sans-serif; color: #0f172a; }
-#report .rp-top { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 2px solid #0f172a; }
-#report .rp-top svg { width: 30px; height: 30px; }
-#report .rp-brand { font-weight: 800; font-size: 18pt; letter-spacing: -.01em; }
-#report .rp-tag { margin-left: auto; font: 600 8pt "Inter", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #4f46e5; }
-#report h1 { font-weight: 800; font-size: 26pt; line-height: 1.05; margin: 22px 0 6px; letter-spacing: -.02em; }
-#report h1 em { font-style: normal; color: #4f46e5; }
-#report .rp-date { color: #475569; margin: 0 0 18px; }
-#report .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
-#report .kpi { border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; background: #f8fafc; }
-#report .kpi b { display: block; font-weight: 800; font-size: 22pt; line-height: 1.1; color: #4f46e5; }
-#report .kpi span { color: #475569; font-size: 9pt; }
-#report h2 { font-weight: 700; font-size: 14pt; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
-#report .today { display: grid; grid-template-columns: 1fr auto; gap: 0; margin: 0; }
-#report .today dt, #report .today dd { margin: 0; padding: 6px 0; border-bottom: 1px solid #f1f5f9; }
-#report .today dt { color: #475569; }
-#report .today dd { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
-#report .hl { margin: 10px 0 0; padding: 10px 14px; border-left: 4px solid #4f46e5; background: #eef2ff; border-radius: 0 8px 8px 0; }
-#report .hl p { margin: 2px 0; }
-#report .pains { margin: 8px 0 0; padding-left: 18px; color: #1e293b; }
-#report .prod { display: block; background: #fff; color: #0f172a; break-inside: avoid; border: 1px solid #e2e8f0; border-top: 4px solid var(--pc); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; }
-#report .prod .pri { font: 600 8pt "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--pc); }
-#report .prod h3 { font-weight: 700; font-size: 13pt; margin: 2px 0 4px; }
-#report .prod p { margin: 0 0 6px; color: #334155; }
-#report .prod ul { margin: 0; padding-left: 18px; }
-#report .prod li { margin: 2px 0; }
-#report .prod .you { margin: 8px 0 0; padding-top: 6px; border-top: 1px dashed #e2e8f0; color: #0f172a; }
-#report .next { break-inside: avoid; }
-#report .next ol { margin: 0; padding-left: 18px; }
-#report .cta { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; background: #0f172a; color: #fff; border-radius: 12px; padding: 14px 18px; }
-#report .cta b { font: 700 15pt "Outfit", sans-serif; color: #fff; }
-#report .cta span { color: #00e5ff; font-weight: 600; }
-#report .rp-foot { margin-top: 16px; color: #64748b; font-size: 8.5pt; }
+#report { color: #fff; font: 400 10pt/1.5 "IBM Plex Sans", Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+#report * { box-sizing: border-box; }
+#report .pg { position: relative; width: 210mm; height: 297mm; overflow: hidden; padding: 15mm 15mm 14mm; background: #080d1c; break-after: page; display: flex; flex-direction: column; }
+#report .pg:last-child { break-after: auto; }
+#report .pg::before { content: ""; position: absolute; inset: 0; background: url(diag/fondo.jpg) center / cover no-repeat; opacity: .95; }
+#report .pg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,13,28,.05) 0%, rgba(8,13,28,.55) 40%, rgba(8,13,28,.93) 70%, rgba(8,13,28,.97) 100%); }
+#report .pg > * { position: relative; z-index: 1; }
+#report .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12mm; }
+#report .year { margin-top: 10mm; display: grid; grid-template-columns: auto 1fr; gap: 7mm; align-items: center; padding: 7mm 8mm; border-radius: 4mm; border: 1px solid rgba(0,229,255,.35); background: rgba(0,229,255,.06); }
+#report .year b { font: 800 40pt/1 "Archivo", sans-serif; color: #00e5ff; white-space: nowrap; }
+#report .year span { color: #dfe5f2; font-size: 11pt; }
+#report .top img { height: 8mm; width: auto; }
+#report .eyebrow { font: 600 7.5pt "IBM Plex Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: #8b95ad; }
+#report .eyebrow.c { color: #00e5ff; }
+#report h1, #report h2 { font-family: "Archivo", "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; margin: 0; color: #fff; line-height: .98; }
+#report h1 { font-size: 40pt; margin: 4mm 0 5mm; }
+#report h2 { font-size: 24pt; margin: 3mm 0 7mm; }
+#report h1 .a, #report h2 .a { color: #00e5ff; }
+#report .lede { font-size: 11.5pt; color: #c6cde0; max-width: 150mm; margin: 0; }
+#report .grow { flex: 1; }
+/* the line */
+#report .line { position: relative; display: grid; grid-template-columns: 12mm repeat(5, 1fr) 12mm; align-items: start; margin: 12mm 0 4mm; }
+#report .line::before { content: ""; position: absolute; left: 3mm; right: 3mm; top: 15.5mm; height: 1.4px; background: #cfd6e6; opacity: .7; }
+#report .end { display: grid; justify-items: center; gap: 2.5mm; padding-top: 13mm; }
+#report .end i { width: 5.5mm; height: 5.5mm; border-radius: 50%; border: 1.4px solid #cfd6e6; background: #080d1c; }
+#report .end span { font: 600 6.5pt "IBM Plex Mono", monospace; letter-spacing: .14em; text-transform: uppercase; color: #8b95ad; white-space: nowrap; }
+#report .st { display: grid; justify-items: center; gap: 2.2mm; text-align: center; }
+#report .st .verb { font: 800 11pt "Archivo", sans-serif; text-transform: uppercase; color: var(--pc); height: 6mm; }
+#report .st .dot { width: 13mm; height: 13mm; border-radius: 50%; display: grid; place-items: center; background: var(--pc); }
+#report .st .dot svg { width: 6.5mm; height: 6.5mm; fill: none; stroke: #080d1c; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#report .st .nm { font: 700 7.5pt "Archivo", sans-serif; color: #fff; }
+#report .st.off .verb { color: transparent; }
+#report .st.off .dot { background: #0d1426; border: 1.4px solid #3a4560; }
+#report .st.off .dot svg { stroke: #56627f; }
+#report .st.off .nm { color: #56627f; }
+/* numbers */
+#report .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+#report .kpi { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); border-radius: 3mm; padding: 5mm; }
+#report .kpi b { display: block; font: 800 24pt/1 "Archivo", sans-serif; color: #00e5ff; margin-bottom: 2mm; }
+#report .kpi span { color: #c6cde0; font-size: 9pt; }
+#report .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 7mm; padding-top: 4mm; border-top: 1px solid rgba(255,255,255,.12); font: 500 7pt "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: #6f7a94; }
+/* today */
+#report .cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 9mm; }
+#report .today { margin: 0; }
+#report .today div { display: grid; grid-template-columns: 1fr auto; gap: 4mm; padding: 2.6mm 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+#report .today dt { color: #a9b2c8; font-size: 9pt; }
+#report .today dd { margin: 0; font-weight: 600; text-align: right; }
+#report .stats { display: grid; gap: 4mm; align-content: start; }
+#report .stat { border-left: 1.2mm solid var(--pc, #00e5ff); background: rgba(255,255,255,.04); border-radius: 0 3mm 3mm 0; padding: 4mm 5mm; }
+#report .stat b { display: block; font: 800 26pt/1 "Archivo", sans-serif; color: var(--pc, #00e5ff); }
+#report .stat span { color: #c6cde0; font-size: 9pt; }
+#report .pains { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; }
+#report .pains span { border: 1px solid rgba(255,77,66,.55); color: #ffb3ad; border-radius: 99px; padding: 1.6mm 4mm; font-size: 8.5pt; }
+#report .h3 { font: 800 10pt "Archivo", sans-serif; text-transform: uppercase; letter-spacing: .04em; margin: 9mm 0 0; color: #fff; }
+/* products */
+#report .prods { display: grid; grid-template-columns: 1fr; gap: 7mm; }
+#report .prod { display: grid; grid-template-columns: 74mm 1fr; gap: 7mm; align-items: start; break-inside: avoid; background: none; border: 0; padding: 0; }
+#report .prod .shot { border-radius: 3mm; overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-top: 1.2mm solid var(--pc); }
+#report .prod .shot img { display: block; width: 100%; height: auto; }
+#report .prod .pri { font: 600 7pt "IBM Plex Mono", monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--pc); }
+#report .prod h3 { font: 800 16pt/1.05 "Archivo", sans-serif; margin: 1.5mm 0 2mm; color: #fff; }
+#report .prod h3 .v { color: var(--pc); }
+#report .prod p { margin: 0 0 2.5mm; color: #c6cde0; font-size: 9.5pt; }
+#report .prod ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 1.4mm; }
+#report .prod li { position: relative; padding-left: 4.5mm; font-size: 9pt; color: #e6eaf3; }
+#report .prod li::before { content: ""; position: absolute; left: 0; top: 1.9mm; width: 1.8mm; height: 1.8mm; border-radius: 50%; background: var(--pc); }
+#report .prod .you { margin-top: 3mm; padding: 2.5mm 3.5mm; border-radius: 2mm; background: color-mix(in srgb, var(--pc) 13%, transparent); color: #fff; font-size: 9pt; }
+#report .prod .you b { color: var(--pc); font: 700 9pt "IBM Plex Sans", sans-serif; }
+/* demo */
+#report .agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 4mm; }
+#report .agenda li { display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; align-items: center; padding: 4mm 5mm; border: 1px solid rgba(255,255,255,.12); border-radius: 3mm; background: rgba(255,255,255,.035); }
+#report .agenda .n { width: 12mm; height: 12mm; border-radius: 50%; display: grid; place-items: center; background: var(--pc); color: #080d1c; font: 800 13pt "Archivo", sans-serif; }
+#report .agenda b { display: block; font: 800 11pt "Archivo", sans-serif; }
+#report .agenda span { color: #c6cde0; font-size: 9.5pt; }
+#report .cta { margin-top: 12mm; display: grid; justify-items: center; gap: 5mm; text-align: center; }
+#report .cta .lead { font: 800 22pt/1.05 "Archivo", sans-serif; text-transform: uppercase; }
+#report .cta .lineimg { width: 100%; height: auto; border-radius: 3mm; margin-bottom: 3mm; }
+#report .cta .btn { background: #00e5ff; color: #080d1c; font: 800 13pt "Archivo", sans-serif; border-radius: 99px; padding: 4mm 11mm; }
+#report .cta .url { font: 600 10pt "IBM Plex Mono", monospace; color: #00e5ff; letter-spacing: .06em; }
+#report .note { color: #6f7a94; font-size: 7.5pt; margin-top: 6mm; max-width: 160mm; }
 /* the client test, in its own colour */
 .tabs button.tst { color: var(--tst); }
 .tabs button.tst[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--tst); }
@@ -296,10 +342,10 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">3Way · ViDeus Catalog · actualizado el 31 oct 2026</div>
-    <h1>Videos <em>ViDeus Catalog</em></h1>
-    <p class="lede">Capítulos, publicidades e instructivos de ViDeus Catalog, de 3Way. Empezá por el Top 10: los diez que mejor salieron. Cada video está en español y, cuando existe, en inglés; «Descargar» baja el original.</p>
-    <div class="progress"><div><span class="k">Listo para ver</span><span class="v"><b>7</b>capítulos · <b>40</b>publicidades · <b>13</b>instructivos</span></div><div class="doing"><span class="k">En producción</span><span class="v"><b>1</b>piezas nuevas · <b>10</b>frases en inglés · instructivos en celu e inglés</span></div></div>
+    <div class="eyebrow">3Way · Todos los productos ViDeus · actualizado el 31 oct 2026</div>
+    <h1>Videos <em>3Way</em></h1>
+    <p class="lede">Los videos de todos los productos ViDeus de 3Way: Catalog, Clipping, Auditor, Multiviewer y Round Robin. Arriba, la primera ronda de ViDeus Catalog (empezá por el Top 10); debajo, Round 2 con el resto de los productos y un test para clientes. Cada video está en español y, cuando existe, en inglés; «Descargar» baja el original.</p>
+    <div class="progress"><div><span class="k">Listo para ver</span><span class="v"><b>7</b>capítulos · <b>40</b>publicidades · <b>13</b>instructivos · <b>5</b>videos Round 2 · <b>1</b>test para clientes</span></div><div class="doing"><span class="k">En producción</span><span class="v"><b>1</b>video de Round Robin · Round 2 en celu e inglés · <b>10</b>frases en inglés · instructivos en celu e inglés</span></div></div>
     
   </header>
 
@@ -809,37 +855,70 @@ const BEN = {
   clipping: ["Corta mientras sale al aire.", "Le decís qué buscar y arma el clip solo, con título y resumen.", "Sale con tu logo y tus subtítulos.", "Y si querés, va directo a tu canal de YouTube."],
   catalog: ["Mira y escucha cada video de tu archivo, y lo transcribe.", "Reconoce caras y voces, y lee lo que aparece en pantalla.", "Le preguntás con tus palabras y te lleva al momento justo.", "Corre en tus propios servidores: el archivo no sale de tu red."],
 };
-const PC = { multiviewer: "#10b981", roundrobin: "#7c3aed", auditor: "#ca8a04", clipping: "#ef4444", catalog: "#0891b2" };
-const TIPO_EN = { canal: "canal de TV", cable: "cableoperadora", productora: "productora", regulador: "organización", institucion: "institución", otro: "empresa" };
-const MARK = '<svg viewBox="25 15 234 234" aria-hidden="true"><g fill="#196e9e"><path d="M53 235 111 85H139L81 235Z"/><path d="M105 235 183 30H212L134 235Z"/><path d="M158 235 203 115H231L186 235Z"/></g></svg>';
+const ORDER = ["multiviewer", "roundrobin", "auditor", "clipping", "catalog"];
+const PC = { multiviewer: "#3ddc84", roundrobin: "#a78bfa", auditor: "#ffd60a", clipping: "#ff4d42", catalog: "#00e5ff" };
+const VERB = { multiviewer: "Mirar", roundrobin: "Recorrer", auditor: "Guardar", clipping: "Cortar", catalog: "Ordenar" };
+const ICON = {
+  multiviewer: '<path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/>',
+  roundrobin: '<rect width="20" height="15" x="2" y="7" rx="2"/><path d="m17 2-5 5-5-5"/>',
+  auditor: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/>',
+  clipping: '<circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/>',
+  catalog: '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+};
+const TIPO_EN = { canal: "tu canal", cable: "tu grilla", productora: "tu productora", regulador: "tu control", institucion: "tu archivo", otro: "tu empresa" };
 function buildReport(d) {
-  const r = el("div", { id: "report" });
-  const top = el("div", { class: "rp-top" }); top.innerHTML = MARK; top.append(el("span", { class: "rp-brand", text: "3Way" }), el("span", { class: "rp-tag", text: "Diagnóstico ViDeus" }));
-  const h1 = el("h1"); h1.append("Diagnóstico para tu ", el("em", { text: TIPO_EN[d.tipo] }));
   const fecha = new Date().toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
-  r.append(top, h1, el("p", { class: "rp-date", text: "Armado con tus respuestas · " + fecha }));
-  const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus que te sirve" : "productos ViDeus que te sirven"], [d.lab(d.sen), "señales"]];
-  kpis.splice(1, 0, d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"]);
-  r.append(el("div", { class: "kpis" }, kpis.map(([b, s]) => el("div", { class: "kpi" }, [el("b", { text: b }), el("span", { text: s })]))));
-  r.append(el("h2", { text: "Cómo trabajan hoy" }));
-  const dl = el("dl", { class: "today" });
-  [["Tipo de empresa", TIPO[d.tipo]], ["Señales", d.lab(d.sen)], ["Archivo", d.lab(d.arch)], ["Dónde publican", d.lab(d.pub)], ...d.X.rows].forEach(([a, b]) => dl.append(el("dt", { text: a }), el("dd", { text: b })));
-  r.append(dl);
-  if (d.X.hl.length) r.append(el("div", { class: "hl" }, d.X.hl.map(([, t]) => el("p", { text: t }))));
-  if (d.dolores.length) { r.append(el("h3", { text: "Lo que te duele" })); r.append(el("ul", { class: "pains" }, d.dolores.map(k => el("li", { text: d.lab(k) })))); }
-  r.append(el("h2", { text: "Lo que te resuelve cada producto" }));
-  d.picks.forEach((k, i) => {
-    const mine = d.X.hl.filter(([p]) => p === k).map(([, t]) => t);
-    if (d.dolores.includes(k)) mine.unshift("Marcaste: «" + d.lab(k) + "».");
-    const kids = [el("span", { class: "pri", text: i === 0 ? "Prioridad 1 · empezar por acá" : "Prioridad " + (i + 1) }), el("h3", { text: PROD[k].name }), el("p", { text: PROD[k].what }), el("ul", {}, BEN[k].map(t => el("li", { text: t })))];
-    if (mine.length) kids.push(el("p", { class: "you", text: "Para vos: " + mine.join(" ") }));
-    r.append(el("div", { class: "prod", style: "--pc:" + PC[k] }, kids));
-  });
-  const next = el("div", { class: "next" }, [el("h2", { text: "Próximo paso: la demo" }), el("p", { text: "En la primera reunión te mostramos, con tu caso:" }), el("ol", {}, d.picks.map(k => el("li", { text: PROD[k].name + ": " + PROD[k].demo })))]);
-  const cta = el("div", { class: "cta" }, [el("b", { text: "Pedí tu demo" }), el("span", { text: "3way.com.ar" })]);
-  next.append(cta);
-  r.append(next, el("p", { class: "rp-foot", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos; en la demo vemos cuánto bajan con ViDeus. ViDeus es una familia de productos de 3Way." }));
-  return r;
+  const page = kids => el("section", { class: "pg" }, kids);
+  const top = () => el("div", { class: "top" }, [el("img", { src: "diag/logo.png", alt: "3Way" }), el("span", { class: "eyebrow c", text: "Diagnóstico ViDeus" })]);
+  const foot = n => el("div", { class: "foot" }, [el("span", { text: "ViDeus · de 3Way" }), el("span", { text: "3way.com.ar · " + n })]);
+  const head = (tag, a, b) => { const h = el(tag); h.append(a + " ", el("span", { class: "a", text: b })); return h; };
+  const svg = k => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 24 24"); s.innerHTML = ICON[k]; return s; };
+  // 1 · cover: who it is for, the line with their products lit, three numbers
+  const line = el("div", { class: "line" }, [el("div", { class: "end" }, [el("i"), el("span", { text: "En vivo" })]),
+    ...ORDER.map(k => el("div", { class: "st" + (d.picks.includes(k) ? "" : " off"), style: "--pc:" + PC[k] }, [el("span", { class: "verb", text: VERB[k] + "." }), el("span", { class: "dot" }, [svg(k)]), el("span", { class: "nm", text: PROD[k].name })])),
+    el("div", { class: "end" }, [el("i"), el("span", { text: "Archivo" })])]);
+  const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus para tu caso" : "productos ViDeus para tu caso"],
+    d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy se hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"],
+    [d.lab(d.sen), "señales hoy"]];
+  const cover = page([top(), el("div", { class: "grow" }),
+    el("span", { class: "eyebrow", text: TIPO[d.tipo] + " · " + fecha }),
+    head("h1", TIPO_EN[d.tipo] + ",", "en una sola línea."),
+    el("p", { class: "lede", text: "Lo armamos con tus respuestas: qué te sirve de ViDeus, en qué orden empezar, y cuánto tiempo se va hoy en tareas a mano." }),
+    line, el("div", { class: "kpis" }, kpis.map(([b, s]) => el("div", { class: "kpi" }, [el("b", { text: b }), el("span", { text: s })]))),
+    foot("1")]);
+  // 2 · how they work today
+  const dl = el("dl", { class: "today" }, [["Tipo de empresa", TIPO[d.tipo]], ["Señales", d.lab(d.sen)], ["Archivo", d.lab(d.arch)], ["Dónde publican", d.lab(d.pub)], ...d.X.rows]
+    .map(([a, b]) => el("div", {}, [el("dt", { text: a }), el("dd", { text: b })])));
+  const stats = el("div", { class: "stats" }, d.X.hl.map(([k, t]) => { const m = t.match(/^(≈ )?([\d.,]+ ?(horas|canales)?)/);
+    const big = m ? m[0].replace(" horas", " h").replace(" canales", "") : ""; const rest = m ? t.slice(m[0].length).replace(/^ /, "") : t;
+    return el("div", { class: "stat", style: k ? "--pc:" + PC[k] : "" }, [el("b", { text: big }), el("span", { text: rest })]); }));
+  const today = [top(), el("span", { class: "eyebrow", text: "01 · Tu punto de partida" }), head("h2", "Cómo trabajan", "hoy."),
+    el("div", { class: "cols" }, [dl, d.X.hl.length ? stats : el("div")])];
+  if (d.dolores.length) today.push(el("p", { class: "h3", text: "Lo que te duele" }), el("div", { class: "pains" }, d.dolores.map(k => el("span", { text: d.lab(k) }))));
+  if (d.X.hours) today.push(el("div", { class: "year" }, [el("b", { text: "≈ " + fmtN(Math.round(d.X.hours * 52)) + " h" }), el("span", { text: "al año en tareas que hoy se hacen a mano, según tus números. En la demo vemos cuánto de ese tiempo baja con ViDeus." })]));
+  today.push(el("div", { class: "grow" }), foot("2"));
+  const pages = [cover, page(today)];
+  // 3 · products, three per page, in priority order, each with its screen from the videos
+  const per = d.picks.length <= 3 ? 3 : Math.ceil(d.picks.length / 2);  // 4 → 2 + 2, 5 → 3 + 2: no half-empty page
+  for (let i = 0; i < d.picks.length; i += per) {
+    const blocks = d.picks.slice(i, i + per).map((k, j) => {
+      const n = i + j, mine = d.X.hl.filter(([p]) => p === k).map(([, t]) => t);
+      if (d.dolores.includes(k)) mine.unshift("Marcaste «" + d.lab(k) + "».");
+      const h = el("h3"); h.append(PROD[k].name.replace("ViDeus ", "ViDeus "), " ", el("span", { class: "v", text: "· " + VERB[k] }));
+      const txt = [el("span", { class: "pri", text: n === 0 ? "Prioridad 1 · empezar por acá" : "Prioridad " + (n + 1) }), h, el("p", { text: PROD[k].what }), el("ul", {}, BEN[k].map(t => el("li", { text: t })))];
+      if (mine.length) { const y = el("div", { class: "you" }); y.append(el("b", { text: "Para vos: " }), mine.join(" ")); txt.push(y); }
+      return el("div", { class: "prod", style: "--pc:" + PC[k] }, [el("div", { class: "shot" }, [el("img", { src: "diag/" + k + ".jpg", alt: "" })]), el("div", {}, txt)]);
+    });
+    pages.push(page([top(), el("span", { class: "eyebrow", text: "02 · Lo que te resuelve" }), head("h2", i ? "Y además," : "Qué te sirve,", i ? "esto." : "en orden."), el("div", { class: "prods" }, blocks), el("div", { class: "grow" }), foot(String(pages.length + 1))]));
+  }
+  // 4 · next step
+  pages.push(page([top(), el("span", { class: "eyebrow", text: "03 · Próximo paso" }), head("h2", "En la demo,", "con tu caso."),
+    el("ol", { class: "agenda" }, d.picks.map((k, i) => el("li", { style: "--pc:" + PC[k] }, [el("span", { class: "n", text: String(i + 1) }), el("div", {}, [el("b", { text: PROD[k].name }), el("span", { text: PROD[k].demo })])]))),
+    el("div", { class: "cta" }, [el("img", { class: "lineimg", src: "diag/linea.jpg", alt: "" }), el("span", { class: "lead", text: "De la señal al archivo." }), el("span", { class: "btn", text: "Pedí tu demo →" }), el("span", { class: "url", text: "3way.com.ar" })]),
+    el("div", { class: "grow" }),
+    el("p", { class: "note", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos: en la demo vemos cuánto bajan con ViDeus." }),
+    foot(String(pages.length + 1))]));
+  return el("div", { id: "report" }, pages);
 }
 function printReport(d) {
   document.getElementById("report")?.remove();
@@ -847,7 +926,8 @@ function printReport(d) {
   document.body.classList.add("printing");
   const done = () => { document.body.classList.remove("printing"); removeEventListener("afterprint", done); };
   addEventListener("afterprint", done);
-  try { window.print(); } catch (err) { done(); alert("Tu navegador no dejó abrir la impresión. Probá desde la página web de ViDeus."); }
+  const imgs = [...document.querySelectorAll("#report img")].map(i => i.decode ? i.decode().catch(() => {}) : null);
+  Promise.all(imgs).then(() => { try { window.print(); } catch (err) { done(); alert("Tu navegador no dejó abrir la impresión. Probá desde la página web de ViDeus."); } });
 }
 // pause other videos when one plays
 document.addEventListener("play", e => document.querySelectorAll("video").forEach(v => { if (v !== e.target) v.pause(); }), true);
