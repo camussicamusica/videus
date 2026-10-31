@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>ViDeus Catalog · Videos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +14,51 @@
   --muted: #9aa3a3;
   --orange: #e0623a;
   --azul: #2f8cff; --ambar: #f5b400; --gris: #00e5ff;
+  --r2: #a78bfa; --tst: #ff8fb3; --verde: #3ddc84; --rojo: #ff4d42; --amarillo: #ffd60a;
+}
+/* Round 2: the other 3Way products, in its own colour so it reads as the newest batch */
+.tabs button.r2 { color: var(--r2); }
+.tabs button.r2[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--r2); }
+.tabs button.r2 .new { font: 600 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--r2); color: var(--bg); border-radius: 4px; padding: 2px 6px; margin-left: 6px; }
+.r2-banner { border: 1px solid color-mix(in srgb, var(--r2) 55%, var(--line)); background: color-mix(in srgb, var(--r2) 8%, var(--panel)); border-radius: 12px; padding: 18px; display: grid; gap: 8px; }
+.r2-banner h2 { margin: 0; }
+.r2-banner p { margin: 0; max-width: 72ch; }
+.r2-banner .note { color: var(--muted); font-size: 14px; }
+/* tabs in three rows: line 1 ViDeus Catalog, line 2 Round 2 · 3Way, line 3 the client test */
+nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
+.tabs .trow { display: flex; gap: 4px; align-items: center; overflow-x: auto; border-top: 1px solid var(--line); }
+.tabs .trow:first-child { border-top: 0; }
+.tabs .grp { flex: none; width: 200px; font: 500 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 8px 0 2px; border: 0; }
+.tabs .grp.r2g { color: var(--r2); }
+.tabs .grp.tstg { color: var(--tst); }
+@media (max-width: 640px) { .tabs .grp { width: auto; } }
+/* the client test, in its own colour */
+.tabs button.tst { color: var(--tst); }
+.tabs button.tst[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--tst); }
+.tabs button.tst .new { font: 600 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; background: var(--tst); color: var(--bg); border-radius: 4px; padding: 2px 6px; margin-left: 6px; }
+.tst-banner { border-color: color-mix(in srgb, var(--tst) 55%, var(--line)); background: color-mix(in srgb, var(--tst) 7%, var(--panel)); }
+.quiz { display: grid; gap: 18px; max-width: 760px; }
+.q { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; margin: 0; }
+.q legend { font: 700 17px var(--display); padding: 0; }
+.q .hint { color: var(--muted); font-size: 13px; margin: -4px 0 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; font-size: 14px; }
+.opts input { accent-color: var(--tst); margin: 0; }
+.opts label:has(input:checked) { border-color: var(--tst); background: color-mix(in srgb, var(--tst) 12%, transparent); }
+.opts label:has(input:focus-visible) { outline: 2px solid var(--tst); outline-offset: 2px; }
+.go { justify-self: start; font: 600 15px var(--body); background: var(--tst); color: var(--bg); border: 0; border-radius: 999px; padding: 11px 22px; cursor: pointer; }
+.go:disabled { opacity: .4; cursor: default; }
+.res { display: grid; gap: 18px; }
+.res h2 { margin: 0; }
+.prods { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 10px; }
+.prod { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; }
+.prod b { font-family: var(--display); font-size: 16px; }
+.prod span { color: var(--muted); font-size: 14px; }
+.prod small { font: 500 11px var(--mono); color: var(--c); text-transform: uppercase; letter-spacing: .08em; }
+.ficha { background: var(--panel); border: 1px dashed color-mix(in srgb, var(--tst) 60%, var(--line)); border-radius: 12px; padding: 16px; display: grid; gap: 10px; }
+.ficha pre { margin: 0; white-space: pre-wrap; font: 400 13px/1.6 var(--mono); color: var(--fg); }
+.ficha button { justify-self: start; font: 500 13px var(--mono); color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+:root {
   --ok: #5fbf7f; --rev: #f5b400; --todo: #8a8f86;
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
@@ -197,7 +243,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">3Way · ViDeus Catalog · actualizado el 22 oct 2026</div>
+    <div class="eyebrow">3Way · ViDeus Catalog · actualizado el 31 oct 2026</div>
     <h1>Videos <em>ViDeus Catalog</em></h1>
     <p class="lede">Capítulos, publicidades e instructivos de ViDeus Catalog, de 3Way. Empezá por el Top 10: los diez que mejor salieron. Cada video está en español y, cuando existe, en inglés; «Descargar» baja el original.</p>
     <div class="progress"><div><span class="k">Listo para ver</span><span class="v"><b>7</b>capítulos · <b>40</b>publicidades · <b>13</b>instructivos</span></div><div class="doing"><span class="k">En producción</span><span class="v"><b>1</b>piezas nuevas · <b>10</b>frases en inglés · instructivos en celu e inglés</span></div></div>
@@ -205,6 +251,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Secciones">
+    <div class="trow"><span class="grp">Round 1 · ViDeus Catalog</span>
     <button type="button" role="tab" id="t-top" aria-controls="p-top">Top 10</button>
     <button type="button" role="tab" id="t-inicio" aria-controls="p-inicio">Para empezar</button>
     <button type="button" role="tab" id="t-capitulos" aria-controls="p-capitulos">Capítulos<span class="n">7</span></button>
@@ -212,7 +259,71 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
     <button type="button" role="tab" id="t-instructivos" aria-controls="p-instructivos">Instructivos<span class="n">13 de 13</span></button>
     <button type="button" role="tab" id="t-diseno" aria-controls="p-diseno">Sistema de diseño</button>
     <button type="button" role="tab" id="t-historial" aria-controls="p-historial">Historial<span class="n">▾</span></button>
+    </div>
+    <div class="trow"><span class="grp r2g">Round 2 · 3Way</span>
+    <button type="button" role="tab" id="t-round2" aria-controls="p-round2" class="r2">Videos<span class="n">5</span><span class="new">Nuevo</span></button>
+    </div>
+    <div class="trow"><span class="grp tstg">Para clientes</span>
+    <button type="button" role="tab" id="t-test" aria-controls="p-test" class="tst">Test para clientes<span class="new">Propuesta</span></button>
+    </div>
   </nav>
+
+  <section class="panel" id="p-round2" role="tabpanel" aria-labelledby="t-round2" hidden>
+    <div class="r2-banner">
+      <h2>Round 2: todo 3Way, no solo Catalog</h2>
+      <p>Los videos más nuevos, del 31 de octubre. Salen de las demos y las respuestas del equipo de 3Way de esta semana. Primero el ecosistema completo y después cada producto, con su color.</p>
+      <p class="note">Español, para compu y TV. Voz provisoria. Faltan la versión de celu, el inglés y el video de Round Robin solo.</p>
+    </div>
+    <div class="grid" id="g-round2"></div>
+  </section>
+
+  <section class="panel" id="p-test" role="tabpanel" aria-labelledby="t-test" hidden>
+    <div class="r2-banner tst-banner">
+      <h2>Test para quien pide una demo</h2>
+      <p>En base a todo lo que entendí de los productos, se me ocurrió esto: antes de pedir la demo, el cliente responde cinco preguntas. Él ve qué productos le sirven, con el video de cada uno. Y 3Way llega a la primera reunión con una ficha armada: qué tipo de cliente es, qué le duele y qué mostrarle primero.</p>
+      <p class="note">Es una propuesta para revisar con el equipo de 3Way: qué pregunta lleva a qué producto, y adónde llegarían las respuestas. Probalo: no se guarda ni se manda nada.</p>
+    </div>
+    <form class="quiz" id="quiz">
+      <fieldset class="q"><legend>1 · ¿Qué tipo de empresa sos?</legend>
+        <div class="opts">
+          <label><input type="radio" name="tipo" value="canal">Canal de TV</label>
+          <label><input type="radio" name="tipo" value="cable">Cableoperador</label>
+          <label><input type="radio" name="tipo" value="productora">Productora o agencia de noticias</label>
+          <label><input type="radio" name="tipo" value="regulador">Regulador o agencia de medios</label>
+          <label><input type="radio" name="tipo" value="institucion">Institución (congreso, universidad)</label>
+          <label><input type="radio" name="tipo" value="otro">Otra</label>
+        </div></fieldset>
+      <fieldset class="q"><legend>2 · ¿Cuántas señales manejás?</legend>
+        <div class="opts">
+          <label><input type="radio" name="senales" value="1">Una</label>
+          <label><input type="radio" name="senales" value="2-10">De 2 a 10</label>
+          <label><input type="radio" name="senales" value="10+">Más de 10</label>
+          <label><input type="radio" name="senales" value="grilla">Una grilla de cable</label>
+        </div></fieldset>
+      <fieldset class="q"><legend>3 · ¿Qué te duele hoy?</legend><p class="hint">Podés marcar varias.</p>
+        <div class="opts">
+          <label><input type="checkbox" name="dolor" value="multiviewer">Me entero tarde de que una señal falla</label>
+          <label><input type="checkbox" name="dolor" value="roundrobin">No llego a revisar toda la grilla</label>
+          <label><input type="checkbox" name="dolor" value="auditor">Tengo que probar qué salió al aire</label>
+          <label><input type="checkbox" name="dolor" value="clipping">Los clips para redes llegan tarde</label>
+          <label><input type="checkbox" name="dolor" value="catalog">No encuentro material de mi archivo</label>
+        </div></fieldset>
+      <fieldset class="q"><legend>4 · ¿Tenés un archivo de video de años?</legend>
+        <div class="opts">
+          <label><input type="radio" name="archivo" value="no">No</label>
+          <label><input type="radio" name="archivo" value="desordenado">Sí, pero sin ordenar</label>
+          <label><input type="radio" name="archivo" value="mano">Sí, ordenado a mano</label>
+        </div></fieldset>
+      <fieldset class="q"><legend>5 · ¿Dónde publicás lo que hacés?</legend>
+        <div class="opts">
+          <label><input type="radio" name="publica" value="tv">Solo en TV</label>
+          <label><input type="radio" name="publica" value="redes">También en YouTube y redes</label>
+          <label><input type="radio" name="publica" value="web">También en mi web</label>
+        </div></fieldset>
+      <button type="submit" class="go" id="go" disabled>Ver qué me sirve</button>
+    </form>
+    <div class="res" id="res" hidden></div>
+  </section>
 
   <section class="panel" id="p-historial" role="tabpanel" aria-labelledby="t-historial" hidden>
     <p class="intro">Todas las versiones hasta hoy, de la más nueva a la más vieja. Lo actual es lo que ves en las otras pestañas.</p>
@@ -530,10 +641,62 @@ DATA.top.forEach(([id, why], k) => { const it = byId[id]; if (!it) return;
   const c = card(it); c.prepend(el("span", { class: "rank", text: String(k + 1) })); c.insertBefore(el("p", { class: "why", text: why }), c.querySelector(".fb"));
   document.getElementById("g-top").append(el("li", {}, [c])); });
 Object.entries(DATA.picks).forEach(([k, ids]) => ids.forEach(id => { if (byId[id]) document.getElementById("g-pick-" + k).append(card(byId[id])); }));
+// Round 2 (31 oct): the other 3Way products
+const ROUND2 = [
+  { id: "r2-eco", t: "Ecosistema 3Way · Una sola línea", n: "Un grupo de medios y una sola señal que pasa por los cinco productos: mirar, recorrer, guardar, cortar, ordenar. 3:25.", col: "r2", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/ecosistema.mp4", fmt: "horizontal", dl: "1X3Pg9qpX_tQo0XssX9rvXrFLI8em_m9Y" }] },
+  { id: "r2-clip-ad", t: "ViDeus Clipping · Falta el clip", n: "Publicidad: corta mientras sale al aire y arma el clip solo, con título y resumen. 46 s.", col: "rojo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/clipping-anuncio.mp4", fmt: "horizontal", dl: "1Yg1Q81l5fFRismASKLtqY2u-vEpc5Tfm" }] },
+  { id: "r2-clip-caso", t: "ViDeus Clipping · La nota de las cinco", n: "Caso: una productora de noticias arma su nota con cinco clips de la semana. 64 s.", col: "rojo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/clipping-caso.mp4", fmt: "horizontal", dl: "1PA0XTsylgqKWVy-ZHsTm-uZJe7fOIbU4" }] },
+  { id: "r2-auditor", t: "ViDeus Auditor · Qué hace", n: "Graba cada señal las 24 horas, lee zócalos, transcribe y reconoce cada aviso. 83 s.", col: "amarillo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/auditor.mp4", fmt: "horizontal", dl: "1Yh6i-twe3TDv1ePff-gk4ZHZBUcxBBpR" }] },
+  { id: "r2-multi", t: "ViDeus Multiviewer · Qué hace", n: "Todas las señales en un mosaico, y avisa cuando algo falla. 83 s.", col: "verde", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/multiviewer.mp4", fmt: "horizontal", dl: "1Zy3WcdPEFdCe5SOzQx9ZYZOjEF2nzwiH" }] },
+];
+ROUND2.forEach(it => { KIND[it.id] = "Round 2 · 3Way"; const c = card(it); c.id = "v-" + it.id; document.getElementById("g-round2").append(c); });
+// Client test (proposal): type gives a base, pains weigh most, archive and publishing nudge Catalog and Clipping
+const PROD = {
+  multiviewer: { name: "ViDeus Multiviewer", col: "verde", what: "Todas tus señales en un mosaico, y te avisa cuando algo falla.", demo: "Armar su mosaico con sus señales y disparar una alarma de prueba.", video: "r2-multi" },
+  roundrobin: { name: "ViDeus Round Robin", col: "r2", what: "Recorre tu grilla de cable canal por canal y avisa si uno falla.", demo: "Barrido de su grilla y volver al momento de una falla.", video: null },
+  auditor: { name: "ViDeus Auditor", col: "amarillo", what: "Graba cada señal las 24 horas y prueba qué salió al aire.", demo: "Buscar qué salió ayer a una hora, y un aviso reconocido.", video: "r2-auditor" },
+  clipping: { name: "ViDeus Clipping", col: "rojo", what: "Corta mientras sale al aire y lo lleva a tus redes.", demo: "Clip automático de algo que esté saliendo en vivo, con su logo.", video: "r2-clip-ad" },
+  catalog: { name: "ViDeus Catalog", col: "gris", what: "Tu archivo, buscable con tus palabras.", demo: "Preguntarle algo a una muestra de su propio archivo.", video: null },
+};
+const BASE = { canal: ["multiviewer", "auditor", "clipping", "catalog"], cable: ["roundrobin", "multiviewer"], productora: ["clipping", "catalog"], regulador: ["auditor", "multiviewer"], institucion: ["catalog", "clipping"], otro: [] };
+const TIPO = { canal: "Canal de TV", cable: "Cableoperador", productora: "Productora o agencia de noticias", regulador: "Regulador o agencia de medios", institucion: "Institución", otro: "Otra" };
+const quiz = document.getElementById("quiz"), res = document.getElementById("res"), go = document.getElementById("go");
+quiz.addEventListener("change", () => { const f = new FormData(quiz); go.disabled = !(f.get("tipo") && f.get("senales") && f.get("archivo") && f.get("publica")); });
+quiz.addEventListener("submit", e => {
+  e.preventDefault();
+  const f = new FormData(quiz), tipo = f.get("tipo"), sen = f.get("senales"), arch = f.get("archivo"), pub = f.get("publica"), dolores = f.getAll("dolor");
+  const score = Object.fromEntries(Object.keys(PROD).map(k => [k, 0]));
+  BASE[tipo].forEach(k => score[k] += 2);
+  dolores.forEach(k => score[k] += 3);
+  if (sen === "grilla") score.roundrobin += 2;
+  if (sen === "10+" || sen === "grilla") score.multiviewer += 1;
+  if (arch === "desordenado") score.catalog += 2; else if (arch === "mano") score.catalog += 1;
+  if (pub !== "tv") score.clipping += 1;
+  const picks = Object.keys(score).filter(k => score[k] >= 3).sort((a, b) => score[b] - score[a]);
+  res.replaceChildren();
+  if (!picks.length) { res.append(el("p", { class: "intro", text: "Con estas respuestas no hay un producto claro. Mejor una charla corta con 3Way para entender qué necesitás." })); res.hidden = false; return; }
+  res.append(el("h2", { text: picks.length >= 3 ? "Te sirve el ecosistema completo, empezando por " + PROD[picks[0]].name : "Lo que te sirve" }));
+  res.append(el("div", { class: "prods" }, picks.map((k, i) => el("div", { class: "prod", style: "--c: var(--" + PROD[k].col + ")" }, [el("small", { text: i === 0 ? "Primero" : "También" }), el("b", { text: PROD[k].name }), el("span", { text: PROD[k].what })]))));
+  const vids = (picks.length >= 3 ? ["r2-eco"] : []).concat(picks.map(k => PROD[k].video).filter(Boolean)).slice(0, 2);
+  if (vids.length) { const g = el("div", { class: "grid" }); vids.forEach(id => g.append(card(ROUND2.find(r => r.id === id)))); res.append(g); }
+  const lab = n => quiz.querySelector('input[value="' + n + '"]').parentElement.textContent;
+  const txt = ["FICHA PARA LA PRIMERA REUNIÓN (3Way)",
+    "Tipo: " + TIPO[tipo] + " · Señales: " + lab(sen),
+    "Le duele: " + (dolores.length ? dolores.map(lab).join("; ") : "no marcó nada"),
+    "Archivo: " + lab(arch) + " · Publica: " + lab(pub),
+    "Mostrar, en este orden:", ...picks.map((k, i) => "  " + (i + 1) + ". " + PROD[k].name + ": " + PROD[k].demo),
+    "Mandar antes de la reunión: " + (picks.length >= 3 ? "video del ecosistema" : "video de " + PROD[picks[0]].name)].join("\n");
+  const copy = el("button", { type: "button", text: "Copiar ficha" });
+  copy.addEventListener("click", () => { try { navigator.clipboard.writeText(txt); copy.textContent = "Copiada ✓"; } catch (err) {} });
+  res.append(el("div", { class: "ficha" }, [el("p", { class: "sub", text: "Lo que vería 3Way" }), el("pre", { text: txt }), copy]));
+  res.append(el("p", { class: "dl", text: "Pedí tu demo → 3way.com.ar" }));
+  res.hidden = false;
+  res.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 // pause other videos when one plays
 document.addEventListener("play", e => document.querySelectorAll("video").forEach(v => { if (v !== e.target) v.pause(); }), true);
 // tabs, deep-linkable with #diseno / #publicidades / #capitulos / #instructivos
-const TABS = ["top", "inicio", "capitulos", "publicidades", "instructivos", "diseno", "historial"];
+const TABS = ["top", "round2", "test", "inicio", "capitulos", "publicidades", "instructivos", "diseno", "historial"];
 function tab(name) {
   TABS.forEach(t => {
     const on = t === name;
