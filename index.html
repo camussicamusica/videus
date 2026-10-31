@@ -2,6 +2,7 @@
 <title>ViDeus Catalog · Videos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: the ViDeus screening room, kept dark like the product. A status strip, four tabs; each tab = showcase cards on top, "Continuará" (expandable list) below. */
@@ -32,6 +33,58 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 .tabs .grp.r2g { color: var(--r2); }
 .tabs .grp.tstg { color: var(--tst); }
 @media (max-width: 640px) { .tabs .grp { width: auto; } }
+/* follow-up questions that open by company type */
+.extra { display: grid; gap: 18px; }
+.extra:empty { display: none; }
+.q.sub-q { border-color: color-mix(in srgb, var(--tst) 40%, var(--line)); }
+.nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.nums label { display: grid; gap: 6px; font-size: 14px; }
+.nums input { font: 500 16px var(--mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; }
+.nums input:focus-visible { outline: 2px solid var(--tst); outline-offset: 1px; }
+.nums small { color: var(--muted); font: 500 12px var(--mono); }
+.res .go.pdf { margin-top: 4px; }
+/* the diagnosis: hidden on screen, the only thing printed (3way.com.ar look: white, slate, indigo, Outfit + Inter) */
+#report { display: none; }
+@media print {
+  @page { size: A4; margin: 14mm 14mm 16mm; }
+  body.printing { background: #fff !important; }
+  body.printing > *:not(#report) { display: none !important; }
+  body.printing #report { display: block; }
+}
+#report { color: #0f172a; font: 400 10.5pt/1.5 "Inter", Arial, sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+#report h1, #report h2, #report h3, #report .rp-brand, #report .kpi b { font-family: "Outfit", Arial, sans-serif; color: #0f172a; }
+#report .rp-top { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 2px solid #0f172a; }
+#report .rp-top svg { width: 30px; height: 30px; }
+#report .rp-brand { font-weight: 800; font-size: 18pt; letter-spacing: -.01em; }
+#report .rp-tag { margin-left: auto; font: 600 8pt "Inter", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #4f46e5; }
+#report h1 { font-weight: 800; font-size: 26pt; line-height: 1.05; margin: 22px 0 6px; letter-spacing: -.02em; }
+#report h1 em { font-style: normal; color: #4f46e5; }
+#report .rp-date { color: #475569; margin: 0 0 18px; }
+#report .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+#report .kpi { border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; background: #f8fafc; }
+#report .kpi b { display: block; font-weight: 800; font-size: 22pt; line-height: 1.1; color: #4f46e5; }
+#report .kpi span { color: #475569; font-size: 9pt; }
+#report h2 { font-weight: 700; font-size: 14pt; margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+#report .today { display: grid; grid-template-columns: 1fr auto; gap: 0; margin: 0; }
+#report .today dt, #report .today dd { margin: 0; padding: 6px 0; border-bottom: 1px solid #f1f5f9; }
+#report .today dt { color: #475569; }
+#report .today dd { font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+#report .hl { margin: 10px 0 0; padding: 10px 14px; border-left: 4px solid #4f46e5; background: #eef2ff; border-radius: 0 8px 8px 0; }
+#report .hl p { margin: 2px 0; }
+#report .pains { margin: 8px 0 0; padding-left: 18px; color: #1e293b; }
+#report .prod { display: block; background: #fff; color: #0f172a; break-inside: avoid; border: 1px solid #e2e8f0; border-top: 4px solid var(--pc); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; }
+#report .prod .pri { font: 600 8pt "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--pc); }
+#report .prod h3 { font-weight: 700; font-size: 13pt; margin: 2px 0 4px; }
+#report .prod p { margin: 0 0 6px; color: #334155; }
+#report .prod ul { margin: 0; padding-left: 18px; }
+#report .prod li { margin: 2px 0; }
+#report .prod .you { margin: 8px 0 0; padding-top: 6px; border-top: 1px dashed #e2e8f0; color: #0f172a; }
+#report .next { break-inside: avoid; }
+#report .next ol { margin: 0; padding-left: 18px; }
+#report .cta { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; background: #0f172a; color: #fff; border-radius: 12px; padding: 14px 18px; }
+#report .cta b { font: 700 15pt "Outfit", sans-serif; color: #fff; }
+#report .cta span { color: #00e5ff; font-weight: 600; }
+#report .rp-foot { margin-top: 16px; color: #64748b; font-size: 8.5pt; }
 /* the client test, in its own colour */
 .tabs button.tst { color: var(--tst); }
 .tabs button.tst[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--tst); }
@@ -284,7 +337,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
       <p class="note">Es una propuesta para revisar con el equipo de 3Way: qué pregunta lleva a qué producto, y adónde llegarían las respuestas. Probalo: no se guarda ni se manda nada.</p>
     </div>
     <form class="quiz" id="quiz">
-      <fieldset class="q"><legend>1 · ¿Qué tipo de empresa sos?</legend>
+      <fieldset class="q"><legend>1 · ¿Qué tipo de empresa sos?</legend><p class="hint">Según lo que elijas, se abren unas preguntas más, para que el diagnóstico sea de tu caso.</p>
         <div class="opts">
           <label><input type="radio" name="tipo" value="canal">Canal de TV</label>
           <label><input type="radio" name="tipo" value="cable">Cableoperador</label>
@@ -293,6 +346,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
           <label><input type="radio" name="tipo" value="institucion">Institución (congreso, universidad)</label>
           <label><input type="radio" name="tipo" value="otro">Otra</label>
         </div></fieldset>
+      <div class="extra" id="extra" aria-live="polite"></div>
       <fieldset class="q"><legend>2 · ¿Cuántas señales manejás?</legend>
         <div class="opts">
           <label><input type="radio" name="senales" value="1">Una</label>
@@ -672,6 +726,7 @@ quiz.addEventListener("submit", e => {
   if (sen === "10+" || sen === "grilla") score.multiviewer += 1;
   if (arch === "desordenado") score.catalog += 2; else if (arch === "mano") score.catalog += 1;
   if (pub !== "tv") score.clipping += 1;
+  const X = extraAnswers(f, tipo); extraScore(X, score);
   const picks = Object.keys(score).filter(k => score[k] >= 3).sort((a, b) => score[b] - score[a]);
   res.replaceChildren();
   if (!picks.length) { res.append(el("p", { class: "intro", text: "Con estas respuestas no hay un producto claro. Mejor una charla corta con 3Way para entender qué necesitás." })); res.hidden = false; return; }
@@ -684,15 +739,116 @@ quiz.addEventListener("submit", e => {
     "Tipo: " + TIPO[tipo] + " · Señales: " + lab(sen),
     "Le duele: " + (dolores.length ? dolores.map(lab).join("; ") : "no marcó nada"),
     "Archivo: " + lab(arch) + " · Publica: " + lab(pub),
+    ...X.rows.map(([a, b]) => "  " + a + " " + b), ...X.hl.map(([, t]) => "  → " + t),
     "Mostrar, en este orden:", ...picks.map((k, i) => "  " + (i + 1) + ". " + PROD[k].name + ": " + PROD[k].demo),
     "Mandar antes de la reunión: " + (picks.length >= 3 ? "video del ecosistema" : "video de " + PROD[picks[0]].name)].join("\n");
   const copy = el("button", { type: "button", text: "Copiar ficha" });
   copy.addEventListener("click", () => { try { navigator.clipboard.writeText(txt); copy.textContent = "Copiada ✓"; } catch (err) {} });
   res.append(el("div", { class: "ficha" }, [el("p", { class: "sub", text: "Lo que vería 3Way" }), el("pre", { text: txt }), copy]));
+  const pdf = el("button", { type: "button", class: "go pdf", text: "Descargar mi diagnóstico (PDF)" });
+  pdf.addEventListener("click", () => printReport({ tipo, sen, arch, pub, dolores, picks, X, lab }));
+  res.append(pdf);
   res.append(el("p", { class: "dl", text: "Pedí tu demo → 3way.com.ar" }));
   res.hidden = false;
   res.scrollIntoView({ behavior: "smooth", block: "start" });
 });
+// Follow-up questions by company type: numbers make the diagnosis about *their* operation
+const QX = {
+  canal: [["personas", "¿Cuántas personas miran las señales en cada turno?", "personas"], ["clips", "¿Cuántos clips sacan por semana?", "clips"], ["minclip", "¿Cuántos minutos tarda hoy cada clip, desde que pasa hasta que está listo?", "minutos"], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", "horas"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"]],
+  cable: [["canales", "¿Cuántos canales tiene tu grilla?", "canales"], ["personas", "¿Cuántas personas hacen monitoreo?", "personas"], ["revision", "¿Cada cuánto revisan la grilla entera?", ["Nunca entera", "Una vez por día", "Varias veces por día", "Todo el tiempo"]], ["entera", "¿Cómo se enteran hoy de que un canal falla?", ["Llaman los abonados", "Lo ve alguien del equipo", "Avisa un sistema"]]],
+  productora: [["clips", "¿Cuántos clips sacan por semana?", "clips"], ["minclip", "¿Cuántos minutos tarda hoy cada clip?", "minutos"], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", "horas"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"], ["clientes", "¿A cuántos medios o clientes les entregan material?", "clientes"]],
+  regulador: [["senales", "¿Cuántas señales tienen que controlar?", "señales"], ["avisos", "¿Cuántos avisos o pautas verifican por mes?", "avisos"], ["hinforme", "¿Cuántas horas lleva armar un informe de lo que salió al aire?", "horas"], ["prueba", "¿Cómo prueban hoy qué salió al aire?", ["Con grabación propia", "Se lo piden al canal", "No pueden probarlo"]]],
+  institucion: [["hgrab", "¿Cuántas horas de sesiones o clases graban por semana?", "horas"], ["anios", "¿De cuántos años es su archivo?", "años"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"]],
+  otro: [["hvideo", "¿Cuántas horas por semana dedica tu equipo a buscar, cortar o revisar video?", "horas"]],
+};
+const extra = document.getElementById("extra");
+function renderExtra(tipo) {
+  extra.replaceChildren();
+  const qs = QX[tipo]; if (!qs) return;
+  const nums = qs.filter(q => !Array.isArray(q[2])), picks = qs.filter(q => Array.isArray(q[2]));
+  if (nums.length) extra.append(el("fieldset", { class: "q sub-q" }, [el("legend", { text: "Unos números de tu operación" }), el("p", { class: "hint", text: "Son opcionales y aproximados. Sirven para que el diagnóstico hable de tu caso." }),
+    el("div", { class: "nums" }, nums.map(([k, label, unit]) => el("label", {}, [label, el("input", { type: "number", name: "x_" + k, min: "0", step: "any", inputmode: "decimal", placeholder: "0" }), el("small", { text: unit })])))]));
+  picks.forEach(([k, label, opts]) => extra.append(el("fieldset", { class: "q sub-q" }, [el("legend", { text: label }),
+    el("div", { class: "opts" }, opts.map(o => el("label", {}, [el("input", { type: "radio", name: "x_" + k, value: o }), o])))])));
+}
+quiz.addEventListener("change", e => { if (e.target.name === "tipo") renderExtra(e.target.value); });
+const fmtN = x => x.toLocaleString("es-AR", { maximumFractionDigits: 1 });
+function extraAnswers(f, tipo) {
+  const v = {}, rows = [], hl = [];
+  (QX[tipo] || []).forEach(([k, label, unit]) => {
+    const raw = f.get("x_" + k); if (raw == null || raw === "") return;
+    if (Array.isArray(unit)) { v[k] = raw; rows.push([label, raw]); return; }
+    const x = parseFloat(raw); if (!(x > 0)) return;
+    v[k] = x; rows.push([label, fmtN(x) + " " + unit]);
+  });
+  const hClips = v.clips && v.minclip ? v.clips * v.minclip / 60 : 0;
+  const hBusq = v.busq && v.minbusq ? v.busq * v.minbusq / 60 : 0;
+  if (hClips) hl.push(["clipping", "≈ " + fmtN(hClips) + " horas por semana armando clips (" + fmtN(v.clips) + " clips × " + fmtN(v.minclip) + " min)."]);
+  if (hBusq) hl.push(["catalog", "≈ " + fmtN(hBusq) + " horas por semana buscando en el archivo (" + fmtN(v.busq) + " búsquedas × " + fmtN(v.minbusq) + " min)."]);
+  if (v.canales && v.personas) hl.push(["roundrobin", "≈ " + fmtN(v.canales / v.personas) + " canales por persona de monitoreo."]);
+  if (v.avisos && v.hinforme) hl.push(["auditor", fmtN(v.avisos) + " avisos por mes, y " + fmtN(v.hinforme) + " horas por cada informe de emisión."]);
+  if (v.hvideo) hl.push([null, fmtN(v.hvideo) + " horas por semana de tu equipo buscando, cortando o revisando video."]);
+  const hours = hClips + hBusq + (v.hvideo || 0);
+  return { v, rows, hl, hours };
+}
+function extraScore(X, score) {
+  const v = X.v;
+  if (v.clips) score.clipping += 1;
+  if (v.archivo || v.anios || v.busq) score.catalog += 1;
+  if (v.hgrab) { score.catalog += 1; score.clipping += 1; }
+  if (v.avisos) score.auditor += 2;
+  if (v.prueba === "Se lo piden al canal" || v.prueba === "No pueden probarlo") score.auditor += 2;
+  if (v.entera === "Llaman los abonados") { score.roundrobin += 2; score.multiviewer += 1; }
+  if (v.revision === "Nunca entera" || v.revision === "Una vez por día") score.roundrobin += 1;
+}
+// The printable diagnosis
+const BEN = {
+  multiviewer: ["Todas tus señales en un solo mosaico, en la sala de control o en el navegador.", "Imagen y nivel de audio a la vista en cada cuadro.", "Te avisa si una señal se va a negro, se congela, se queda sin audio o se cae."],
+  roundrobin: ["Recorre tu grilla canal por canal, solo, con la agenda que le marques.", "Guarda cómo estaba cada señal, con fecha y hora.", "Te avisa cuando un canal falla y podés volver al momento exacto.", "Lo mirás en vivo o grabado, en la sala o desde donde estés."],
+  auditor: ["Graba cada señal, las 24 horas.", "Elegís señal, día y hora, y ves lo que salió al aire.", "Lee los zócalos y transcribe lo que se dice: buscás por palabra.", "Reconoce cada aviso que salió al aire."],
+  clipping: ["Corta mientras sale al aire.", "Le decís qué buscar y arma el clip solo, con título y resumen.", "Sale con tu logo y tus subtítulos.", "Y si querés, va directo a tu canal de YouTube."],
+  catalog: ["Mira y escucha cada video de tu archivo, y lo transcribe.", "Reconoce caras y voces, y lee lo que aparece en pantalla.", "Le preguntás con tus palabras y te lleva al momento justo.", "Corre en tus propios servidores: el archivo no sale de tu red."],
+};
+const PC = { multiviewer: "#10b981", roundrobin: "#7c3aed", auditor: "#ca8a04", clipping: "#ef4444", catalog: "#0891b2" };
+const TIPO_EN = { canal: "canal de TV", cable: "cableoperadora", productora: "productora", regulador: "organización", institucion: "institución", otro: "empresa" };
+const MARK = '<svg viewBox="25 15 234 234" aria-hidden="true"><g fill="#196e9e"><path d="M53 235 111 85H139L81 235Z"/><path d="M105 235 183 30H212L134 235Z"/><path d="M158 235 203 115H231L186 235Z"/></g></svg>';
+function buildReport(d) {
+  const r = el("div", { id: "report" });
+  const top = el("div", { class: "rp-top" }); top.innerHTML = MARK; top.append(el("span", { class: "rp-brand", text: "3Way" }), el("span", { class: "rp-tag", text: "Diagnóstico ViDeus" }));
+  const h1 = el("h1"); h1.append("Diagnóstico para tu ", el("em", { text: TIPO_EN[d.tipo] }));
+  const fecha = new Date().toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
+  r.append(top, h1, el("p", { class: "rp-date", text: "Armado con tus respuestas · " + fecha }));
+  const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus que te sirve" : "productos ViDeus que te sirven"], [d.lab(d.sen), "señales"]];
+  kpis.splice(1, 0, d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"]);
+  r.append(el("div", { class: "kpis" }, kpis.map(([b, s]) => el("div", { class: "kpi" }, [el("b", { text: b }), el("span", { text: s })]))));
+  r.append(el("h2", { text: "Cómo trabajan hoy" }));
+  const dl = el("dl", { class: "today" });
+  [["Tipo de empresa", TIPO[d.tipo]], ["Señales", d.lab(d.sen)], ["Archivo", d.lab(d.arch)], ["Dónde publican", d.lab(d.pub)], ...d.X.rows].forEach(([a, b]) => dl.append(el("dt", { text: a }), el("dd", { text: b })));
+  r.append(dl);
+  if (d.X.hl.length) r.append(el("div", { class: "hl" }, d.X.hl.map(([, t]) => el("p", { text: t }))));
+  if (d.dolores.length) { r.append(el("h3", { text: "Lo que te duele" })); r.append(el("ul", { class: "pains" }, d.dolores.map(k => el("li", { text: d.lab(k) })))); }
+  r.append(el("h2", { text: "Lo que te resuelve cada producto" }));
+  d.picks.forEach((k, i) => {
+    const mine = d.X.hl.filter(([p]) => p === k).map(([, t]) => t);
+    if (d.dolores.includes(k)) mine.unshift("Marcaste: «" + d.lab(k) + "».");
+    const kids = [el("span", { class: "pri", text: i === 0 ? "Prioridad 1 · empezar por acá" : "Prioridad " + (i + 1) }), el("h3", { text: PROD[k].name }), el("p", { text: PROD[k].what }), el("ul", {}, BEN[k].map(t => el("li", { text: t })))];
+    if (mine.length) kids.push(el("p", { class: "you", text: "Para vos: " + mine.join(" ") }));
+    r.append(el("div", { class: "prod", style: "--pc:" + PC[k] }, kids));
+  });
+  const next = el("div", { class: "next" }, [el("h2", { text: "Próximo paso: la demo" }), el("p", { text: "En la primera reunión te mostramos, con tu caso:" }), el("ol", {}, d.picks.map(k => el("li", { text: PROD[k].name + ": " + PROD[k].demo })))]);
+  const cta = el("div", { class: "cta" }, [el("b", { text: "Pedí tu demo" }), el("span", { text: "3way.com.ar" })]);
+  next.append(cta);
+  r.append(next, el("p", { class: "rp-foot", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos; en la demo vemos cuánto bajan con ViDeus. ViDeus es una familia de productos de 3Way." }));
+  return r;
+}
+function printReport(d) {
+  document.getElementById("report")?.remove();
+  document.body.append(buildReport(d));
+  document.body.classList.add("printing");
+  const done = () => { document.body.classList.remove("printing"); removeEventListener("afterprint", done); };
+  addEventListener("afterprint", done);
+  try { window.print(); } catch (err) { done(); alert("Tu navegador no dejó abrir la impresión. Probá desde la página web de ViDeus."); }
+}
 // pause other videos when one plays
 document.addEventListener("play", e => document.querySelectorAll("video").forEach(v => { if (v !== e.target) v.pause(); }), true);
 // tabs, deep-linkable with #diseno / #publicidades / #capitulos / #instructivos
