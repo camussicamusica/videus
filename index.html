@@ -63,8 +63,12 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 #report .year b { font: 800 40pt/1 "Archivo", sans-serif; color: #00e5ff; white-space: nowrap; }
 #report .year span { color: #dfe5f2; font-size: 11pt; }
 #report .top img { height: 8mm; width: auto; }
-#report .hero { flex: 1; display: flex; align-items: center; justify-content: center; padding-bottom: 6mm; }
-#report .hero img { width: 92mm; height: auto; }
+#report .hero { flex: 1; display: flex; align-items: center; justify-content: center; padding-top: 6mm; }
+#report .hero img { width: 72mm; height: auto; }
+#report .mark { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+#report .mark { container-type: size; }
+#report .mark img { height: min(48mm, 70cqh); width: auto; opacity: .07; }
+@container (max-height: 35mm) { #report .mark img { display: none; } }  /* a small gap stays empty: a tiny mark reads as a smudge */
 #report .eyebrow { font: 600 7.5pt "IBM Plex Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: #8b95ad; }
 #report .eyebrow.c { color: #00e5ff; }
 #report h1, #report h2 { font-family: "Archivo", "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; margin: 0; color: #fff; line-height: .98; }
@@ -100,7 +104,7 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 #report .today div { display: grid; grid-template-columns: 1fr auto; gap: 4mm; padding: 2.6mm 0; border-bottom: 1px solid rgba(255,255,255,.1); }
 #report .today dt { color: #a9b2c8; font-size: 9pt; }
 #report .today dd { margin: 0; font-weight: 600; text-align: right; }
-#report .stats { display: grid; gap: 4mm; align-content: start; }
+#report .stats { display: flex; flex-direction: column; gap: 4mm; }
 #report .stat { border-left: 1.2mm solid var(--pc, #00e5ff); background: rgba(255,255,255,.04); border-radius: 0 3mm 3mm 0; padding: 4mm 5mm; }
 #report .stat b { display: block; font: 800 26pt/1 "Archivo", sans-serif; color: var(--pc, #00e5ff); }
 #report .stat span { color: #c6cde0; font-size: 9pt; }
@@ -872,6 +876,7 @@ function buildReport(d) {
   const fecha = new Date().toLocaleDateString("es-AR", { day: "numeric", month: "long", year: "numeric" });
   const page = kids => el("section", { class: "pg" }, kids);
   const top = () => el("div", { class: "top" }, [el("img", { src: "diag/logo.png", alt: "3Way" }), el("span", { class: "eyebrow c", text: "Diagnóstico ViDeus" })]);
+  const mark = () => el("div", { class: "mark" }, [el("img", { src: "diag/simbolo.png", alt: "" })]);
   const foot = n => el("div", { class: "foot" }, [el("span", { text: "ViDeus · de 3Way" }), el("span", { text: "3way.com.ar · " + n })]);
   const head = (tag, a, b) => { const h = el(tag); h.append(a + " ", el("span", { class: "a", text: b })); return h; };
   const svg = k => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 24 24"); s.innerHTML = ICON[k]; return s; };
@@ -882,13 +887,13 @@ function buildReport(d) {
   const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus para tu caso" : "productos ViDeus para tu caso"],
     d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy se hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"],
     [d.lab(d.sen), "señales hoy"]];
-  // the empty top half of the cover carries the 3Way mark, big, instead of a second small logo
+  // cover reads top-down: who it is for, the line, the numbers; the 3Way logo closes the page
   const cover = page([el("div", { class: "top" }, [el("span"), el("span", { class: "eyebrow c", text: "Diagnóstico ViDeus" })]),
-    el("div", { class: "hero" }, [el("img", { src: "diag/logo.png", alt: "3Way" })]),
     el("span", { class: "eyebrow", text: TIPO[d.tipo] + " · " + fecha }),
     head("h1", TIPO_EN[d.tipo] + ",", "en una sola línea."),
     el("p", { class: "lede", text: "Lo armamos con tus respuestas: qué te sirve de ViDeus, en qué orden empezar, y cuánto tiempo se va hoy en tareas a mano." }),
     line, el("div", { class: "kpis" }, kpis.map(([b, s]) => el("div", { class: "kpi" }, [el("b", { text: b }), el("span", { text: s })]))),
+    el("div", { class: "hero" }, [el("img", { src: "diag/logo.png", alt: "3Way" })]),
     foot("1")]);
   // 2 · how they work today
   const dl = el("dl", { class: "today" }, [["Tipo de empresa", TIPO[d.tipo]], ["Señales", d.lab(d.sen)], ["Archivo", d.lab(d.arch)], ["Dónde publican", d.lab(d.pub)], ...d.X.rows]
@@ -896,11 +901,12 @@ function buildReport(d) {
   const stats = el("div", { class: "stats" }, d.X.hl.map(([k, t]) => { const m = t.match(/^(≈ )?([\d.,]+ ?(horas|canales)?)/);
     const big = m ? m[0].replace(" horas", " h").replace(" canales", "") : ""; const rest = m ? t.slice(m[0].length).replace(/^ /, "") : t;
     return el("div", { class: "stat", style: k ? "--pc:" + PC[k] : "" }, [el("b", { text: big }), el("span", { text: rest })]); }));
+  stats.append(mark());
   const today = [top(), el("span", { class: "eyebrow", text: "01 · Tu punto de partida" }), head("h2", "Cómo trabajan", "hoy."),
     el("div", { class: "cols" }, [dl, d.X.hl.length ? stats : el("div")])];
   if (d.dolores.length) today.push(el("p", { class: "h3", text: "Lo que te duele" }), el("div", { class: "pains" }, d.dolores.map(k => el("span", { text: d.lab(k) }))));
   if (d.X.hours) today.push(el("div", { class: "year" }, [el("b", { text: "≈ " + fmtN(Math.round(d.X.hours * 52)) + " h" }), el("span", { text: "al año en tareas que hoy se hacen a mano, según tus números. En la demo vemos cuánto de ese tiempo baja con ViDeus." })]));
-  today.push(el("div", { class: "grow" }), foot("2"));
+  today.push(mark(), foot("2"));
   const pages = [cover, page(today)];
   // 3 · products, three per page, in priority order, each with its screen from the videos
   const per = d.picks.length <= 3 ? 3 : Math.ceil(d.picks.length / 2);  // 4 → 2 + 2, 5 → 3 + 2: no half-empty page
@@ -913,13 +919,13 @@ function buildReport(d) {
       if (mine.length) { const y = el("div", { class: "you" }); y.append(el("b", { text: "Para vos: " }), mine.join(" ")); txt.push(y); }
       return el("div", { class: "prod", style: "--pc:" + PC[k] }, [el("div", { class: "shot" }, [el("img", { src: "diag/" + k + ".jpg", alt: "" })]), el("div", {}, txt)]);
     });
-    pages.push(page([top(), el("span", { class: "eyebrow", text: "02 · Lo que te resuelve" }), head("h2", i ? "Y además," : "Qué te sirve,", i ? "esto." : "en orden."), el("div", { class: "prods" }, blocks), el("div", { class: "grow" }), foot(String(pages.length + 1))]));
+    pages.push(page([top(), el("span", { class: "eyebrow", text: "02 · Lo que te resuelve" }), head("h2", i ? "Y además," : "Qué te sirve,", i ? "esto." : "en orden."), el("div", { class: "prods" }, blocks), mark(), foot(String(pages.length + 1))]));
   }
   // 4 · next step
   pages.push(page([top(), el("span", { class: "eyebrow", text: "03 · Próximo paso" }), head("h2", "En la demo,", "con tu caso."),
     el("ol", { class: "agenda" }, d.picks.map((k, i) => el("li", { style: "--pc:" + PC[k] }, [el("span", { class: "n", text: String(i + 1) }), el("div", {}, [el("b", { text: PROD[k].name }), el("span", { text: PROD[k].demo })])]))),
     el("div", { class: "cta" }, [el("img", { class: "lineimg", src: "diag/linea.jpg", alt: "" }), el("span", { class: "lead", text: "De la señal al archivo." }), el("span", { class: "btn", text: "Pedí tu demo →" }), el("span", { class: "url", text: "3way.com.ar" })]),
-    el("div", { class: "grow" }),
+    mark(),
     el("p", { class: "note", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos: en la demo vemos cuánto bajan con ViDeus." }),
     foot(String(pages.length + 1))]));
   return el("div", { id: "report" }, pages);
