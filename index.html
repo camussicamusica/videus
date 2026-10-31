@@ -63,6 +63,8 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 #report .year b { font: 800 40pt/1 "Archivo", sans-serif; color: #00e5ff; white-space: nowrap; }
 #report .year span { color: #dfe5f2; font-size: 11pt; }
 #report .top img { height: 8mm; width: auto; }
+#report .hero { flex: 1; display: flex; align-items: center; justify-content: center; padding-bottom: 6mm; }
+#report .hero img { width: 92mm; height: auto; }
 #report .eyebrow { font: 600 7.5pt "IBM Plex Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: #8b95ad; }
 #report .eyebrow.c { color: #00e5ff; }
 #report h1, #report h2 { font-family: "Archivo", "Arial Black", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; margin: 0; color: #fff; line-height: .98; }
@@ -880,7 +882,9 @@ function buildReport(d) {
   const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus para tu caso" : "productos ViDeus para tu caso"],
     d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy se hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"],
     [d.lab(d.sen), "señales hoy"]];
-  const cover = page([top(), el("div", { class: "grow" }),
+  // the empty top half of the cover carries the 3Way mark, big, instead of a second small logo
+  const cover = page([el("div", { class: "top" }, [el("span"), el("span", { class: "eyebrow c", text: "Diagnóstico ViDeus" })]),
+    el("div", { class: "hero" }, [el("img", { src: "diag/logo.png", alt: "3Way" })]),
     el("span", { class: "eyebrow", text: TIPO[d.tipo] + " · " + fecha }),
     head("h1", TIPO_EN[d.tipo] + ",", "en una sola línea."),
     el("p", { class: "lede", text: "Lo armamos con tus respuestas: qué te sirve de ViDeus, en qué orden empezar, y cuánto tiempo se va hoy en tareas a mano." }),
