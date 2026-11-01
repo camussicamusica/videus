@@ -42,7 +42,9 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 .nums input { font: 500 16px var(--mono); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; }
 .nums input:focus-visible { outline: 2px solid var(--tst); outline-offset: 1px; }
 .nums small { color: var(--muted); font: 500 12px var(--mono); }
-.res .go.pdf { margin-top: 4px; }
+.res .pdfs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.res .go.pdf.light { background: #fff; color: #0f172a; }
+.res .go.pdf.dark { background: #080d1c; color: #fff; border: 1px solid rgba(255,255,255,.35); }
 /* the diagnosis: hidden on screen, the only thing printed. Same look as the videos: navy, wall of screens, five-station line */
 #report { display: none; }
 @media print {
@@ -137,6 +139,38 @@ nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 #report .cta .btn { background: #00e5ff; color: #080d1c; font: 800 13pt "Archivo", sans-serif; border-radius: 99px; padding: 4mm 11mm; }
 #report .cta .url { font: 600 10pt "IBM Plex Mono", monospace; color: #00e5ff; letter-spacing: .06em; }
 #report .note { color: #6f7a94; font-size: 7.5pt; margin-top: 6mm; max-width: 160mm; }
+/* white version: same layout, no wall of screens; product colours darkened for text on white */
+#report.light { color: #0f172a; --acc: #0891b2; }
+html:has(#report.light), html:has(#report.light) body { background: #fff !important; }  /* no dark sliver at the page edge */
+#report.light .pg { background: #fff; }
+#report.light .pg::before, #report.light .pg::after { display: none; }
+#report.light .top img, #report.light .hero img, #report.light .mark img { filter: brightness(0); }
+#report.light .top img, #report.light .hero img { opacity: .88; }
+#report.light .mark img { opacity: .045; }
+#report.light .eyebrow { color: #64748b; }
+#report.light .eyebrow.c, #report.light h1 .a, #report.light h2 .a, #report.light .kpi b, #report.light .year b, #report.light .cta .url { color: var(--acc); }
+#report.light h1, #report.light h2, #report.light .h3, #report.light .prod h3, #report.light .st .nm { color: #0f172a; }
+#report.light .lede, #report.light .kpi span, #report.light .stat span, #report.light .prod p, #report.light .agenda span, #report.light .year span { color: #475569; }
+#report.light .line::before { background: #94a3b8; }
+#report.light .end i { background: #fff; border-color: #94a3b8; }
+#report.light .end span, #report.light .foot, #report.light .note { color: #64748b; }
+#report.light .st .verb, #report.light .prod .pri, #report.light .prod h3 .v, #report.light .prod .you b { color: color-mix(in srgb, var(--pc) 62%, #0f172a); }
+#report.light .st .dot svg { stroke: #0f172a; }
+#report.light .st.off .dot { background: #f1f5f9; border-color: #cbd5e1; }
+#report.light .st.off .dot svg { stroke: #94a3b8; }
+#report.light .st.off .nm { color: #94a3b8; }
+#report.light .kpi, #report.light .agenda li { border-color: #e2e8f0; background: #f8fafc; }
+#report.light .foot { border-top-color: #e2e8f0; }
+#report.light .today div { border-bottom-color: #e2e8f0; }
+#report.light .today dt { color: #64748b; }
+#report.light .stat { background: #f8fafc; border-left-color: var(--pc, var(--acc)); }
+#report.light .stat b { color: color-mix(in srgb, var(--pc, #0891b2) 75%, #0f172a); }
+#report.light .pains span { border-color: #fca5a5; color: #b91c1c; background: #fef2f2; }
+#report.light .year { border-color: #a5f3fc; background: #ecfeff; }
+#report.light .prod .shot { border-color: #e2e8f0; border-top-color: var(--pc); }
+#report.light .prod li { color: #1e293b; }
+#report.light .prod .you { background: color-mix(in srgb, var(--pc) 12%, #fff); color: #0f172a; }
+#report.light .cta .btn { background: #0f172a; color: #fff; }
 /* the client test, in its own colour */
 .tabs button.tst { color: var(--tst); }
 .tabs button.tst[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--tst); }
@@ -797,9 +831,12 @@ quiz.addEventListener("submit", e => {
   const copy = el("button", { type: "button", text: "Copiar ficha" });
   copy.addEventListener("click", () => { try { navigator.clipboard.writeText(txt); copy.textContent = "Copiada ✓"; } catch (err) {} });
   res.append(el("div", { class: "ficha" }, [el("p", { class: "sub", text: "Lo que vería 3Way" }), el("pre", { text: txt }), copy]));
-  const pdf = el("button", { type: "button", class: "go pdf", text: "Descargar mi diagnóstico (PDF)" });
-  pdf.addEventListener("click", () => printReport({ tipo, sen, arch, pub, dolores, picks, X, lab }));
-  res.append(pdf);
+  // the same diagnosis in two looks: white (sober) and black (the video background)
+  const pdfs = el("div", { class: "pdfs" }, [["light", "Descargá tu diagnóstico (versión blanca)"], ["dark", "Descargá tu diagnóstico (versión negra)"]].map(([theme, label]) => {
+    const b = el("button", { type: "button", class: "go pdf " + theme, text: label });
+    b.addEventListener("click", () => printReport({ tipo, sen, arch, pub, dolores, picks, X, lab, theme }));
+    return b; }));
+  res.append(pdfs);
   res.append(el("p", { class: "dl", text: "Pedí tu demo → 3way.com.ar" }));
   res.hidden = false;
   res.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -928,7 +965,7 @@ function buildReport(d) {
     mark(),
     el("p", { class: "note", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos: en la demo vemos cuánto bajan con ViDeus." }),
     foot(String(pages.length + 1))]));
-  return el("div", { id: "report" }, pages);
+  return el("div", { id: "report", class: d.theme || "dark" }, pages);
 }
 function printReport(d) {
   document.getElementById("report")?.remove();
