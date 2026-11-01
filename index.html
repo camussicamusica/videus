@@ -825,7 +825,7 @@ quiz.addEventListener("submit", e => {
     "Tipo: " + TIPO[tipo] + " · Señales: " + lab(sen),
     "Le duele: " + (dolores.length ? dolores.map(lab).join("; ") : "no marcó nada"),
     "Archivo: " + lab(arch) + " · Publica: " + lab(pub),
-    ...X.rows.map(([a, b]) => "  " + a + " " + b), ...X.hl.map(([, t]) => "  → " + t),
+    ...X.rows.map(([a, b]) => "  " + a + " " + b), ...X.hl.map(([, b, t]) => "  → " + b + " " + t),
     "Mostrar, en este orden:", ...picks.map((k, i) => "  " + (i + 1) + ". " + PROD[k].name + ": " + PROD[k].demo),
     "Mandar antes de la reunión: " + (picks.length >= 3 ? "video del ecosistema" : "video de " + PROD[picks[0]].name)].join("\n");
   const copy = el("button", { type: "button", text: "Copiar ficha" });
@@ -841,21 +841,28 @@ quiz.addEventListener("submit", e => {
   res.hidden = false;
   res.scrollIntoView({ behavior: "smooth", block: "start" });
 });
-// Follow-up questions by company type: numbers make the diagnosis about *their* operation
+// Follow-up questions by company type, so the diagnosis is about *their* operation
+// Answers a person can give without doing maths: ranges, a few countable numbers, and "today vs what you'd want"
+const R_PERS = ["1", "2 a 5", "6 a 10", "Más de 10"];
+const R_CLIPS = ["Ninguno", "1 a 10", "10 a 50", "Más de 50"];
+const R_ARCH = ["Menos de 100", "100 a 1.000", "1.000 a 10.000", "Más de 10.000"];
+const R_AVISOS = ["Menos de 50", "50 a 100", "100 a 1.000", "Más de 1.000"];
+const R_HGRAB = ["Menos de 10", "10 a 20", "20 a 100", "Más de 100"];
+const R_FIND = ["Casi siempre", "A veces", "Casi nunca"];
 const QX = {
-  canal: [["personas", "¿Cuántas personas miran las señales en cada turno?", "personas"], ["clips", "¿Cuántos clips sacan por semana?", "clips"], ["minclip", "¿Cuántos minutos tarda hoy cada clip, desde que pasa hasta que está listo?", "minutos"], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", "horas"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"]],
-  cable: [["canales", "¿Cuántos canales tiene tu grilla?", "canales"], ["personas", "¿Cuántas personas hacen monitoreo?", "personas"], ["revision", "¿Cada cuánto revisan la grilla entera?", ["Nunca entera", "Una vez por día", "Varias veces por día", "Todo el tiempo"]], ["entera", "¿Cómo se enteran hoy de que un canal falla?", ["Llaman los abonados", "Lo ve alguien del equipo", "Avisa un sistema"]]],
-  productora: [["clips", "¿Cuántos clips sacan por semana?", "clips"], ["minclip", "¿Cuántos minutos tarda hoy cada clip?", "minutos"], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", "horas"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"], ["clientes", "¿A cuántos medios o clientes les entregan material?", "clientes"]],
-  regulador: [["senales", "¿Cuántas señales tienen que controlar?", "señales"], ["avisos", "¿Cuántos avisos o pautas verifican por mes?", "avisos"], ["hinforme", "¿Cuántas horas lleva armar un informe de lo que salió al aire?", "horas"], ["prueba", "¿Cómo prueban hoy qué salió al aire?", ["Con grabación propia", "Se lo piden al canal", "No pueden probarlo"]]],
-  institucion: [["hgrab", "¿Cuántas horas de sesiones o clases graban por semana?", "horas"], ["anios", "¿De cuántos años es su archivo?", "años"], ["busq", "¿Cuántas veces por semana buscan algo en el archivo?", "veces"], ["minbusq", "¿Cuántos minutos tardan en encontrarlo?", "minutos"]],
-  otro: [["hvideo", "¿Cuántas horas por semana dedica tu equipo a buscar, cortar o revisar video?", "horas"]],
+  canal: [["personas", "¿Cuántas personas trabajan resolviendo las fallas de las señales?", R_PERS], ["clipsHoy", "¿Cuántos clips para redes sacan por semana hoy?", R_CLIPS], ["clipsQuieren", "¿Y cuántos querrían sacar?", R_CLIPS], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", R_ARCH], ["encuentran", "Cuando buscan algo en el archivo, ¿lo encuentran?", R_FIND]],
+  cable: [["canales", "¿Cuántos canales tiene tu grilla?", "canales"], ["personas", "¿Cuántas personas hacen monitoreo?", R_PERS], ["revision", "¿Cada cuánto revisan la grilla entera?", ["Nunca entera", "Una vez por día", "Varias veces por día", "Todo el tiempo"]], ["entera", "¿Cómo se enteran hoy de que un canal falla?", ["Llaman los abonados", "Lo ve alguien del equipo", "Avisa un sistema"]]],
+  productora: [["clipsHoy", "¿Cuántos clips sacan por semana hoy?", R_CLIPS], ["clipsQuieren", "¿Y cuántos querrían sacar?", R_CLIPS], ["archivo", "¿Cuántas horas de archivo tienen, más o menos?", R_ARCH], ["encuentran", "Cuando buscan algo en el archivo, ¿lo encuentran?", R_FIND], ["clientes", "¿A cuántos medios o clientes les entregan material?", "clientes"]],
+  regulador: [["senales", "¿Cuántas señales tienen que controlar?", "señales"], ["avisos", "¿Cuántos avisos o pautas verifican por mes?", R_AVISOS], ["pedidos", "¿Cada cuánto les piden probar qué salió al aire?", ["Todos los días", "Cada semana", "Cada mes", "Casi nunca"]], ["prueba", "¿Cómo prueban hoy qué salió al aire?", ["Con grabación propia", "Se lo piden al canal", "No pueden probarlo"]]],
+  institucion: [["hgrab", "¿Cuántas horas de sesiones o clases graban por semana?", R_HGRAB], ["anios", "¿De cuántos años es su archivo?", "años"], ["encuentran", "Cuando buscan algo en el archivo, ¿lo encuentran?", R_FIND], ["publico", "¿El público puede ver hoy lo que graban?", ["No", "Sí, pero cuesta encontrarlo", "Sí, ordenado y buscable"]]],
+  otro: [["hvideo", "¿Cuántas horas por semana dedica tu equipo a buscar, cortar o revisar video?", ["Menos de 5", "5 a 20", "20 a 50", "Más de 50"]]],
 };
 const extra = document.getElementById("extra");
 function renderExtra(tipo) {
   extra.replaceChildren();
   const qs = QX[tipo]; if (!qs) return;
   const nums = qs.filter(q => !Array.isArray(q[2])), picks = qs.filter(q => Array.isArray(q[2]));
-  if (nums.length) extra.append(el("fieldset", { class: "q sub-q" }, [el("legend", { text: "Unos números de tu operación" }), el("p", { class: "hint", text: "Son opcionales y aproximados. Sirven para que el diagnóstico hable de tu caso." }),
+  if (nums.length) extra.append(el("fieldset", { class: "q sub-q" }, [el("legend", { text: "Unos números de tu operación" }), el("p", { class: "hint", text: "Son opcionales. Si no sabés, dejalo vacío." }),
     el("div", { class: "nums" }, nums.map(([k, label, unit]) => el("label", {}, [label, el("input", { type: "number", name: "x_" + k, min: "0", step: "any", inputmode: "decimal", placeholder: "0" }), el("small", { text: unit })])))]));
   picks.forEach(([k, label, opts]) => extra.append(el("fieldset", { class: "q sub-q" }, [el("legend", { text: label }),
     el("div", { class: "opts" }, opts.map(o => el("label", {}, [el("input", { type: "radio", name: "x_" + k, value: o }), o])))])));
@@ -863,29 +870,36 @@ function renderExtra(tipo) {
 quiz.addEventListener("change", e => { if (e.target.name === "tipo") renderExtra(e.target.value); });
 const fmtN = x => x.toLocaleString("es-AR", { maximumFractionDigits: 1 });
 function extraAnswers(f, tipo) {
-  const v = {}, rows = [], hl = [];
+  const v = {}, rows = [], hl = [];  // hl: [product, big figure, the rest of the sentence]
   (QX[tipo] || []).forEach(([k, label, unit]) => {
     const raw = f.get("x_" + k); if (raw == null || raw === "") return;
     if (Array.isArray(unit)) { v[k] = raw; rows.push([label, raw]); return; }
     const x = parseFloat(raw); if (!(x > 0)) return;
     v[k] = x; rows.push([label, fmtN(x) + " " + unit]);
   });
-  const hClips = v.clips && v.minclip ? v.clips * v.minclip / 60 : 0;
-  const hBusq = v.busq && v.minbusq ? v.busq * v.minbusq / 60 : 0;
-  if (hClips) hl.push(["clipping", "≈ " + fmtN(hClips) + " horas por semana armando clips (" + fmtN(v.clips) + " clips × " + fmtN(v.minclip) + " min)."]);
-  if (hBusq) hl.push(["catalog", "≈ " + fmtN(hBusq) + " horas por semana buscando en el archivo (" + fmtN(v.busq) + " búsquedas × " + fmtN(v.minbusq) + " min)."]);
-  if (v.canales && v.personas) hl.push(["roundrobin", "≈ " + fmtN(v.canales / v.personas) + " canales por persona de monitoreo."]);
-  if (v.avisos && v.hinforme) hl.push(["auditor", fmtN(v.avisos) + " avisos por mes, y " + fmtN(v.hinforme) + " horas por cada informe de emisión."]);
-  if (v.hvideo) hl.push([null, fmtN(v.hvideo) + " horas por semana de tu equipo buscando, cortando o revisando video."]);
-  const hours = hClips + hBusq + (v.hvideo || 0);
-  return { v, rows, hl, hours };
+  const lc = s => s.charAt(0).toLowerCase() + s.slice(1);
+  const per = p => lc(p) + (p === "1" ? " persona" : " personas");
+  if (v.clipsQuieren && R_CLIPS.indexOf(v.clipsQuieren) > R_CLIPS.indexOf(v.clipsHoy || "Ninguno"))
+    hl.push(["clipping", v.clipsQuieren, "clips por semana querrían sacar. Hoy sacan " + lc(v.clipsHoy || "sin dato") + "."]);
+  if (v.encuentran && v.encuentran !== "Casi siempre")
+    hl.push(["catalog", v.archivo || v.encuentran, (v.archivo ? "horas de archivo, y lo que buscan lo encuentran " : "encuentran lo que buscan en el archivo") + (v.archivo ? lc(v.encuentran) : "") + "."]);
+  if (v.canales) hl.push(["roundrobin", fmtN(v.canales), "canales en la grilla" + (v.personas ? ", con " + per(v.personas) + " de monitoreo." : ".")]);
+  else if (v.personas) hl.push(["multiviewer", v.personas, (v.personas === "1" ? "persona resolviendo" : "personas resolviendo") + " las fallas de las señales."]);
+  if (v.avisos) hl.push(["auditor", v.avisos, "avisos o pautas por mes para verificar" + (v.pedidos && v.pedidos !== "Casi nunca" ? ", y les piden pruebas " + lc(v.pedidos) : "") + "."]);
+  if (v.hgrab) hl.push(["catalog", v.hgrab, "horas de sesiones o clases por semana" + (v.anios ? ", con un archivo de " + fmtN(v.anios) + " años" : "") + "."]);
+  if (v.hvideo) hl.push([null, v.hvideo, "horas por semana de tu equipo buscando, cortando o revisando video."]);
+  return { v, rows, hl };
 }
 function extraScore(X, score) {
   const v = X.v;
-  if (v.clips) score.clipping += 1;
-  if (v.archivo || v.anios || v.busq) score.catalog += 1;
+  if (v.clipsHoy || v.clipsQuieren) score.clipping += 1;
+  if (X.hl.some(([k]) => k === "clipping")) score.clipping += 1;  // they want more clips than they make
+  if (v.archivo || v.anios || v.encuentran) score.catalog += 1;
+  if (v.encuentran === "A veces" || v.encuentran === "Casi nunca") score.catalog += 1;
+  if (v.publico && v.publico !== "Sí, ordenado y buscable") score.catalog += 1;
   if (v.hgrab) { score.catalog += 1; score.clipping += 1; }
   if (v.avisos) score.auditor += 2;
+  if (v.pedidos === "Todos los días" || v.pedidos === "Cada semana") score.auditor += 1;
   if (v.prueba === "Se lo piden al canal" || v.prueba === "No pueden probarlo") score.auditor += 2;
   if (v.entera === "Llaman los abonados") { score.roundrobin += 2; score.multiviewer += 1; }
   if (v.revision === "Nunca entera" || v.revision === "Una vez por día") score.roundrobin += 1;
@@ -922,34 +936,32 @@ function buildReport(d) {
     ...ORDER.map(k => el("div", { class: "st" + (d.picks.includes(k) ? "" : " off"), style: "--pc:" + PC[k] }, [el("span", { class: "verb", text: VERB[k] + "." }), el("span", { class: "dot" }, [svg(k)]), el("span", { class: "nm", text: PROD[k].name })])),
     el("div", { class: "end" }, [el("i"), el("span", { text: "Archivo" })])]);
   const kpis = [[String(d.picks.length), d.picks.length === 1 ? "producto ViDeus para tu caso" : "productos ViDeus para tu caso"],
-    d.X.hours ? ["≈ " + fmtN(d.X.hours) + " h", "por semana en tareas que hoy se hacen a mano"] : [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"],
+    [String(d.dolores.length), d.dolores.length === 1 ? "problema que marcaste" : "problemas que marcaste"],
     [d.lab(d.sen), "señales hoy"]];
   // cover reads top-down: who it is for, the line, the numbers; the 3Way logo closes the page
   const cover = page([el("div", { class: "top" }, [el("span"), el("span", { class: "eyebrow c", text: "Diagnóstico ViDeus" })]),
     el("span", { class: "eyebrow", text: TIPO[d.tipo] + " · " + fecha }),
     head("h1", TIPO_EN[d.tipo] + ",", "en una sola línea."),
-    el("p", { class: "lede", text: "Lo armamos con tus respuestas: qué te sirve de ViDeus, en qué orden empezar, y cuánto tiempo se va hoy en tareas a mano." }),
+    el("p", { class: "lede", text: "Lo armamos con tus respuestas: qué te sirve de ViDeus, en qué orden empezar, y cómo pasar de lo que hacés hoy a lo que querés hacer." }),
     line, el("div", { class: "kpis" }, kpis.map(([b, s]) => el("div", { class: "kpi" }, [el("b", { text: b }), el("span", { text: s })]))),
     el("div", { class: "hero" }, [el("img", { src: "diag/logo.png", alt: "3Way" })]),
     foot("1")]);
   // 2 · how they work today
   const dl = el("dl", { class: "today" }, [["Tipo de empresa", TIPO[d.tipo]], ["Señales", d.lab(d.sen)], ["Archivo", d.lab(d.arch)], ["Dónde publican", d.lab(d.pub)], ...d.X.rows]
     .map(([a, b]) => el("div", {}, [el("dt", { text: a }), el("dd", { text: b })])));
-  const stats = el("div", { class: "stats" }, d.X.hl.map(([k, t]) => { const m = t.match(/^(≈ )?([\d.,]+ ?(horas|canales)?)/);
-    const big = m ? m[0].replace(" horas", " h").replace(" canales", "") : ""; const rest = m ? t.slice(m[0].length).replace(/^ /, "") : t;
-    return el("div", { class: "stat", style: k ? "--pc:" + PC[k] : "" }, [el("b", { text: big }), el("span", { text: rest })]); }));
+  const stats = el("div", { class: "stats" }, d.X.hl.map(([k, big, rest]) =>
+    el("div", { class: "stat", style: k ? "--pc:" + PC[k] : "" }, [el("b", { text: big }), el("span", { text: rest })])));
   stats.append(mark());
   const today = [top(), el("span", { class: "eyebrow", text: "01 · Tu punto de partida" }), head("h2", "Cómo trabajan", "hoy."),
     el("div", { class: "cols" }, [dl, d.X.hl.length ? stats : el("div")])];
   if (d.dolores.length) today.push(el("p", { class: "h3", text: "Lo que te duele" }), el("div", { class: "pains" }, d.dolores.map(k => el("span", { text: d.lab(k) }))));
-  if (d.X.hours) today.push(el("div", { class: "year" }, [el("b", { text: "≈ " + fmtN(Math.round(d.X.hours * 52)) + " h" }), el("span", { text: "al año en tareas que hoy se hacen a mano, según tus números. En la demo vemos cuánto de ese tiempo baja con ViDeus." })]));
   today.push(mark(), foot("2"));
   const pages = [cover, page(today)];
   // 3 · products, three per page, in priority order, each with its screen from the videos
   const per = d.picks.length <= 3 ? 3 : Math.ceil(d.picks.length / 2);  // 4 → 2 + 2, 5 → 3 + 2: no half-empty page
   for (let i = 0; i < d.picks.length; i += per) {
     const blocks = d.picks.slice(i, i + per).map((k, j) => {
-      const n = i + j, mine = d.X.hl.filter(([p]) => p === k).map(([, t]) => t);
+      const n = i + j, mine = d.X.hl.filter(([p]) => p === k).map(([, b, t]) => b + " " + t);
       if (d.dolores.includes(k)) mine.unshift("Marcaste «" + d.lab(k) + "».");
       const h = el("h3"); h.append(PROD[k].name.replace("ViDeus ", "ViDeus "), " ", el("span", { class: "v", text: "· " + VERB[k] }));
       const txt = [el("span", { class: "pri", text: n === 0 ? "Prioridad 1 · empezar por acá" : "Prioridad " + (n + 1) }), h, el("p", { text: PROD[k].what }), el("ul", {}, BEN[k].map(t => el("li", { text: t })))];
@@ -963,7 +975,7 @@ function buildReport(d) {
     el("ol", { class: "agenda" }, d.picks.map((k, i) => el("li", { style: "--pc:" + PC[k] }, [el("span", { class: "n", text: String(i + 1) }), el("div", {}, [el("b", { text: PROD[k].name }), el("span", { text: PROD[k].demo })])]))),
     el("div", { class: "cta" }, [el("img", { class: "lineimg", src: "diag/linea.jpg", alt: "" }), el("span", { class: "lead", text: "De la señal al archivo." }), el("span", { class: "btn", text: "Pedí tu demo →" }), el("span", { class: "url", text: "3way.com.ar" })]),
     mark(),
-    el("p", { class: "note", text: "Diagnóstico orientativo, armado con tus respuestas. Los números son los que cargaste vos: en la demo vemos cuánto bajan con ViDeus." }),
+    el("p", { class: "note", text: "Diagnóstico orientativo, armado con tus respuestas. En la demo lo vemos con tu caso real." }),
     foot(String(pages.length + 1))]));
   return el("div", { id: "report", class: d.theme || "dark" }, pages);
 }
