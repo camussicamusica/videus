@@ -12,6 +12,7 @@ Página: https://camussicamusica.github.io/videus/
 
 | Fecha | Serie | Pieza | Versiones | Drive (original) | En la página |
 |---|---|---|---|---|---|
+| 2026-11-02 | Capítulos | Cap. 2 · Cómo funciona, v2 (voz provisoria) | ES compu | [carpeta](https://drive.google.com/drive/folders/1buVm6VjrYJnt2btSURUMZI5frErNcqyX) | [#v-cap2](https://camussicamusica.github.io/videus/#v-cap2) |
 | 2026-11-02 | Round 2 · 3Way | Ecosistema 3Way · Cinta; ViDeus Clipping · Presentación; ViDeus Multiviewer · Presentación; ViDeus Auditor · Presentación (voz provisoria) | ES compu | [carpeta](https://drive.google.com/drive/folders/1RrfwukW3jduBNvacUQw9RkLiuLvyWnLQ) | Round 2 · 3Way · Videos |
 | 2026-10-31 | Round 2 · 3Way | Ecosistema 3Way · Una sola línea; ViDeus Clipping · Falta el clip; ViDeus Clipping · La nota de las cinco; ViDeus Auditor · Qué hace; ViDeus Multiviewer · Qué hace (voz provisoria) | ES compu | [carpeta](https://drive.google.com/drive/folders/1RrfwukW3jduBNvacUQw9RkLiuLvyWnLQ) | Round 2 · 3Way · Videos |
 | 2026-10-27 | V3 · Los casos | La cámara de diputados (nuevo, pedido en la llamada con Seba del 26/10; voces de prueba Valentina ES y Ava EN). Primero en «Los casos» con la etiqueta Nuevo | ES compu (aprobada), ES celu, EN compu, EN celu (v1) | [carpeta](https://drive.google.com/drive/folders/1dA8Uf9QzvusKsnALdryqP-qtqWnxoYgV) | Los casos · primero |
