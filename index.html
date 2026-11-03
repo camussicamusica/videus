@@ -25,6 +25,11 @@
 .r2-banner h2 { margin: 0; }
 .r2-banner p { margin: 0; max-width: 72ch; }
 .r2-banner .note { color: var(--muted); font-size: 14px; }
+.prod-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.prod-nav a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; color: inherit; text-decoration: none; }
+#g-round2 { display: grid; gap: 32px; }
+.prod-sec { display: grid; gap: 14px; scroll-margin-top: 16px; }
+.prod-sec > h3 { margin: 0; font-size: 22px; }
 /* tabs in three rows: line 1 ViDeus Catalog, line 2 Round 2 · 3Way, line 3 the client test */
 nav.tabs { position: static; display: grid; gap: 0; overflow: visible; }
 .tabs .trow { display: flex; gap: 4px; align-items: center; overflow-x: auto; border-top: 1px solid var(--line); }
@@ -385,7 +390,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
     <div class="eyebrow">3Way · Todos los productos ViDeus · actualizado el 3 nov 2026</div>
     <h1>Videos <em>3Way</em></h1>
     <p class="lede">Los videos de todos los productos ViDeus de 3Way: Catalog, Clipping, Auditor, Multiviewer y Round Robin. Arriba, la primera ronda de ViDeus Catalog (empezá por el Top 10); debajo, Round 2 con el resto de los productos y un test para clientes. Cada video está en español y, cuando existe, en inglés; «Descargar» baja el original.</p>
-    <div class="progress"><div><span class="k">Listo para ver</span><span class="v"><b>7</b>capítulos · <b>40</b>publicidades · <b>13</b>instructivos · <b>10</b>videos Round 2 · <b>1</b>test para clientes</span></div><div class="doing"><span class="k">En producción</span><span class="v"><b>1</b>video de Round Robin · Round 2 en celu e inglés · <b>10</b>frases en inglés · instructivos en celu e inglés</span></div></div>
+    <div class="progress"><div><span class="k">Listo para ver</span><span class="v"><b>7</b>capítulos · <b>40</b>publicidades · <b>13</b>instructivos · <b>13</b>videos Round 2 · <b>1</b>test para clientes</span></div><div class="doing"><span class="k">En producción</span><span class="v"><b>1</b>video de Round Robin · Round 2 en celu e inglés · <b>10</b>frases en inglés · instructivos en celu e inglés</span></div></div>
     
   </header>
 
@@ -400,7 +405,7 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
     <button type="button" role="tab" id="t-historial" aria-controls="p-historial">Historial<span class="n">▾</span></button>
     </div>
     <div class="trow"><span class="grp r2g">Round 2 · 3Way</span>
-    <button type="button" role="tab" id="t-round2" aria-controls="p-round2" class="r2">Videos<span class="n">10</span><span class="new">Nuevo</span></button>
+    <button type="button" role="tab" id="t-round2" aria-controls="p-round2" class="r2">Videos<span class="n">13</span><span class="new">Nuevo</span></button>
     </div>
     <div class="trow"><span class="grp tstg">Para clientes</span>
     <button type="button" role="tab" id="t-test" aria-controls="p-test" class="tst">Test para clientes<span class="new">Propuesta</span></button>
@@ -410,10 +415,11 @@ thead th { font: 500 12px var(--mono); color: var(--muted); text-transform: uppe
   <section class="panel" id="p-round2" role="tabpanel" aria-labelledby="t-round2" hidden>
     <div class="r2-banner">
       <h2>Round 2: todo 3Way, no solo Catalog</h2>
-      <p>Los videos más nuevos, del 31 de octubre y del 2 y 3 de noviembre. Salen de las demos y las respuestas del equipo de 3Way de esta semana. Primero el ecosistema completo y después cada producto, con su color.</p>
-      <p class="note">Español, para compu y TV. Voz provisoria. Faltan la versión de celu, el inglés y el video de Round Robin solo.</p>
+      <p>Los videos más nuevos, del 31 de octubre y del 2 y 3 de noviembre. Salen de las demos y las respuestas del equipo de 3Way de esta semana. Separados por producto: primero el video completo de cada uno y después las piezas cortas.</p>
+      <p class="note">Español, para compu y TV. Voz provisoria. Faltan la versión de celu y el inglés. Round Robin, en producción.</p>
     </div>
-    <div class="grid" id="g-round2"></div>
+    <nav class="prod-nav" id="r2-nav" aria-label="Productos"></nav>
+    <div id="g-round2"></div>
   </section>
 
   <section class="panel" id="p-test" role="tabpanel" aria-labelledby="t-test" hidden>
@@ -793,8 +799,24 @@ const ROUND2 = [
   { id: "r2-multi-pres", t: "ViDeus Multiviewer · Presentación", n: "Todas tus señales en una sola pantalla. Si una falla, te avisa, y queda anotado qué pasó. 22 s.", col: "verde", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/multiviewer-presentacion.mp4", fmt: "horizontal", dl: "1De5A086EXcEy63DZoEm9kNXkZu-l86iP" }] },
   { id: "r2-auditor-pres", t: "ViDeus Auditor · Presentación", n: "Graba tus señales las 24 horas y encuentra cada aviso que salió al aire, con canal, hora y video. 22 s.", col: "amarillo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/auditor-presentacion.mp4", fmt: "horizontal", dl: "1KthIZFldnHQELhB860U4QdaEtNw4AdH7" }] },
   { id: "r2-catalog", t: "ViDeus Catalog · Completo", n: "Años de televisión grabada: encontrás el momento justo con tus palabras, lo descargás y vuelve a salir al aire. 1:17.", col: "gris", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/catalog-completo.mp4", fmt: "horizontal", dl: "1V9hcNl7jsOJhjAjyOoDjO8fbJd-Uc-pz" }] },
+  { id: "r2-clip-completo", t: "ViDeus Clipping · Completo", n: "Corta mientras sale al aire y lo lleva a tus redes. 1:13.", col: "rojo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/clipping-completo.mp4", fmt: "horizontal", dl: "1QbZIuTAxqrO_H629wTS2vZ5D4XbzRlGo" }] },
+  { id: "r2-multi-completo", t: "ViDeus Multiviewer · Completo", n: "Todas tus señales en un mosaico, y te avisa cuando algo falla. 1:50.", col: "verde", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/multiviewer-completo.mp4", fmt: "horizontal", dl: "1qjAFqnQoFrfXHPUhI6MufD0oV0SIQx2L" }] },
+  { id: "r2-auditor-completo", t: "ViDeus Auditor · Completo", n: "Graba cada señal las 24 horas y prueba qué salió al aire. 1:23.", col: "amarillo", state: "revision", stlab: "Nuevo", v: [{ lab: "ES · Compu", src: "videos/round2/auditor-completo.mp4", fmt: "horizontal", dl: "1AnoI--OPV6VbSAheTGIgPzMeZqAKI8Gk" }] },
 ];
-ROUND2.forEach(it => { KIND[it.id] = "Round 2 · 3Way"; const c = card(it); c.id = "v-" + it.id; document.getElementById("g-round2").append(c); });
+const R2_GRUPOS = [
+  ["catalog", "ViDeus Catalog", ["r2-catalog"]],
+  ["clipping", "ViDeus Clipping", ["r2-clip-completo", "r2-clip-pres", "r2-clip-ad", "r2-clip-caso"]],
+  ["multiviewer", "ViDeus Multiviewer", ["r2-multi-completo", "r2-multi-pres", "r2-multi"]],
+  ["auditor", "ViDeus Auditor", ["r2-auditor-completo", "r2-auditor-pres", "r2-auditor"]],
+  ["ecosistema", "Ecosistema 3Way", ["r2-eco", "r2-eco-cinta"]],
+];
+const r2ById = Object.fromEntries(ROUND2.map(it => [it.id, it]));
+R2_GRUPOS.forEach(([key, name, ids]) => {
+  document.getElementById("r2-nav").append(el("a", { href: "#v-prod-" + key, text: name }));
+  const g = el("div", { class: "grid" });
+  ids.forEach(id => { const it = r2ById[id]; KIND[id] = "Round 2 · 3Way"; const c = card(it); c.id = "v-" + id; g.append(c); });
+  document.getElementById("g-round2").append(el("section", { class: "prod-sec", id: "v-prod-" + key }, [el("h3", { text: name }), g]));
+});
 // Client test (proposal): type gives a base, pains weigh most, archive and publishing nudge Catalog and Clipping
 const PROD = {
   multiviewer: { name: "ViDeus Multiviewer", col: "verde", what: "Todas tus señales en un mosaico, y te avisa cuando algo falla.", demo: "Armar su mosaico con sus señales y disparar una alarma de prueba.", video: "r2-multi" },
@@ -1011,7 +1033,7 @@ const h = location.hash.slice(1), target = h.startsWith("v-") && document.getEle
 if (target) {
   try { history.scrollRestoration = "manual"; } catch (e) {}
   tab(target.closest(".panel").id.slice(2));
-  const go = () => target.scrollIntoView({ block: "center" });
+  const go = () => target.scrollIntoView({ block: target.classList.contains("prod-sec") ? "start" : "center" });
   go(); addEventListener("load", () => setTimeout(go, 50));
 }
 else tab(TABS.includes(h) ? h : "top");
