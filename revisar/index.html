@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revisar videos · 3Way</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #17191a; --panel: #212426; --line: #33383a;
+  --fg: #eef0ee; --muted: #9aa3a3; --orange: #e0623a;
+  --va: #3ddc84; --nova: #ff4d42; --pend: #8a8f86;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 var(--body); }
+a { color: inherit; }
+header { padding: 28px 16px 8px; max-width: 1240px; margin: 0 auto; }
+.back { color: var(--muted); font-size: 13px; text-decoration: none; }
+.back:hover { color: var(--fg); }
+h1 { font: 800 clamp(26px, 4vw, 38px)/1.1 var(--display); margin: 10px 0 6px; }
+.intro { color: var(--muted); margin: 0 0 18px; max-width: 62ch; }
+.progress { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.bar { flex: 1; min-width: 180px; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; }
+.bar .v { background: var(--va); } .bar .n { background: var(--nova); }
+.count { font-weight: 600; white-space: nowrap; }
+.count small { color: var(--muted); font-weight: 400; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; }
+.seg button, .chip { font: 500 14px var(--body); color: var(--muted); background: none; border: 0; padding: 7px 12px; border-radius: 7px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { border: 1px solid var(--line); border-radius: 99px; padding: 5px 11px; font-size: 13px; }
+.chip[aria-pressed="true"] { border-color: var(--fg); color: var(--fg); }
+.sync { color: var(--muted); font-size: 12px; margin-left: auto; }
+main { max-width: 1240px; margin: 0 auto; padding: 8px 16px 60px; }
+h2.prod { font: 600 13px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; color: inherit; font: inherit; padding: 0; display: flex; flex-direction: column; transition: transform .12s, border-color .12s; }
+.card:hover, .card:focus-visible { transform: translateY(-2px); border-color: var(--muted); outline: none; }
+.thumb { position: relative; aspect-ratio: 16/9; background: #000; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dur { position: absolute; right: 6px; bottom: 6px; background: rgba(0,0,0,.75); font-size: 12px; padding: 1px 6px; border-radius: 4px; }
+.badge { position: absolute; left: 6px; top: 6px; font: 600 12px var(--body); padding: 2px 8px; border-radius: 99px; background: rgba(0,0,0,.75); }
+.badge.va { background: var(--va); color: #0b1a10; } .badge.nova { background: var(--nova); color: #fff; }
+.badge.conf { background: #ffd60a; color: #1a1600; left: auto; right: 6px; top: 6px; }
+.meta { padding: 10px 12px 12px; }
+.code { font: 600 12px var(--body); color: var(--orange); }
+.tit { font-weight: 600; margin: 2px 0 2px; }
+.cat { color: var(--muted); font-size: 13px; }
+.note { color: var(--fg); font-size: 13px; margin-top: 6px; border-left: 2px solid var(--line); padding-left: 8px; white-space: pre-wrap; }
+.empty { color: var(--muted); padding: 40px 0; text-align: center; }
+dialog { width: min(920px, 100% - 24px); max-height: calc(100% - 24px); background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 0; }
+dialog::backdrop { background: rgba(0,0,0,.7); }
+dialog video { width: 100%; display: block; background: #000; max-height: 60vh; }
+.dbody { padding: 16px; }
+.dhead { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.dhead h3 { font: 800 20px var(--display); margin: 0; }
+.dhead a { color: var(--muted); font-size: 13px; margin-left: auto; }
+.verdict { display: flex; gap: 10px; margin: 14px 0 10px; }
+.verdict button { flex: 1; font: 700 17px var(--display); padding: 14px; border-radius: 10px; border: 2px solid var(--line); background: none; color: var(--fg); cursor: pointer; }
+.verdict .bva[aria-pressed="true"] { background: var(--va); border-color: var(--va); color: #0b1a10; }
+.verdict .bnova[aria-pressed="true"] { background: var(--nova); border-color: var(--nova); color: #fff; }
+textarea { width: 100%; min-height: 84px; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 10px; font: 15px var(--body); resize: vertical; }
+.actions { display: flex; gap: 10px; margin-top: 12px; align-items: center; }
+.save { font: 600 15px var(--body); background: var(--fg); color: var(--bg); border: 0; border-radius: 10px; padding: 11px 20px; cursor: pointer; }
+.save:disabled { opacity: .35; cursor: default; }
+.close { background: none; border: 0; color: var(--muted); font: 15px var(--body); cursor: pointer; }
+.msg { color: var(--muted); font-size: 13px; }
+.toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="../">← Videos 3Way</a>
+  <h1>Revisar videos</h1>
+  <p class="intro">Abrí cada video, marcá <b>Va</b> o <b>No va</b> y escribí para qué sirve o qué le cambiarías. Cuando lo guardás, pasa a «Revisados».</p>
+  <div class="progress">
+    <div class="bar" aria-hidden="true"><i class="v" id="bv"></i><i class="n" id="bn"></i></div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Qué mostrar">
+      <button type="button" data-view="pend" aria-pressed="true">Sin revisar</button>
+      <button type="button" data-view="done" aria-pressed="false">Revisados</button>
+    </div>
+    <div class="chips" id="chips"></div>
+    <span class="sync" id="sync"></span>
+  </div>
+</header>
+<main id="main"></main>
+
+<dialog id="dlg" aria-labelledby="dtitle">
+  <video id="dvideo" controls playsinline preload="metadata"></video>
+  <div class="dbody">
+    <div class="dhead"><span class="code" id="dcode"></span><h3 id="dtitle"></h3><a id="ddrive" target="_blank" rel="noopener">Original en Drive ↗</a></div>
+    <div class="verdict" role="group" aria-label="¿Va o no va?">
+      <button type="button" class="bva" data-v="Va" aria-pressed="false">Va</button>
+      <button type="button" class="bnova" data-v="No va" aria-pressed="false">No va</button>
+    </div>
+    <textarea id="dnote" placeholder="¿Para qué sirve? ¿Qué le cambiarías? (opcional)"></textarea>
+    <div class="actions">
+      <button type="button" class="save" id="dsave" disabled>Guardar</button>
+      <button type="button" class="close" id="dclose">Cerrar</button>
+      <span class="msg" id="dmsg"></span>
+    </div>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfwyX-TPMGvGTJsHrS1UFgchI4kN-LQz7iamSwZWvlzRxwaGQ/formResponse";
+const F_VERDICT = "entry.1256890529", F_NOTE = "entry.761398995", F_CODE = "entry.1095167524";
+const SHEET = "1m52hhtEBHx6461R_22xVf1B3hnJeNuaBxVoAHCX79hI";
+const LKEY = "revisar3way.v1";
+
+let videos = [], view = "pend", prod = "Todos", current = null, pick = null;
+const sheetState = {};          // code -> {v, note, t}
+let localState = {};            // code -> {v, note, t}
+try { localState = JSON.parse(localStorage.getItem(LKEY) || "{}"); } catch (e) {}
+
+function state(code) {
+  const a = sheetState[code], b = localState[code];
+  if (a && b) return b.t > a.t ? b : a;
+  return a || b || null;
+}
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt = s => s ? `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}` : "";
+
+function render() {
+  const prods = ["Todos", ...new Set(videos.map(v => v.producto))];
+  $("#chips").innerHTML = prods.map(p => `<button type="button" class="chip" aria-pressed="${p===prod}" data-p="${esc(p)}">${esc(p.replace("ViDeus ",""))}</button>`).join("");
+  let va = 0, nova = 0;
+  videos.forEach(v => { const s = state(v.code); if (s) s.v === "Va" ? va++ : nova++; });
+  const n = videos.length;
+  $("#bv").style.width = (va/n*100) + "%"; $("#bn").style.width = (nova/n*100) + "%";
+  $("#count").innerHTML = `${va+nova} de ${n} revisados <small>· ${va} va · ${nova} no va</small>`;
+
+  const list = videos.filter(v => (prod === "Todos" || v.producto === prod) && (!!state(v.code) === (view === "done")));
+  if (!list.length) { $("#main").innerHTML = `<p class="empty">${view==="pend" ? "No queda nada por revisar acá. 🎉" : "Todavía no revisaste ninguno."}</p>`; return; }
+  const groups = {};
+  list.forEach(v => (groups[v.producto] ??= []).push(v));
+  $("#main").innerHTML = Object.entries(groups).map(([p, vs]) => `
+    <h2 class="prod">${esc(p)} · ${vs.length}</h2>
+    <div class="grid">${vs.map(card).join("")}</div>`).join("");
+}
+function card(v) {
+  const s = state(v.code);
+  const badge = s ? `<span class="badge ${s.v==="Va"?"va":"nova"}">${esc(s.v)}</span>` : "";
+  return `<button type="button" class="card" data-code="${v.code}">
+    <div class="thumb"><img loading="lazy" src="thumbs/${v.code}.jpg" alt="">${badge}${v.confuso?'<span class="badge conf">En «Confusos»</span>':""}<span class="dur">${fmt(v.dur)}</span></div>
+    <div class="meta"><div class="code">${v.code}</div><div class="tit">${esc(v.titulo)}</div><div class="cat">${esc(v.categoria)}</div>
+    ${s && s.note ? `<div class="note">${esc(s.note)}</div>` : ""}</div></button>`;
+}
+
+function open(code) {
+  current = videos.find(v => v.code === code); if (!current) return;
+  const s = state(code);
+  pick = s ? s.v : null;
+  $("#dcode").textContent = current.code;
+  $("#dtitle").textContent = current.titulo;
+  $("#ddrive").href = current.drive_url;
+  $("#dvideo").src = current.video;
+  $("#dnote").value = s ? (s.note || "") : "";
+  $("#dmsg").textContent = s ? "Ya revisado: si cambiás algo, se guarda la nueva respuesta." : "";
+  syncPick(); $("#dlg").showModal();
+}
+function syncPick() {
+  document.querySelectorAll(".verdict button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === pick));
+  $("#dsave").disabled = !pick;
+}
+function closeDlg() { $("#dvideo").pause(); $("#dvideo").removeAttribute("src"); $("#dvideo").load(); $("#dlg").close(); }
+
+async function save() {
+  if (!current || !pick) return;
+  const note = $("#dnote").value.trim();
+  $("#dsave").disabled = true; $("#dmsg").textContent = "Guardando…";
+  const body = new URLSearchParams({ [F_VERDICT]: pick, [F_NOTE]: note, [F_CODE]: current.code });
+  try {
+    await fetch(FORM, { method: "POST", mode: "no-cors", body });
+    localState[current.code] = { v: pick, note, t: Date.now() };
+    try { localStorage.setItem(LKEY, JSON.stringify(localState)); } catch (e) {}
+    closeDlg(); render(); toast(`${current.code}: ${pick} ✓`);
+  } catch (e) {
+    $("#dmsg").textContent = "No se pudo guardar. Revisá la conexión y probá de nuevo.";
+    $("#dsave").disabled = false;
+  }
+}
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 2200); }
+
+// Respuestas del formulario (Sheet de Google). Si no se puede leer, la página sigue andando con lo guardado en este navegador.
+function loadSheet() {
+  return new Promise(resolve => {
+    const cb = "gviz_" + Date.now();
+    const s = document.createElement("script");
+    const timer = setTimeout(() => { cleanup(); resolve(false); }, 8000);
+    function cleanup() { clearTimeout(timer); delete window[cb]; s.remove(); }
+    window[cb] = res => {
+      cleanup();
+      try {
+        const cols = res.table.cols.map(c => (c.label || "").toLowerCase());
+        const iT = 0, iV = cols.findIndex(c => c.includes("va")), iN = cols.findIndex(c => c.includes("sirve")), iC = cols.findIndex(c => c.startsWith("video"));
+        res.table.rows.forEach(r => {
+          const g = i => r.c[i] && r.c[i].v;
+          const code = g(iC); if (!code) return;
+          const m = /Date\((\d+),(\d+),(\d+),(\d+),(\d+),(\d+)/.exec(g(iT) || "");
+          const t = m ? new Date(+m[1], +m[2], +m[3], +m[4], +m[5], +m[6]).getTime() : 0;
+          const prev = sheetState[code];
+          if (!prev || t >= prev.t) sheetState[code] = { v: g(iV), note: g(iN) || "", t };
+        });
+        resolve(true);
+      } catch (e) { resolve(false); }
+    };
+    s.src = `https://docs.google.com/spreadsheets/d/${SHEET}/gviz/tq?tqx=responseHandler:${cb}&headers=1&t=${Date.now()}`;
+    s.onerror = () => { cleanup(); resolve(false); };
+    document.head.appendChild(s);
+  });
+}
+
+document.addEventListener("click", e => {
+  const c = e.target.closest(".card"); if (c) return open(c.dataset.code);
+  const v = e.target.closest("[data-view]"); if (v) { view = v.dataset.view; document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", b === v)); return render(); }
+  const p = e.target.closest("[data-p]"); if (p) { prod = p.dataset.p; return render(); }
+  const b = e.target.closest(".verdict button"); if (b) { pick = b.dataset.v; return syncPick(); }
+});
+$("#dsave").onclick = save;
+$("#dclose").onclick = closeDlg;
+$("#dlg").addEventListener("cancel", e => { e.preventDefault(); closeDlg(); });
+
+(async () => {
+  videos = await fetch("videos.json").then(r => r.json());
+  render();
+  const ok = await loadSheet();
+  $("#sync").textContent = ok ? "Respuestas al día" : "Mostrando lo guardado en este navegador";
+  render();
+})();
+</script>
+</body>
+</html>

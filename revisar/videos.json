@@ -1,0 +1,752 @@
+[
+{
+"code": "CAT02",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 1 El problema",
+"drive_url": "https://drive.google.com/file/d/1DrhGT-1Tl3gyMJvxVvKwReo-WnLFhnzi/view",
+"video": "../videos/largos/cap1-el-problema-es-horizontal.mp4",
+"dur": 51,
+"confuso": false
+},
+{
+"code": "CAT03",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 2 Cómo funciona",
+"drive_url": "https://drive.google.com/file/d/10qgYPIC3Pnrx6t6KlOmVoXpdqjx-D-ue/view",
+"video": "../videos/largos/cap2-como-funciona-es-horizontal-v2.mp4",
+"dur": 98,
+"confuso": false
+},
+{
+"code": "CAT04",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 3 Por qué confiar",
+"drive_url": "https://drive.google.com/file/d/1meS29A9be0HqqcfDUNYGjBc4pB9ShKxT/view",
+"video": "../videos/largos/cap3-por-que-confiar-es-horizontal.mp4",
+"dur": 75,
+"confuso": false
+},
+{
+"code": "CAT05",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 4 Productoras",
+"drive_url": "https://drive.google.com/file/d/1oeS6-dtyAZoAC6fsLvSMIbZMAKMqqNpP/view",
+"video": "../videos/largos/cap4-productoras-es-horizontal.mp4",
+"dur": 87,
+"confuso": false
+},
+{
+"code": "CAT06",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 4 Instituciones",
+"drive_url": "https://drive.google.com/file/d/13twjecLIwdz-aSouOcM9gGdUJIvs2Pmm/view",
+"video": "../videos/largos/cap4-instituciones-es-horizontal.mp4",
+"dur": 88,
+"confuso": false
+},
+{
+"code": "CAT07",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 5 Lo que tu archivo puede hacer",
+"drive_url": "https://drive.google.com/file/d/1rp5e8ieu2n3Y2bOK6dycmsimA_guYUx_/view",
+"video": "../videos/largos/cap5-lo-que-tu-archivo-puede-hacer-es-horizontal.mp4",
+"dur": 49,
+"confuso": false
+},
+{
+"code": "CAT08",
+"producto": "ViDeus Catalog",
+"categoria": "Episodios",
+"titulo": "Capítulo 6 Inversores",
+"drive_url": "https://drive.google.com/file/d/1Q1T7Yv7IFK5oPrWSjfBYXlN3vzNE6csV/view",
+"video": "../videos/largos/cap6-inversores-es-horizontal.mp4",
+"dur": 78,
+"confuso": false
+},
+{
+"code": "CAT10",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El gurú",
+"drive_url": "https://drive.google.com/file/d/1Nm0io73YO7g_W66yv8OdPzTBeiW1nMSV/view",
+"video": "../videos/v3/guru-es-horizontal.mp4",
+"dur": 81,
+"confuso": false
+},
+{
+"code": "CAT11",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Tu archivo nunca sale del edificio",
+"drive_url": "https://drive.google.com/file/d/1PuvV2MFaVRh64JWEFKUmfmxfjT5idWcu/view",
+"video": "../videos/v3/v02-es-horizontal.mp4",
+"dur": 63,
+"confuso": false
+},
+{
+"code": "CAT12",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El costo de un archivo que no podés buscar",
+"drive_url": "https://drive.google.com/file/d/114ZZlaD4uCnIFAyxSvPmgZPA1sC3HBTk/view",
+"video": "../videos/v3/v03-es-horizontal.mp4",
+"dur": 36,
+"confuso": false
+},
+{
+"code": "CAT13",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Hacé inteligente el archivo que ya tenés",
+"drive_url": "https://drive.google.com/file/d/10d-KKoQIlbrjTDhFGlmKViVMc09EggXb/view",
+"video": "../videos/v3/v04-es-horizontal.mp4",
+"dur": 45,
+"confuso": false
+},
+{
+"code": "CAT14",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Tu archivo es materia prima",
+"drive_url": "https://drive.google.com/file/d/1aYFDNiSS25G68Vhuq-lW8tTONrgkqH3h/view",
+"video": "../videos/v3/filo-materia-prima-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT15",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Todo lo que grabaste sigue ahí",
+"drive_url": "https://drive.google.com/file/d/1bxH84GDB5bvuxbJeIoz1Tx5XQYWJpJtz/view",
+"video": "../videos/v3/filo-sigue-ahi-es-horizontal.mp4",
+"dur": 30,
+"confuso": false
+},
+{
+"code": "CAT16",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El colega que vio todo",
+"drive_url": "https://drive.google.com/file/d/1C9tQfpVqAVXtp9gHyz4mnS1SJ1nR9iJU/view",
+"video": "../videos/v3/filo-colega-es-horizontal.mp4",
+"dur": 40,
+"confuso": false
+},
+{
+"code": "CAT17",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Sumamos, no reemplazamos",
+"drive_url": "https://drive.google.com/file/d/1a1k8W0SrSiAA26oKU4PRR1fXjiQ8qQ_S/view",
+"video": "../videos/v3/sumamos-es-horizontal.mp4",
+"dur": 56,
+"confuso": false
+},
+{
+"code": "CAT18",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Buscar vs. preguntar",
+"drive_url": "https://drive.google.com/file/d/1nZgNpXkO_FqowXNLgIIO9C3wQKEe_byk/view",
+"video": "../videos/v3/filo-buscar-preguntar-es-horizontal.mp4",
+"dur": 41,
+"confuso": false
+},
+{
+"code": "CAT19",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Empezá a tu medida",
+"drive_url": "https://drive.google.com/file/d/1l9dkIkiUVZ3PmPHKKJU--pklMphv8qf2/view",
+"video": "../videos/frases/frase9-es-horizontal.mp4",
+"dur": 23,
+"confuso": false
+},
+{
+"code": "CAT20",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Busca lo que significa",
+"drive_url": "https://drive.google.com/file/d/1EeEn1zE8Pi8zq-rA4D2fVOfSNiipcN8F/view",
+"video": "../videos/frases/frase6-es-horizontal.mp4",
+"dur": 25,
+"confuso": false
+},
+{
+"code": "CAT21",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Lo que decía el zócalo",
+"drive_url": "https://drive.google.com/file/d/1xpfiWiO2SzSk1V6LLq2eRK_bixaIKuqd/view",
+"video": "../videos/frases/frase3-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT22",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Abrir sin exponer",
+"drive_url": "https://drive.google.com/file/d/1cVQqL64IfELcObL9nbgRdCLrGIGAkrPg/view",
+"video": "../videos/frases/frase8-es-horizontal.mp4",
+"dur": 25,
+"confuso": false
+},
+{
+"code": "CAT23",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Quién fue",
+"drive_url": "https://drive.google.com/file/d/1mD7Cla67tQVMV3wrw47Of-OU_X8GsCjW/view",
+"video": "../videos/frases/frase7-es-horizontal.mp4",
+"dur": 25,
+"confuso": false
+},
+{
+"code": "CAT24",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Subilo y olvidate",
+"drive_url": "https://drive.google.com/file/d/1doIuyhSvv_4F8eZeedtKqyMdnCn_f3qL/view",
+"video": "../videos/frases/frase2-es-horizontal.mp4",
+"dur": 30,
+"confuso": false
+},
+{
+"code": "CAT25",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta De un vistazo",
+"drive_url": "https://drive.google.com/file/d/1_rCeWKiRRaNS-lXJQNrKyX9aTulmBITR/view",
+"video": "../videos/frases/frase4-es-horizontal.mp4",
+"dur": 29,
+"confuso": false
+},
+{
+"code": "CAT26",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Todos en el mismo archivo",
+"drive_url": "https://drive.google.com/file/d/1zqRugpQFc9AQRNiMpQiqP1uYqzDnWpFb/view",
+"video": "../videos/frases/frase1-es-horizontal.mp4",
+"dur": 27,
+"confuso": false
+},
+{
+"code": "CAT27",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Quién habla",
+"drive_url": "https://drive.google.com/file/d/1jHho3YziuAGQfvRtJMUYxZcT1u8ax9QC/view",
+"video": "../videos/frases/frase5-es-horizontal.mp4",
+"dur": 27,
+"confuso": false
+},
+{
+"code": "CAT28",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo corta Material con precio",
+"drive_url": "https://drive.google.com/file/d/1qEIPvwU1QGpNf3tMkXjiEcCszviMYG_P/view",
+"video": "../videos/frases/frase10-es-horizontal.mp4",
+"dur": 23,
+"confuso": false
+},
+{
+"code": "CAT29",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Lo que se dijo de tu cliente",
+"drive_url": "https://drive.google.com/file/d/18_8Bsw84CbSufP6ror0y9ba0Zy1edybW/view",
+"video": "../videos/v3/abogados-es-horizontal.mp4",
+"dur": 34,
+"confuso": false
+},
+{
+"code": "CAT30",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo La abuela",
+"drive_url": "https://drive.google.com/file/d/1hbUasgFtCPFuTdftPAweS6BvuGSOvXMo/view",
+"video": "../videos/v3/abuela-es-horizontal.mp4",
+"dur": 39,
+"confuso": false
+},
+{
+"code": "CAT31",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo La universidad",
+"drive_url": "https://drive.google.com/file/d/1c2kB6sbciPAE1HleVZCs-9bveUVpkBVx/view",
+"video": "../videos/v3/universidad-es-horizontal.mp4",
+"dur": 49,
+"confuso": false
+},
+{
+"code": "CAT32",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Reels (el evento)",
+"drive_url": "https://drive.google.com/file/d/1_PCIVSEB141xNzxpn6MitjBLs_6mMvTj/view",
+"video": "../videos/v3/reels-es-horizontal.mp4",
+"dur": 46,
+"confuso": false
+},
+{
+"code": "CAT33",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El homenaje",
+"drive_url": "https://drive.google.com/file/d/16k_Q7c_Kx6QQSOAorfXYJCeVGZEJayX1/view",
+"video": "../videos/v3/despedida-es-horizontal.mp4",
+"dur": 43,
+"confuso": false
+},
+{
+"code": "CAT34",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo La contradicción",
+"drive_url": "https://drive.google.com/file/d/1RfACHZ2BRc570ROYecEp1wd2Kw8eCQo6/view",
+"video": "../videos/v3/contradiccion-es-horizontal.mp4",
+"dur": 33,
+"confuso": false
+},
+{
+"code": "CAT35",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo La cámara de diputados",
+"drive_url": "https://drive.google.com/file/d/1xGKKh5QTsvSuKMWoUsfC8PBM6l_PCPkq/view",
+"video": "../videos/v3/camara-es-horizontal.mp4",
+"dur": 56,
+"confuso": false
+},
+{
+"code": "CAT36",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El congreso",
+"drive_url": "https://drive.google.com/file/d/1Gut8xwIlj0UgR_L4ke0xIW_IpLsLJyoM/view",
+"video": "../videos/v3/congreso-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT37",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Es un ladrón",
+"drive_url": "https://drive.google.com/file/d/1bXSrRhSEkA8CLWsF-zBnqNfaMQqWvmAN/view",
+"video": "../videos/v3/difamacion-es-horizontal.mp4",
+"dur": 28,
+"confuso": false
+},
+{
+"code": "CAT38",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Quién lo dijo primero",
+"drive_url": "https://drive.google.com/file/d/14isaiYedyNLkxPVEZYDQD4gkFkX_n5oK/view",
+"video": "../videos/v3/primero-es-horizontal.mp4",
+"dur": 32,
+"confuso": false
+},
+{
+"code": "CAT39",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo La leyenda",
+"drive_url": "https://drive.google.com/file/d/1-PChztDcgSeByRxlwdyCdCN9xxado7YY/view",
+"video": "../videos/v3/leyenda-es-horizontal.mp4",
+"dur": 35,
+"confuso": false
+},
+{
+"code": "CAT40",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Club de fútbol",
+"drive_url": "https://drive.google.com/file/d/1skis--Qdm0CReGnoelQQiQqBaSHJADj1/view",
+"video": "../videos/v3/club-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT41",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Documentalista",
+"drive_url": "https://drive.google.com/file/d/15n2wWi4YFSMZMnTA8xZViIAOd0I8Vm0A/view",
+"video": "../videos/v3/documental-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT42",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Consultora de comunicación",
+"drive_url": "https://drive.google.com/file/d/1os1ASMhl5xqTsBslgMFRSeoGlx_LFQVh/view",
+"video": "../videos/v3/comunicacion-es-horizontal.mp4",
+"dur": 26,
+"confuso": false
+},
+{
+"code": "CAT43",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Agencia de noticias",
+"drive_url": "https://drive.google.com/file/d/1yr9myZz8MIRSQTUTzmckcbDwUB7l84SF/view",
+"video": "../videos/v3/agencia-es-horizontal.mp4",
+"dur": 33,
+"confuso": false
+},
+{
+"code": "CAT44",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Tu archivo en otro idioma",
+"drive_url": "https://drive.google.com/file/d/16shlhPY3aJtOYgIa9m-gB47z-rbEHeL5/view",
+"video": "../videos/v3/idioma-es-horizontal.mp4",
+"dur": 24,
+"confuso": false
+},
+{
+"code": "CAT45",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Plataforma de streaming",
+"drive_url": "https://drive.google.com/file/d/1iPesnnVvDbWaNX350vY3_ftJTZFrtda_/view",
+"video": "../videos/v3/streaming-es-horizontal.mp4",
+"dur": 30,
+"confuso": false
+},
+{
+"code": "CAT46",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Museo o filmoteca",
+"drive_url": "https://drive.google.com/file/d/1AkVy_BkjIpIV90mD6KXJOFnV0i_EfOoK/view",
+"video": "../videos/v3/museo-es-horizontal.mp4",
+"dur": 31,
+"confuso": false
+},
+{
+"code": "CAT47",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Empresa (uso interno)",
+"drive_url": "https://drive.google.com/file/d/12sugPvr7J69XD0IZnG_zGk9Jx9rr712B/view",
+"video": "../videos/v3/empresa-es-horizontal.mp4",
+"dur": 34,
+"confuso": false
+},
+{
+"code": "CAT48",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo El famoso y su manager",
+"drive_url": "https://drive.google.com/file/d/1qGPHflFz6PXsU9mGs08STbQ6b3zZnUBJ/view",
+"video": "../videos/v3/famoso-es-horizontal.mp4",
+"dur": 33,
+"confuso": false
+},
+{
+"code": "CAT49",
+"producto": "ViDeus Catalog",
+"categoria": "Publicidades",
+"titulo": "Promo Teatro, festival o conciertos",
+"drive_url": "https://drive.google.com/file/d/1LAUXp16pEm3l08mI_OQO5nWFBrU-nr21/view",
+"video": "../videos/v3/escenario-es-horizontal.mp4",
+"dur": 25,
+"confuso": false
+},
+{
+"code": "CAT50",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 1 Entrar y ubicarse",
+"drive_url": "https://drive.google.com/file/d/10EnFtGl2J6DEPvVvBWAYAEF3w_BEn_i2/view",
+"video": "../videos/tutoriales/tutorial-01-entrar-es-horizontal.mp4",
+"dur": 126,
+"confuso": false
+},
+{
+"code": "CAT51",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 2 Subir archivos y seguir el proceso",
+"drive_url": "https://drive.google.com/file/d/1fD-Ka6KUaAOPe-8NZNwsSu16FEkqRyyD/view",
+"video": "../videos/tutoriales/tutorial-02-subir-es-horizontal.mp4",
+"dur": 143,
+"confuso": false
+},
+{
+"code": "CAT52",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 3 Encontrar con los filtros",
+"drive_url": "https://drive.google.com/file/d/16sWMjVQ1vwTy4dl0q-cbpZBtLFVKwuPr/view",
+"video": "../videos/tutoriales/tutorial-06-filtros-es-horizontal.mp4",
+"dur": 239,
+"confuso": false
+},
+{
+"code": "CAT53",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 4 Lo que ya sabe de cada video",
+"drive_url": "https://drive.google.com/file/d/1j0fvVi7UX7Oa29NIBwtBi-OYj3Q8y3-X/view",
+"video": "../videos/tutoriales/tutorial-04-ficha-es-horizontal.mp4",
+"dur": 95,
+"confuso": false
+},
+{
+"code": "CAT54",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 5 Encontrar lo que se dijo",
+"drive_url": "https://drive.google.com/file/d/1FXDEUjzoJQsPWD-NzvZCApOpGXpxe-I4/view",
+"video": "../videos/tutoriales/tutorial-05-dicho-es-horizontal.mp4",
+"dur": 89,
+"confuso": false
+},
+{
+"code": "CAT55",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 6 Encontrar a una persona",
+"drive_url": "https://drive.google.com/file/d/12XRr-eusM9w0W6IY6suBNTXSbSTKi7nJ/view",
+"video": "../videos/tutoriales/tutorial-06-persona-es-horizontal.mp4",
+"dur": 128,
+"confuso": false
+},
+{
+"code": "CAT56",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 7 Encontrar escenas e imágenes",
+"drive_url": "https://drive.google.com/file/d/1JLhxYSYTd76G0ZKlSbROYPItlKvIUWS8/view",
+"video": "../videos/tutoriales/tutorial-07-escenas-es-horizontal.mp4",
+"dur": 71,
+"confuso": false
+},
+{
+"code": "CAT57",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 8 Pedirle bien al Asistente",
+"drive_url": "https://drive.google.com/file/d/1NISrxnNVmyPZ-JsaJtkMYbxY-X5HT2p4/view",
+"video": "../videos/tutoriales/tutorial-08-pedir-es-horizontal.mp4",
+"dur": 85,
+"confuso": false
+},
+{
+"code": "CAT58",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 9 Pedirle ideas de reels",
+"drive_url": "https://drive.google.com/file/d/188AkYUG0yN6FAJdjRN_z_bLy_De4Alwy/view",
+"video": "../videos/tutoriales/tutorial-09-reels-es-horizontal.mp4",
+"dur": 57,
+"confuso": false
+},
+{
+"code": "CAT59",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 10 Que ViDeus Catalog corte por vos",
+"drive_url": "https://drive.google.com/file/d/1Ej2ZwPoYv-5T36RxiLlNU06rGCMzR15a/view",
+"video": "../videos/tutoriales/tutorial-10-cortar-es-horizontal.mp4",
+"dur": 107,
+"confuso": false
+},
+{
+"code": "CAT60",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 11 Para administradores",
+"drive_url": "https://drive.google.com/file/d/1JJyQOVAFZJ5AsgZdV1mz49fP_UGOHK6A/view",
+"video": "../videos/tutoriales/tutorial-11-admin-es-horizontal.mp4",
+"dur": 88,
+"confuso": false
+},
+{
+"code": "CAT61",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 12 Conectar tu IA al archivo",
+"drive_url": "https://drive.google.com/file/d/1KvcooXm4GpJFd-QriRjhB6ViYcImer8S/view",
+"video": "../videos/tutoriales/tutorial-12-conectar-ia-es-horizontal.mp4",
+"dur": 80,
+"confuso": false
+},
+{
+"code": "CAT62",
+"producto": "ViDeus Catalog",
+"categoria": "Instructivos",
+"titulo": "Instructivo 13 Pedirle al archivo desde tu IA",
+"drive_url": "https://drive.google.com/file/d/1yrFLaJBg6Ejz2szSTbLn5LhPwbxs7zTw/view",
+"video": "../videos/tutoriales/tutorial-13-pedir-desde-ia-es-horizontal.mp4",
+"dur": 73,
+"confuso": false
+},
+{
+"code": "CAT01",
+"producto": "ViDeus Catalog",
+"categoria": "Largos",
+"titulo": "Completo",
+"drive_url": "https://drive.google.com/file/d/1bMTSvAVIrTuY3cgB52CGFBsUDgNl48yl/view",
+"video": "../videos/round2/catalog-completo.mp4",
+"dur": 78,
+"confuso": false
+},
+{
+"code": "CAT09",
+"producto": "ViDeus Catalog",
+"categoria": "Largos",
+"titulo": "Loop para pantalla de feria",
+"drive_url": "https://drive.google.com/file/d/1pUz54JWuKsIDxnkpQj4sqZbpbuFVHQDs/view",
+"video": "../videos/loop/loop-stand-es-horizontal.mp4",
+"dur": 49,
+"confuso": false
+},
+{
+"code": "CLI02",
+"producto": "ViDeus Clipping",
+"categoria": "Publicidades",
+"titulo": "Falta el clip",
+"drive_url": "https://drive.google.com/file/d/1o1Q9VCkupF_VD4ZoGo31Vnnb6yOWAsRI/view",
+"video": "../videos/round2/clipping-anuncio.mp4",
+"dur": 46,
+"confuso": false
+},
+{
+"code": "CLI03",
+"producto": "ViDeus Clipping",
+"categoria": "Publicidades",
+"titulo": "La nota de las cinco",
+"drive_url": "https://drive.google.com/file/d/1KD5oKWHT3Gqjqje0HeKMtqVApYmra6T3/view",
+"video": "../videos/round2/clipping-caso.mp4",
+"dur": 64,
+"confuso": false
+},
+{
+"code": "CLI04",
+"producto": "ViDeus Clipping",
+"categoria": "Publicidades",
+"titulo": "Presentación",
+"drive_url": "https://drive.google.com/file/d/1p3mmV6la4cWDaVML0x7aKedyDAuMP2Pd/view",
+"video": "../videos/round2/clipping-presentacion.mp4",
+"dur": 19,
+"confuso": false
+},
+{
+"code": "CLI01",
+"producto": "ViDeus Clipping",
+"categoria": "Largos",
+"titulo": "Completo",
+"drive_url": "https://drive.google.com/file/d/1QbZIuTAxqrO_H629wTS2vZ5D4XbzRlGo/view",
+"video": "../videos/round2/clipping-completo.mp4",
+"dur": 73,
+"confuso": false
+},
+{
+"code": "MB03",
+"producto": "ViDeus Multiviewer",
+"categoria": "Publicidades",
+"titulo": "Presentación",
+"drive_url": "https://drive.google.com/file/d/1h1ajfy3BqQ6Sw572eCdA63K95q7-BfsC/view",
+"video": "../videos/round2/multiviewer-presentacion.mp4",
+"dur": 22,
+"confuso": false
+},
+{
+"code": "MB01",
+"producto": "ViDeus Multiviewer",
+"categoria": "Largos",
+"titulo": "Completo",
+"drive_url": "https://drive.google.com/file/d/1qjAFqnQoFrfXHPUhI6MufD0oV0SIQx2L/view",
+"video": "../videos/round2/multiviewer-completo.mp4",
+"dur": 110,
+"confuso": false
+},
+{
+"code": "MB02",
+"producto": "ViDeus Multiviewer",
+"categoria": "Largos",
+"titulo": "Qué hace",
+"drive_url": "https://drive.google.com/file/d/1l6tW_f86otnepYB3VekSj1_yumgUpj2W/view",
+"video": "../videos/round2/multiviewer.mp4",
+"dur": 83,
+"confuso": false
+},
+{
+"code": "AUD03",
+"producto": "ViDeus Auditor",
+"categoria": "Publicidades",
+"titulo": "Presentación",
+"drive_url": "https://drive.google.com/file/d/1VBsg4Y8KgMD4rxB1AbcBBT2zqOMcenF4/view",
+"video": "../videos/round2/auditor-presentacion.mp4",
+"dur": 22,
+"confuso": false
+},
+{
+"code": "AUD01",
+"producto": "ViDeus Auditor",
+"categoria": "Largos",
+"titulo": "Completo",
+"drive_url": "https://drive.google.com/file/d/1AnoI--OPV6VbSAheTGIgPzMeZqAKI8Gk/view",
+"video": "../videos/round2/auditor-completo.mp4",
+"dur": 83,
+"confuso": false
+},
+{
+"code": "AUD02",
+"producto": "ViDeus Auditor",
+"categoria": "Largos",
+"titulo": "Qué hace",
+"drive_url": "https://drive.google.com/file/d/1OzBUGQMp4xPDnyhar0VCveZ6Bo-cs3h3/view",
+"video": "../videos/round2/auditor.mp4",
+"dur": 83,
+"confuso": false
+},
+{
+"code": "RR01",
+"producto": "ViDeus Round Robin",
+"categoria": "Largos",
+"titulo": "Completo",
+"drive_url": "https://drive.google.com/file/d/1QykwUNjXf3F9eRUbeLplEbJDrPo8p_Ik/view",
+"video": "../videos/round2/roundrobin-completo.mp4",
+"dur": 89,
+"confuso": false
+},
+{
+"code": "ECO01",
+"producto": "Ecosistema 3Way",
+"categoria": "Largos",
+"titulo": "Pantallas reales",
+"drive_url": "https://drive.google.com/file/d/1p1x0LVieNe4DC-yw_ZlwzJZDkM8wZQCm/view",
+"video": "../videos/round2/ecosistema-pantallas.mp4",
+"dur": 206,
+"confuso": true
+},
+{
+"code": "ECO02",
+"producto": "Ecosistema 3Way",
+"categoria": "Largos",
+"titulo": "Versión 2 con símbolos opcional",
+"drive_url": "https://drive.google.com/file/d/1XOnaER5gpBH2DPK_TCBczoEpWmcsqBgt/view",
+"video": "../videos/round2/ecosistema-cinta.mp4",
+"dur": 206,
+"confuso": true
+}
+]
