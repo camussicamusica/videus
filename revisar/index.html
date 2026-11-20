@@ -83,6 +83,12 @@ textarea { width: 100%; min-height: 84px; background: var(--bg); color: var(--fg
 .save:disabled { opacity: .35; cursor: default; }
 .close { background: none; border: 0; color: var(--muted); font: 15px var(--body); cursor: pointer; }
 .msg { color: var(--muted); font-size: 13px; }
+.notewrap { position: relative; }
+.notewrap textarea { padding-right: 120px; }
+.mic { position: absolute; right: 8px; top: 8px; font: 600 13px var(--body); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 99px; padding: 7px 12px; cursor: pointer; }
+.mic[hidden] { display: none; }
+.mic.on { background: var(--nova); border-color: var(--nova); color: #fff; animation: rec 1.2s infinite; }
+@keyframes rec { 50% { opacity: .65; } }
 .del { margin-left: auto; background: none; border: 1px solid var(--nova); color: var(--nova); font: 600 13px var(--body); padding: 8px 12px; border-radius: 8px; cursor: pointer; }
 .del:hover { background: var(--nova); color: #fff; }
 .del[hidden] { display: none; }
@@ -121,7 +127,7 @@ textarea { width: 100%; min-height: 84px; background: var(--bg); color: var(--fg
       <button type="button" class="bva" data-v="Va" aria-pressed="false">Va</button>
       <button type="button" class="bnova" data-v="No va" aria-pressed="false">No va</button>
     </div>
-    <textarea id="dnote" placeholder="¿Para qué sirve? ¿Qué le cambiarías? (opcional)"></textarea>
+    <div class="notewrap"><textarea id="dnote" placeholder="¿Para qué sirve? ¿Qué le cambiarías? (opcional) Podés escribir o tocar 🎙 y hablar."></textarea><button type="button" class="mic" id="dmic" hidden>🎙 Dictar</button></div>
     <div class="actions">
       <button type="button" class="save" id="dsave" disabled>Guardar</button>
       <button type="button" class="close" id="dclose">Cerrar</button>
@@ -208,12 +214,34 @@ function syncPick() {
   $("#dsave").disabled = !pick;
 }
 function step(d) {
+  micStop();
   const i = seq.indexOf(current && current.code) + d;
   if (i < 0 || i >= seq.length) return;
   const v = $("#dvideo"); v.pause();
   open(seq[i], true);
 }
-function closeDlg() { $("#dvideo").pause(); $("#dvideo").removeAttribute("src"); $("#dvideo").load(); $("#dlg").close(); }
+// Dictado: transcribe en vivo con el reconocimiento de voz del navegador (Chrome, Edge, Safari). Se guarda solo el texto.
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null, recBase = "";
+if (SR) $("#dmic").hidden = false;
+function micStop() { if (rec) { const r = rec; rec = null; try { r.stop(); } catch (e) {} } $("#dmic").classList.remove("on"); $("#dmic").textContent = "🎙 Dictar"; }
+function micStart() {
+  rec = new SR(); rec.lang = "es-AR"; rec.continuous = true; rec.interimResults = true;
+  const t = $("#dnote").value.trim(); recBase = t ? t + " " : "";
+  rec.onresult = e => {
+    let fin = "", tmp = "";
+    for (let i = e.resultIndex; i < e.results.length; i++) (e.results[i].isFinal ? (fin += e.results[i][0].transcript) : (tmp += e.results[i][0].transcript));
+    if (fin) recBase += fin.trim() + " ";
+    $("#dnote").value = (recBase + tmp).trimStart();
+  };
+  rec.onerror = e => { if (e.error === "not-allowed") $("#dmsg").textContent = "El navegador no dio permiso al micrófono."; micStop(); };
+  rec.onend = () => { if (rec) { try { rec.start(); } catch (e) { micStop(); } } };
+  rec.start();
+  $("#dmic").classList.add("on"); $("#dmic").textContent = "● Grabando · tocá para parar";
+}
+$("#dmic").onclick = () => rec ? micStop() : micStart();
+function closeDlg() {
+  micStop(); $("#dvideo").pause(); $("#dvideo").removeAttribute("src"); $("#dvideo").load(); $("#dlg").close(); }
 
 async function send(v, note, done) {
   const body = new URLSearchParams({ [F_VERDICT]: v, [F_NOTE]: note, [F_CODE]: current.code });
@@ -236,6 +264,7 @@ async function del() {
 }
 async function save() {
   if (!current || !pick) return;
+  micStop();
   const note = $("#dnote").value.trim();
   $("#dsave").disabled = true; $("#dmsg").textContent = "Guardando…";
   try {
