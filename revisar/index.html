@@ -64,11 +64,11 @@ dialog { width: min(1040px, 100% - 16px); max-height: calc(100% - 16px); backgro
 .pos { color: var(--muted); font-size: 13px; }
 @media (max-width: 700px) {
   .frame { position: relative; }
-  .nav { position: absolute; top: 18vh; z-index: 2; width: 44px; height: 44px; background: rgba(0,0,0,.6); }
+  .nav { position: absolute; top: calc((100vw - 16px) * 9 / 32 - 22px); z-index: 2; width: 44px; height: 44px; background: rgba(0,0,0,.6); }
   .nav.prev { left: 6px; } .nav.next { right: 6px; }
 }
 dialog::backdrop { background: rgba(0,0,0,.7); }
-dialog video { width: 100%; display: block; background: #000; max-height: 60vh; }
+dialog video { width: 100%; aspect-ratio: 16/9; display: block; background: #000; max-height: 60vh; }
 .dbody { padding: 16px; }
 .dhead { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
 .dhead h3 { font: 800 20px var(--display); margin: 0; }
@@ -285,6 +285,7 @@ document.addEventListener("click", e => {
 });
 $("#dsave").onclick = save;
 $("#ddel").onclick = del;
+$("#dlg").addEventListener("click", e => { if (e.target === $("#dlg") || e.target.classList.contains("frame")) closeDlg(); });
 $("#dprev").onclick = () => step(-1);
 $("#dnext").onclick = () => step(1);
 document.addEventListener("keydown", e => {
