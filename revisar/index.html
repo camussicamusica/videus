@@ -38,6 +38,8 @@ h1 { font: 800 clamp(26px, 4vw, 38px)/1.1 var(--display); margin: 10px 0 6px; }
 .chip[aria-pressed="true"] { border-color: var(--fg); color: var(--fg); }
 .sync { color: var(--muted); font-size: 12px; margin-left: auto; }
 main { max-width: 1240px; margin: 0 auto; padding: 8px 16px 60px; }
+.hl { color: var(--orange); }
+.rank { position: absolute; left: 6px; bottom: 6px; background: var(--orange); color: #fff; font: 700 12px var(--body); padding: 1px 7px; border-radius: 4px; }
 h2.prod { font: 600 13px var(--body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; cursor: pointer; text-align: left; color: inherit; font: inherit; padding: 0; display: flex; flex-direction: column; transition: transform .12s, border-color .12s; }
@@ -175,20 +177,35 @@ function render() {
 
   const list = visibleList();
   if (!list.length) { $("#main").innerHTML = `<p class="empty">${view==="pend" ? "No queda nada por revisar acá. 🎉" : "Todavía no revisaste ninguno."}</p>`; return; }
-  const groups = {};
-  list.forEach(v => (groups[v.producto] ??= []).push(v));
-  $("#main").innerHTML = Object.entries(groups).map(([p, vs]) => `
-    <h2 class="prod">${esc(p)} · ${vs.length}</h2>
+  $("#main").innerHTML = groupsOf(list).map(([p, vs]) => `
+    <h2 class="prod">${p} · ${vs.length}</h2>
     <div class="grid">${vs.map(card).join("")}</div>`).join("");
 }
+// Catalog: primero los 10 mejores (los del Top 10 de la página), después episodios, publicidades, instructivos y largos.
+const CAT_ORDER = ["Episodios", "Publicidades", "Instructivos", "Largos"];
+function groupsOf(list) {
+  const out = [], add = (label, vs) => { if (vs.length) out.push([label, vs]); };
+  const prods = [...new Set(list.map(v => v.producto))];
+  prods.forEach(p => {
+    const vs = list.filter(v => v.producto === p);
+    if (p === "ViDeus Catalog") {
+      add(`${esc(p)} · <span class="hl">Los 10 mejores</span>`, vs.filter(v => v.top).sort((a, b) => a.top - b.top));
+      const rest = vs.filter(v => !v.top);
+      CAT_ORDER.forEach(c => add(`${esc(p)} · ${c}`, rest.filter(v => v.categoria === c)));
+      add(`${esc(p)} · Otros`, rest.filter(v => !CAT_ORDER.includes(v.categoria)));
+    } else add(esc(p), vs);
+  });
+  return out;
+}
 function visibleList() {
-  return videos.filter(v => (prod === "Todos" || v.producto === prod) && (!!state(v.code) === (view === "done")));
+  const list = videos.filter(v => (prod === "Todos" || v.producto === prod) && (!!state(v.code) === (view === "done")));
+  return groupsOf(list).flatMap(g => g[1]);
 }
 function card(v) {
   const s = state(v.code);
   const badge = s ? `<span class="badge ${s.v==="Va"?"va":"nova"}">${esc(s.v)}</span>` : "";
   return `<button type="button" class="card" data-code="${v.code}">
-    <div class="thumb"><img loading="lazy" src="thumbs/${v.code}.jpg" alt="">${badge}${v.confuso?'<span class="badge conf">En «Confusos»</span>':""}<span class="dur">${fmt(v.dur)}</span></div>
+    <div class="thumb"><img loading="lazy" src="thumbs/${v.code}.jpg" alt="">${badge}${v.confuso?'<span class="badge conf">En «Confusos»</span>':""}${v.top ? `<span class="rank">#${v.top}</span>` : ""}<span class="dur">${fmt(v.dur)}</span></div>
     <div class="meta"><div class="code">${v.code}</div><div class="tit">${esc(v.titulo)}</div><div class="cat">${esc(v.categoria)}</div>
     ${s && s.note ? `<div class="note">${esc(s.note)}</div>` : ""}</div></button>`;
 }
@@ -335,6 +352,10 @@ $("#dlg").addEventListener("cancel", e => { e.preventDefault(); closeDlg(); });
   const ok = await loadSheet();
   $("#sync").textContent = ok ? "Respuestas al día" : "Mostrando lo guardado en este navegador";
   render();
+  // Vuelve a leer el Sheet cada 30 s y al volver a la pestaña, para ver lo que cambió en otro lado.
+  const refresh = async () => { if (await loadSheet()) { $("#sync").textContent = "Respuestas al día"; render(); } };
+  setInterval(refresh, 30000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
 })();
 </script>
 </body>

@@ -17,7 +17,8 @@
 "drive_url": "https://drive.google.com/file/d/10qgYPIC3Pnrx6t6KlOmVoXpdqjx-D-ue/view",
 "video": "../videos/largos/cap2-como-funciona-es-horizontal-v2.mp4",
 "dur": 98,
-"confuso": false
+"confuso": false,
+"top": 4
 },
 {
 "code": "CAT04",
@@ -47,7 +48,8 @@
 "drive_url": "https://drive.google.com/file/d/13twjecLIwdz-aSouOcM9gGdUJIvs2Pmm/view",
 "video": "../videos/largos/cap4-instituciones-es-horizontal.mp4",
 "dur": 88,
-"confuso": false
+"confuso": false,
+"top": 6
 },
 {
 "code": "CAT07",
@@ -67,7 +69,8 @@
 "drive_url": "https://drive.google.com/file/d/1Q1T7Yv7IFK5oPrWSjfBYXlN3vzNE6csV/view",
 "video": "../videos/largos/cap6-inversores-es-horizontal.mp4",
 "dur": 78,
-"confuso": false
+"confuso": false,
+"top": 7
 },
 {
 "code": "CAT10",
@@ -77,7 +80,8 @@
 "drive_url": "https://drive.google.com/file/d/1Nm0io73YO7g_W66yv8OdPzTBeiW1nMSV/view",
 "video": "../videos/v3/guru-es-horizontal.mp4",
 "dur": 81,
-"confuso": false
+"confuso": false,
+"top": 10
 },
 {
 "code": "CAT11",
@@ -187,7 +191,8 @@
 "drive_url": "https://drive.google.com/file/d/1xpfiWiO2SzSk1V6LLq2eRK_bixaIKuqd/view",
 "video": "../videos/frases/frase3-es-horizontal.mp4",
 "dur": 31,
-"confuso": false
+"confuso": false,
+"top": 9
 },
 {
 "code": "CAT22",
@@ -217,7 +222,8 @@
 "drive_url": "https://drive.google.com/file/d/1doIuyhSvv_4F8eZeedtKqyMdnCn_f3qL/view",
 "video": "../videos/frases/frase2-es-horizontal.mp4",
 "dur": 30,
-"confuso": false
+"confuso": false,
+"top": 8
 },
 {
 "code": "CAT25",
@@ -567,7 +573,8 @@
 "drive_url": "https://drive.google.com/file/d/1Ej2ZwPoYv-5T36RxiLlNU06rGCMzR15a/view",
 "video": "../videos/tutoriales/tutorial-10-cortar-es-horizontal.mp4",
 "dur": 107,
-"confuso": false
+"confuso": false,
+"top": 1
 },
 {
 "code": "CAT60",
@@ -577,7 +584,8 @@
 "drive_url": "https://drive.google.com/file/d/1JJyQOVAFZJ5AsgZdV1mz49fP_UGOHK6A/view",
 "video": "../videos/tutoriales/tutorial-11-admin-es-horizontal.mp4",
 "dur": 88,
-"confuso": false
+"confuso": false,
+"top": 5
 },
 {
 "code": "CAT61",
@@ -587,7 +595,8 @@
 "drive_url": "https://drive.google.com/file/d/1KvcooXm4GpJFd-QriRjhB6ViYcImer8S/view",
 "video": "../videos/tutoriales/tutorial-12-conectar-ia-es-horizontal.mp4",
 "dur": 80,
-"confuso": false
+"confuso": false,
+"top": 2
 },
 {
 "code": "CAT62",
@@ -597,7 +606,8 @@
 "drive_url": "https://drive.google.com/file/d/1yrFLaJBg6Ejz2szSTbLn5LhPwbxs7zTw/view",
 "video": "../videos/tutoriales/tutorial-13-pedir-desde-ia-es-horizontal.mp4",
 "dur": 73,
-"confuso": false
+"confuso": false,
+"top": 3
 },
 {
 "code": "CAT01",
